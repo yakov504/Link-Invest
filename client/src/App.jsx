@@ -5,7 +5,7 @@ function App() {
 
   return (
    <div>
-      <h1 className='max-h-40 text-red-900'>hello world</h1>
+      <h1>hello world</h1>
    </div>
   )
 }

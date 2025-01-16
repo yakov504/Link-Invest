@@ -1,6 +1,7 @@
 const fs = require('fs')
 const Agents = require('../modules/agentsModuls');
 // const { Agent } = require('http');
+
 exports.getAllAgents =async ( req, res ) =>{
    try{
       const agents = await Agents.find();
@@ -22,7 +23,7 @@ exports.getAllAgents =async ( req, res ) =>{
 
 exports.getAgent = async ( req, res ) =>{
    try{
-      const agent = await Agents.findById(req.params.id)
+      agent = await Agents.findById(req.params.id);
       res.status(200).json({
          status: 'success', 
          data: {
@@ -57,7 +58,7 @@ exports.createAgent = async ( req, res ) => {
 
 exports.updateAgent = async ( req, res ) => {
    try{
-      const agent = await Agents.findByIdAndUpdate(req.params.id, req.body, {
+      const agent = await Agents.findByIdAndUpdate(req.params.id , req.body, {
          new: true,
          runValidators: true
       });

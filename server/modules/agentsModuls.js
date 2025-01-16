@@ -5,43 +5,36 @@ const agentsSchema = new mongoose.Schema({
    שם:{
       type: String,
       required: [true, 'agent must have name'],
-      trim: true
    },
    
    פגישות:{
       type: Number,
-      required: [true, 'גם 0 זה מספר'],
-      trim: true
+      required: [true, 'גם 0 זה מספר']
    },
 
    בלעדיות:{
       type: Number,
-      required: [true, 'גם 0 זה מספר'],
-      trim: true
+      required: [true, 'גם 0 זה מספר']
    },
 
    עדכון_מחיר:{
       type: Number,
-      required: [true, 'גם 0 זה מספר'],
-      trim: true
+      required: [true, 'גם 0 זה מספר']
    },
 
    סיור_קונים:{
       type: Number,
-      required: [true, 'גם 0 זה מספר'],
-      trim: true
+      required: [true, 'גם 0 זה מספר']
    },
 
    הצעות_מחיר:{
       type: Number,
-      required: [true, 'גם 0 זה מספר'],
-      trim: true
+      required: [true, 'גם 0 זה מספר']
    },
 
    עסקאות:{
       type: Number,
-      required: [true, 'גם 0 זה מספר'],
-      trim: true
+      required: [true, 'גם 0 זה מספר']
    },
 
 });

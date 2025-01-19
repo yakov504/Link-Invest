@@ -6,6 +6,11 @@ const agentsSchema = new mongoose.Schema({
       type: String,
       required: [true, 'agent must have name'],
    },
+
+   מייל:{
+      type: String,
+      required: [true, 'agent must have mail'],
+   },
    
    פגישות:{
       type: Number,

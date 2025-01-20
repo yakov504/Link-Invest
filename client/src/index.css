@@ -2,9 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body {
-   direction: rtl;
-   text-align: right;
-   font-family: 'Assistant', sans-serif;
-}

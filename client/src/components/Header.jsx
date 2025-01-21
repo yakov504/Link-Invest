@@ -3,15 +3,22 @@ import NavBar from './Navbar'
 import '../App.css'
 import logo from '../assets/image/link_logo.png'
 import nadlan1 from '../assets/image/nadlan2.jpg'
+// import krayot from '../assets/image/Krayot1.jpg'
+import yam from '../assets/image/yam_LE_upscale_balanced_x4.jpg'
+// import yam from '../assets/image/yam2-transformed.jpeg'
+// import krayot from '../assets/image/Krayot1.jpg'
+// import krayot from '../assets/image/Krayot1.jpg'
+
 
 export default function Header() {
   return (
     <div >
       <NavBar/>
       <div className='header'>
-        <img className='logo' src={logo} alt="logo" />
+        <img className='yam' src={yam} alt="logo" />
+        {/* <img className='logo' src={logo} alt="logo" /> */}
         <h2>LINK INVEST - <br />שיווק, קנייה ומכירת נדל"ן</h2>
-        <img className='nadlan' src={nadlan1} alt="nadlan" />
+        {/* <img className='nadlan' src={nadlan1} alt="nadlan" /> */}
         {/* <p>ברוכים הבאים לחברת לינק אשר מתמחה בתיווך הנכסים.
 
           בה אנו עוזרים להפוך את החלום שלכם לבעלות על בית למציאות.

@@ -8,23 +8,4 @@ body {
    color: black;
  }
 
- .header{
-  margin-top: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
- }
-
- /* .logo{
-  height: 180px;
-  width: 240px;
- } */
- .yam{
-  margin-top: -70px;
-  height: 450px;
-  width: 80%;
- } 
- .nadlan{
-  height: 200px;
- }
+ 

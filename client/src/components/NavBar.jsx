@@ -10,10 +10,10 @@ export default function NavBar() {
     <nav className='nav'> 
       <ul>
         <li> 
-          <Link to='/AgentProfile'>איזור אישי לסוכנים</Link> 
+          <Link to='/Login'>איזור אישי לסוכנים</Link> 
         </li> 
         <li> 
-          <Link to='/'>עמוד הבית</Link>
+          <Link to='/HomePage'>עמוד הבית</Link>
         </li> 
       </ul>
       <ul className='icons'>
@@ -27,7 +27,7 @@ export default function NavBar() {
           <Link to='/'>{<WhatsAppIcon/>}</Link> 
         </li> 
         <Link to='/'><img className='logo' src={logo} alt="logo" /></Link>
-      </ul> 
+      </ul>
     </nav>
   )
 }

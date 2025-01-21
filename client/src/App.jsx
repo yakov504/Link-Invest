@@ -1,18 +1,19 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import './App.css'
-import Header from './components/Header'
-import AgentProfile from './components/AgentProfile';
+import HomePage from './components/HomePage/HomePage';
+import NavBar from './components/Navbar';
+import Login from './components/Login';
 // import Footer from './components/Footer'
 
 function App() {
 
   return (
     <div>
-      <Header/>
-      {/* <Footer/> */}
+      <NavBar/>
       <Routes>
-        <Route path = 'AgentProfile' element = {<AgentProfile/>}/>
+        <Route path = 'Login' element = {<Login/>}/>
+        <Route path = 'HomePage' element = {<HomePage/>}/>
       </Routes>
     </div>
   )

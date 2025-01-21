@@ -1,5 +1,5 @@
-const fs = require('fs')
 const Users = require('../modules/usersModuls')
+// const validator = require('validator')
 
 exports.getAllUsers =async ( req, res ) =>{
    try{
@@ -22,7 +22,7 @@ exports.getAllUsers =async ( req, res ) =>{
 
 exports.getUser = async ( req, res ) =>{
    try{
-      user = await Users.findById(req.params.id);
+      const user = await Users.findById(req.params.id);
       res.status(200).json({
          status: 'success', 
          data: {

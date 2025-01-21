@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
 const slugify =  require('slugify')
 
 const usersSchema = new mongoose.Schema({
@@ -7,9 +8,15 @@ const usersSchema = new mongoose.Schema({
       required: [true, 'לכל משתמש חייב להיות שם'],
    },
 
-   מייל:{
+   email:{
       type: String,
       required: [true, 'חייב להיות מייל'],
+      unique: true,
+      lowercase: true,
+      validate: {
+         validator: validator.isEmail,
+         message: 'המייל שסיפקת לא תקין'
+     }
    },
 
    rule: {

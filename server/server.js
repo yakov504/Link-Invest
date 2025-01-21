@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 
 const agentsRouter = require('./routes/agentsRouter');
+const userRouter = require('./routes/usersRouter')
 dotenv.config({path:'./config.env'})
 
 /// SERVER /// 
@@ -26,6 +27,7 @@ mongoose.connect(process.env.DATABASE_MONGO_CONNECTION || process.env.DATABASE_L
 
 /// ROUTER ///
 app.use('/api/v1/agents', agentsRouter)
+app.use('/api/v1/users', userRouter)
 
 // PORT CONNECTION // 
 const port = process.env.PORT || 3000;

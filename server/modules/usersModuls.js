@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const bcrypt = require('bcryptjs')
 const slugify =  require('slugify')
 
 const usersSchema = new mongoose.Schema({
-   שם: {
+   name: {
       type: String,
       required: [true, 'לכל משתמש חייב להיות שם'],
    },
@@ -28,19 +29,39 @@ const usersSchema = new mongoose.Schema({
      }
    },
 
-   מספר_טלפון:{
-      type: Number,
+   phone_number:{
+      type: String,
       required: [true,' לכל אחד חייב להיות מספר טלפון']
    },
 
-   סיסמה: {
+   password: {
       type: String,
-      required: [true,' חסר סיסמה'],
-      minLength: [8, ' סיסמה חייבת להחיל לפחות 8 תווים']     
+      required: [true,' חסר password'],
+      minLength: [8, ' password חייבת להחיל לפחות 8 תווים'],
+      select: false,
+      /// this is works only Create and save !! ///
+      // validate: {
+         // validator: function(el){
+      //       return el === this.סיסמה
+      //    }
+      // }     
    }
    
-})
+});
 
-const Users = mongoose.model('Users', usersSchema);
+usersSchema.pre('save', async function(next) {
+   /// מריץ את הפונקציה רק אם הסיסמה שונתה ///
+   if(!this.isModified ('password')) return next();
 
-module.exports = Users;
+   /// hash the password with cost of 12 ///
+   this.password = await bcrypt.hash(this.password, 12);
+   next()
+});
+
+usersSchema.methods.correctPassword = async function(candidatePassword, userPassword){
+   return await bcrypt.compare(candidatePassword, userPassword);
+}
+
+const User = mongoose.model('Users', usersSchema);
+
+module.exports = User;

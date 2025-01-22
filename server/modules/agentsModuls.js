@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const slugify =  require('slugify')
 
 const agentsSchema = new mongoose.Schema({
-   שם:{
+   name:{
       type: String,
       required: [true, 'agent must have name'],
    },

@@ -17,16 +17,22 @@ export default function NavBar() {
         </li> 
       </ul>
       <ul className='icons'>
+        <li>
+          <a href="https://www.facebook.com/profile.php?id=100091821998393&mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer">
+            <FacebookIcon />
+          </a>
+        </li>
         <li> 
-          <Link to='/'>{<FacebookIcon/>}</Link>
+          <a href="https://www.instagram.com/linkinvests/" target="_blank" rel="noopener noreferrer">
+            <InstagramIcon />
+          </a>
         </li> 
         <li> 
-          <Link to='/'>{<InstagramIcon/>}</Link> 
+          <a href="https://api.whatsapp.com/send/?phone=528000284&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+            <WhatsAppIcon />
+          </a>
         </li> 
-        <li> 
-          <Link to='/'>{<WhatsAppIcon/>}</Link> 
-        </li> 
-        <Link to='/'><img className='logo' src={logo} alt="logo" /></Link>
+        <Link to='/HomePage'><img className='logo' src={logo} alt="logo" /></Link>
       </ul>
     </nav>
   )

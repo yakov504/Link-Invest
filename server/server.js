@@ -12,14 +12,22 @@ const app = express();
 
 // Error handling middleware 
 app.use(express.json())
-app.use(express.static(`${__dirname}/public`))
 app.use(cors())
+app.use(express.static(`${__dirname}/public`))
 
 app.use((err, req, res, next) => { 
    res.status(err.status || 500).json({
        status: 'fail', message: err.message, errors: err.errors || {} 
    }); 
 });
+
+app.use(( req, res ,next ) => {
+   req.requestTime = new Date().toISOString();
+   // console.log(req.headers);
+
+   next();
+   
+})
 
 /// DB CONNECTION ///
 mongoose.connect(process.env.DATABASE_MONGO_CONNECTION || process.env.DATABASE_LOCAL)

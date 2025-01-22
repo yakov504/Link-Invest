@@ -5,7 +5,6 @@ import HomePage from './components/HomePage/HomePage';
 import AgentProfile from './components/AgentProfile'
 import NavBar from './components/Navbar';
 import Login from './components/Login';
-// import Footer from './components/Footer'
 
 function App() {
 

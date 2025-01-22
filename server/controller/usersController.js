@@ -16,7 +16,8 @@ exports.getAllUsers = catchAsync(async ( req, res, next ) =>{
 })
 
 exports.getUser = catchAsync(async ( req, res ) =>{
-      const user = await Users.findById(req.params.id);
+      const user = await Users.findOne({email: req.params.email})
+      // const user = await Users.findById(req.params.id);
       res.status(200).json({
          status: 'success', 
          data: {

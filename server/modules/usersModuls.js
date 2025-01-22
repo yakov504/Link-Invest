@@ -45,8 +45,8 @@ const usersSchema = new mongoose.Schema({
       //       return el === this.סיסמה
       //    }
       // }     
-   }
-   
+   },
+   passwordChangedAt: Date
 });
 
 usersSchema.pre('save', async function(next) {
@@ -62,6 +62,18 @@ usersSchema.methods.correctPassword = async function(candidatePassword, userPass
    return await bcrypt.compare(candidatePassword, userPassword);
 }
 
+usersSchema.methods.changedPasswordAfter = function(JWTTimestamp){
+   if(this.passwordChangedAt){
+      const changedTimestamp = parseInt(
+         this.passwordChangedAt.getTime() / 1000,
+      10
+      );
+
+      console.log(this.passwordChangedAt, JWTTimestamp);
+      return JWTTimestamp < changedTimestamp;
+   }
+   return false
+}
 const User = mongoose.model('Users', usersSchema);
 
 module.exports = User;

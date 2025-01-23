@@ -1,4 +1,5 @@
 import React from 'react'
+import './Login.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -51,6 +52,6 @@ export default function Login() {
             <button type="submit">היכנס</button>
          </form>
       </div>
-    </div>
+   </div>
   )
 }

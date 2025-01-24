@@ -68,11 +68,14 @@
  }
  .footer__nav a:hover,
  .footer__nav a:active {
-   color: rgb(12, 150, 192);
+   /* color: rgb(12, 150, 192); */
+   color: rgba(24, 216, 152, 0.97);
  }
  .footer__copyright {
-   justify-self: end;
-   color: #999;
+  justify-self: center;
+  color: #999;
+  font-size: 15px;
+
  }
  @media only screen and (max-width: 50em) {
    .footer__copyright {
@@ -80,4 +83,94 @@
      font-size: 15px;
    }
  }
+
+ .list_of_characters{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+ }
+ .list_of_characters h1{
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  /* justify-content: center; */
+  align-items: center;
+  padding-top: 50px;
+ }
  
+ .characterList{
+  display: flex;
+  list-style-type: none;
+  flex-direction: column; 
+  /* flex-wrap: wrap;  */
+  background-color: rgba(12, 65, 65, 0.096);
+  height: 230px;
+  /* width: 180px; */
+  text-align: center;
+  margin: 85px 15px 50px 15px;
+}
+
+.characterList li{
+   align-items: center;
+   padding:10px 0px 10px 35px;
+ }
+.character_name{
+  transition: transform 0.5s ease, background-color 0.0s ease;
+  font-size: 22px;
+  cursor: pointer;
+
+}
+.character_name:hover{
+  transform: scale(1.1); 
+  color:rgba(11, 91, 64, 0.989);
+}
+  .characterList img{
+  /* align-items: center; */
+  margin-top: -80px;
+  margin-bottom: 25px;
+  margin-left: 42px;
+  height: 120px;
+  width: 110px;
+  border-radius: 130px;
+  box-shadow: 0px 0px 0px 12px white;
+  transition: margin-top 0.5s ease, background-color 0.1s ease;
+  cursor: pointer;
+ }
+
+ .characterList img:hover {
+  /* flex:block; */
+  margin-top: -90px; 
+  border: 4px solid rgba(12, 151, 105, 0.493);
+  /* transition: transform 0.3s ease, border 0.3s ease;  */
+}
+ /* .characterList {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 20px;
+  background-color: rgba(43, 161, 161, 0.344);
+  padding: 20px;
+  border-radius: 5px; */
+/* } */
+
+/* .characterList img {
+  display: block; 
+  margin: 0 auto; 
+  height: 120px;
+  width: 110px;
+  border-radius: 50%;
+} */
+
+/* @media (max-width: 700px) {
+  .characterList {
+    flex-direction: row; 
+    align-items: center;
+  }
+}
+
+@media (min-width: 450px) and (max-width: 900px) {
+  .characterList {
+    flex-wrap: wrap; 
+    justify-content: space-around;
+  }
+} */

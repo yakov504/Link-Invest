@@ -1,19 +1,21 @@
 import React from 'react'
 import './HomePage.css'
-import logo from '../../assets/image/link_logo.png'
-import nadlan1 from '../../assets/image/nadlan2.jpg'
-import yam from '../../assets/image/yam_LE_upscale_balanced_x4.jpg'
+import agentVideo from '../../assets/video/agentsVideo.mp4'
+import linkVideo from '../../assets/video/linkVideo.mp4'
 
 
 export default function Header() {
   return (
-    <div >
-      <div className='header'>
-        <img className='yam' src={yam} alt="logo" />
-        {/* <img className='logo' src={logo} alt="logo" /> */}
-        <h2>LINK INVEST - <br />שיווק, קנייה ומכירת נדל"ן</h2>
-        {/* <img className='nadlan' src={nadlan1} alt="nadlan" /> */}
-      </div>
+    <div className='header'>
+      <video className='video' loop autoPlay muted>
+        <source src={agentVideo} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      {/* <video className='video' loop autoPlay muted>
+        <source src={linkVideo} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video> */}
+      <h2>LINK INVEST - <br />שיווק, קנייה ומכירת נדל"ן</h2>
     </div>
   )
 }

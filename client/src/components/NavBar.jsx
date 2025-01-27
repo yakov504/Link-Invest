@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import'./NavBar.css'
 import logo from '../assets/image/link_logo.png'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
-export default function NavBar() {
+export default function NavBar(props) {
+
   return (
     <nav className='nav'> 
       <ul>

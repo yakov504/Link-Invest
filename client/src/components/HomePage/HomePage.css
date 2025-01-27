@@ -1,17 +1,35 @@
 .header{
-   /* margin-top: 70px; */
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
   }
  .video{
-  /* height: 800px; */
   width: 100%;
   margin-top: -87px;
  }
+
+ .options_buy_sell{
+  display: flex;
+  flex-direction: row;
+  border-width: 100%;
+ }
+
+ .options{
+  border: solid 1px;
+  height: 250px;
+  width: 200px;
+  margin-top: -15px;
+ }
+ /* h1{
+  color: white;
+  position: absolute;
+  bottom: 300px;
+  right:120px;
+  font-size: 20px;
+  z-index: 1000;
+ } */
   .footer {
-   /* background-color: #f7f7f7; */
    background-color: rgb(2, 2, 35);
    padding: 6rem 4rem 3rem 4rem;
    font-size: 1.4rem;

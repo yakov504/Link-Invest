@@ -20,6 +20,11 @@ const usersSchema = new mongoose.Schema({
      }
    },
 
+   image:{
+     type: String,
+     required: false,
+   },
+
    rule: {
       type: String,
       required: [true, 'לכל אחד חייב להיות תפקיד'],

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 .header{
    display: flex;
    flex-direction: column;
@@ -8,6 +10,46 @@
   width: 100%;
   margin-top: -87px;
  }
+ 
+ .video-overlay {
+  position: absolute;
+  top: 25%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+  /* font-family: Arial, sans-serif; */
+}
+
+.video-overlay h1{
+  font-size: 45px;
+  font-family: "Sora", serif;
+  width: 300px;;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  text-shadow: 3px 3px 6px rgb(0, 0, 0);
+
+}
+
+ h1::after{
+  content: ""; 
+  position: absolute;
+  left: 0;
+  bottom: 0; 
+  width: 0; 
+  height: 2px; 
+  background-color: rgba(0, 0, 0, 0.277); 
+  transition: width 1s ease; 
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.482);
+}
+
+h1:hover::after {
+   /* transform: scale(1.2); */
+  width: 100%; /* Expand the line to full width on hover */
+  height: 100%;
+
+}
+
 
  .options_buy_sell{
   display: flex;
@@ -21,14 +63,8 @@
   width: 200px;
   margin-top: -15px;
  }
- /* h1{
-  color: white;
-  position: absolute;
-  bottom: 300px;
-  right:120px;
-  font-size: 20px;
-  z-index: 1000;
- } */
+
+
   .footer {
    background-color: rgb(2, 2, 35);
    padding: 6rem 4rem 3rem 4rem;

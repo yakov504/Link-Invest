@@ -1,5 +1,5 @@
 nav {
-   background: rgba(0, 0, 0, 0); /* Transparent background */
+   /* background: rgba(50, 125, 195, 0.726);  */
    color: white;
    display: flex;
    justify-content: space-between;
@@ -61,7 +61,7 @@ nav {
    width: 0; 
    height: 2px; 
    background-color: white; 
-   transition: width 0.3s ease; 
+   transition: width 1s ease; 
  }
 
  nav li:hover::after {

@@ -24,15 +24,19 @@ export default function HomePage() {
   return (
     <div>
       <div className='header'>
-        {/* <h1>LINK INVEST PRESENTS </h1> */}
         {/* <video className='video' loop autoPlay muted>
           <source src={agentVideo} type="video/mp4" />
           Your browser does not support the video tag.
-        </video> */}
+          </video> */}
         <video className='video' loop autoPlay muted>
           <source src={linkVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
+        <div className="video-overlay">
+          <h1>LINK INVEST</h1>
+          <h2>מציגים...</h2>
+          {/* <h2>PRESENTS...</h2> */}
+        </div>
         <div className='options_buy_sell'>
           {buy_sell_rent}
         </div>

@@ -9,7 +9,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 export default function NavBar(props) {
 
   return (
-    <nav className='nav'> 
+    <nav className={props.className}> 
       <ul>
         <li> 
           <Link to='/Login'>איזור אישי לסוכנים</Link> 

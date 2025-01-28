@@ -1,5 +1,4 @@
-nav {
-   /* background: rgba(50, 125, 195, 0.726);  */
+.nav {
    color: white;
    display: flex;
    justify-content: space-between;
@@ -12,6 +11,10 @@ nav {
    left: 0;
    z-index: 1000; 
    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+ }
+
+ .nav.scrolled{
+   background:  rgb(2, 2, 35); 
  }
  
 .logo{

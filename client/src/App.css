@@ -5,8 +5,11 @@ body {
    flex-direction: column;
    justify-content:center;
    align-items: center;
-   background-color: rgb(255, 255, 255);
-   color: black;
- }
+   /* background-color: rgb(255, 255, 255); */
+    background: rgb(2,0,36);
+    background: linear-gradient(0deg,  rgb(2, 2, 35) 0%, rgb(6, 51, 71) 50%,  rgb(2, 2, 35) 100%);
+    color: black;
+    margin: 0;
+  }
 
  

@@ -1,35 +1,44 @@
-import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom';
-import './App.css'
-import './index.css'
+import { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import './App.css';
+import './index.css';
 import HomePage from './components/HomePage/HomePage';
-import AgentProfile from './components/AgentProfile'
+import AgentProfile from './components/AgentProfile';
 import NavBar from './components/NavBar';
 import Login from './components/Login';
+import BuySellRent from './components/HomePage/BuySellRent'
 
-function App() {
-  // const location = useLocation();
-  // const [navBarClass, setNavBarClass] = useState('nav');
+export default function App() {
+  const location = useLocation(); 
+  const [isScroll, setIsScroll] = useState(false);
+  const [navClass, setNavClass] = useState('nav');
 
-  // useEffect(() => {
-  //   if (location.pathname === '/HomePage') {
-  //     setNavBarClass('nav'); // Set to 'nav' when on HomePage
-  //   } else {
-  //     setNavBarClass('nav_bar'); // Set to 'nav_bar' for other pages
-  //   }
-  // }, [location.pathname]); // Re-run the effect when the path changes
+  useEffect(() => {
+    if (location.pathname === '/HomePage') {
+      const handleScroll = () => {
+        if (window.scrollY > 390) {
+          setNavClass('nav scrolled');
+        } else {
+          setNavClass('nav');
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    } else {
+      setNavClass('nav scrolled');
+    }
+  }, [location.pathname]);
 
   return (
     <div>
-      <NavBar/>
+      <NavBar className={navClass} />
       <Routes>
-        <Route path = 'Login' element = {<Login/>}/>
-        <Route path = 'AgentProfile' element = {<AgentProfile/>}/>
-        <Route path = 'HomePage' element = {<HomePage/>}/>
-        {/* {<Route path = 'HomePage' element = {<HomePage/>}/> ? navBarClass : handleNavBar()} */}
+        <Route path="/Login" element={<Login />} />
+        <Route path="/AgentProfile" element={<AgentProfile />} />
+        <Route path="/HomePage" element={<HomePage />} />
+        <Route path='/BuySellRent' element={<BuySellRent/>}/>
       </Routes>
     </div>
-  )
+  );
 }
-
-export default App

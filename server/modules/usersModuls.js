@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
@@ -25,13 +26,11 @@ const usersSchema = new mongoose.Schema({
      required: false,
    },
 
-   rule: {
+   role: {
       type: String,
       required: [true, 'לכל אחד חייב להיות תפקיד'],
-      enum: {
-         values: [ 'admin', 'agent', 'user' ],
-         message: 'זה חייב להיות admin או agent או user '
-     }
+      enum: [ 'admin', 'agent', 'user' ],
+      default: 'agent'
    },
 
    phone_number:{
@@ -51,7 +50,10 @@ const usersSchema = new mongoose.Schema({
       //    }
       // }     
    },
-   passwordChangedAt: Date
+   passwordChangedAt: Date,
+   passwordResetToken: String,
+   passwordResetExpires: Date
+
 });
 
 usersSchema.pre('save', async function(next) {
@@ -79,6 +81,20 @@ usersSchema.methods.changedPasswordAfter = function(JWTTimestamp){
    }
    return false
 }
-const User = mongoose.model('Users', usersSchema);
+
+usersSchema.methods.createPasswordResetToken = function(){
+   const resetToken = crypto.randomBytes(32).toString('hex');
+
+   this.passwordResetToken = crypto
+   .createHash('sha256')
+   .update(resetToken)
+   .digest('hex')
+
+   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+   return resetToken;
+}
+
+const User = mongoose.model('User', usersSchema);
 
 module.exports = User;

@@ -7,11 +7,15 @@ const router = express.Router();
 router.post('/signUp', authController.signUp)
 router.post('/login', authController.login)
 
+router.post('/forgotPassword', authController.forgotPassword)
+router.patch('/resetPassword/:token', authController.resetPassword)
+
 router.route('/').get(usersController.getAllUsers)
 .post(usersController.createUser);
 
 router.route('/:id').get(usersController.getUser)
 .patch(usersController.updateUser)
-.delete(usersController.deleteUser)
+.delete(authController.protect,authController.restrictTo('admin'),
+   usersController.deleteUser)
 
 module.exports = router

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Footer from './Footer'
 import './HomePage.css'
 
+// import sell from '../../assets/image/haifaNghit.jpg'
 import sell from '../../assets/image/sell.jpg'
 import buy from '../../assets/image/buy1.jpg'
 import rent from '../../assets/image/rent.jpg'
@@ -30,21 +31,22 @@ export default function HomePage() {
   return (
     <div>
       <div className='header'>
-    
         <video className='video' loop autoPlay muted>
           <source src={linkVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        {/* <div className="video-overlay">
-          <h1>LINK INVEST</h1>
-          <h2>מציגים...</h2>
-        </div> */}
+        <div className='welcomeH'>
+          <h1>WELCOME TO THE</h1>
+          {/* <h3></h3> */}
+          <h2>NEW FUTURE</h2>
+        </div>
         <div className='options_buy_sell'>
           {buy_sell_rent}
         </div>
         <div className='whoWeAre'>
           <div className='whoText'>
-            <h2>?WHO WE ARE</h2>
+            <h2>WHO WE ARE</h2>
+            {/* <h2>מי אנחנו</h2> */}
             <div class="company-intro">
               <p>
                 <span class="highlight">אנחנו חברת לינק!</span><br />
@@ -69,7 +71,9 @@ export default function HomePage() {
               <p>
                 <strong>צרו קשר עוד היום</strong> או בקרו במשרדינו. נשמח לעזור לכם למצוא את בית חלומותיכם! 
               </p>
-              {/* <button className='contactBtn'> צור איתנו קשר!</button> */}
+              <button className='contactBtn' 
+                 onClick={() => window.location.href = 'tel:+972528000284'}>
+                 צור איתנו קשר!</button>
             </div>
           </div>
           <video className='agentsVideo' loop autoPlay muted>

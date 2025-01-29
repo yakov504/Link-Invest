@@ -8,13 +8,61 @@
   }
 
   /* vidoe */
- .video{
+ /* .video{
   width: 100%;
-  object-fit: cover; 
+  object-fit: cover transparent;
+  opacity: 0.2; 
+  border-image-source: linear-gradient(0deg,transparent,opacity:1.0,0.2,transparent);
   margin-top: -87px;
+  border: solid 1px transparent;
+  border-top: solid 2px white;
+  border-bottom: solid 2px white;
+  border-image-source: linear-gradient(to right, transparent, white, white, transparent);
+  border-image-slice: 1;
+
+ } */
+
+ .video {
+  width: 100%;
+  object-fit: cover;
+  margin-top: -87px;
+  /* יצירת מעבר הדרגתי עם מסכה */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 30%, rgb(0, 0, 0) 70%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 0%, transparent);
+}
+
+.welcomeH{
+  width: 100%;
+  text-align: center;
+  flex-direction: column;
+  margin-top: -45px;
+  /* border: solid 1px transparent; */
+  /* border-top: solid 2px white; */
+  border-bottom: solid 2px #6cd3ef;
+  border-image-source: linear-gradient(to right, transparent, white, white, transparent);
+  border-image-slice: 1;
+}
+
+ .welcomeH h1{
+  font-size: 70px;
+  font-family: "Sora", serif;
+  /* width: 300px; */
+  font-weight: 200;
+  color: white;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.448);
 
  }
- 
+
+ .welcomeH h2{
+  margin-top: -40px;
+  font-size: 50px;
+  font-family: "Sora", serif;
+  font-weight: 500;
+  /* color: rgba(141, 138, 147, 0.76); */
+  color: rgba(105, 232, 251, 0.338);
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.448);
+ }
+
  /* .video-overlay {
   position: absolute;
   top: 25%;
@@ -57,17 +105,17 @@
 
  .options_buy_sell{
   display: flex;
-  margin-top: 70px;
-  margin-bottom: 70px;
+  margin-top: 120px;
+  margin-bottom: 20px;
   flex-direction: row;
   border-width: 100%;
  }
 
  .options{
   /* border: solid 2px; */
-  height: 220px;
-  width: 220px;
-  /* border-radius: 150px; */
+  height: 300px;
+  width: 280px;
+  border-radius: 8px;
   margin-left: 20px;
   margin-right: 20px;
  }
@@ -76,9 +124,15 @@
   /* opacity: 0.9; */
   width: 100%;
   height: 100%;
-  /* border-radius: 150px; */
+  border-radius: 8px;
+  transition: color 0.3s ease, background-color 0.3s ease;
 
  }
+
+ /* .options img:hover{
+  transform: scale(1.1); 
+
+ } */
 
  .options h2{
   text-align: center;
@@ -90,16 +144,17 @@
   font-weight: 500;
   padding-top:3px ;
   padding-bottom:3px ;
-  background-color: rgba(2, 2, 35, 0.811);
-  border-radius: 30px;
+  /* background-color: rgba(2, 2, 35, 0.811); */
+  border: solid 1px white;
+  border-radius: 2px 30px 2px 30px;
   transition: color 0.3s ease, background-color 0.3s ease;
 
  }
-
-.options h2:hover{
-  transform: scale(1.1);
+ .options h2:hover{
+  border: solid 1px #6cd3ef;
+  /* transform: scale(1.1);  */
   cursor: pointer;
-}
+ }
 
 .whoWeAre {
   display: flex; 
@@ -109,7 +164,12 @@
   margin-bottom: 60px; 
   width: 99%; 
   padding: 20px; 
-  /* border: solid 1px; */
+  border: solid 1px transparent;
+  border-top: solid 2px white;
+  border-bottom: solid 2px white;
+  border-image-source: linear-gradient(to right, transparent, white, white, transparent);
+  border-image-slice: 1;
+  /* border-radius: 2px 30px 2px 30p; */
   /* background-color: #938d8d1f; */
   box-sizing: border-box;
 }
@@ -122,6 +182,38 @@
   margin-right: 20px;
   width: 50%;
 }
+
+.whoWeAre h2 {
+  font-size: 60px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.46);
+  font-family: "Sora", serif;
+  font-weight: 100;
+  color: rgba(160, 152, 152, 0.696);
+  text-align: center;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  margin: 0 10px;
+  padding-bottom: 5px;
+  align-items: center;
+  position: relative; 
+  display: inline-block;
+ 
+}
+
+.whoWeAre h2::after {
+  content: ""; 
+  position: absolute;
+  left: 0;
+  bottom: 0; 
+  width: 0; 
+  height: 2px; 
+  background-color: white; 
+  transition: width 1s ease; 
+}
+
+.whoWeAre h2:hover::after {
+  width: 100%; /* Expand the line to full width on hover */
+}
+
 
 .company-intro {
   font-family: 'Assistant', sans-serif;
@@ -143,7 +235,9 @@
 .company-intro .highlight {
   font-size: 22px;
   font-weight: 700;
-  color: #0056b3;
+  color: #6cd3ef;
+  /* color: #0056b3; */
+
 }
 
 .company-intro ul {
@@ -156,34 +250,37 @@
   font-size: 16px;
 }
 
-.whoWeAre h2 {
-  font-size: 60px;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.46);
-  font-family: "Sora", serif;
-  font-weight: 600;
-  text-align: center;
- 
-}
-
 .whoWeAre .agentsVideo {
   height: 550px;
   width: 50%;
   object-fit: cover; 
-  /* box-shadow: 4px 3px 6px ; */
-  /* margin-left: 55px; */
+  /* יצירת מעבר הדרגתי עם מסכה */
+  -webkit-mask-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 1) 30%, rgb(0, 0, 0) 70%, transparent);
+  mask-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 80%, transparent);
 }
 
 .contactBtn{
- border: none;
- margin-top: 40px;
- margin-bottom: 40px;
- background-color: rgb(185, 184, 252);
- font-family: "Fredoka", serif;
- border-radius: 30px;
- font-size: 21px;
- font-weight: 500;
- height: 80px;
- width: 160px;
+  text-align: center;
+  /* font-family: "Fredoka", serif; */
+  font-family: "Secular One", serif;
+  color: white;
+  font-size: 25px;
+  font-weight: 100;
+  padding-top:3px ;
+  padding-bottom:3px ;
+  width: 250px;
+  /* background-color: none; */
+  background-color: transparent;
+  border: solid 1px white;
+  border-radius: 2px 30px 2px 30px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.contactBtn:hover{
+  border-color:#6cd3ef ;
+  cursor: pointer;
+
 }
 
 

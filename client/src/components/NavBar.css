@@ -15,6 +15,11 @@
 
  .nav.scrolled{
    background:  rgb(2, 2, 35); 
+   border: solid 1px transparent;
+   /* border-top: solid 2px white; */
+   border-bottom: solid 2px #6cd3ef;
+   border-image-source: linear-gradient(to right, transparent, #6cd3ef, #6cd3ef, transparent);
+   border-image-slice: 1;
  }
  
 .logo{
@@ -56,6 +61,7 @@
    position: relative; 
    display: inline-block;
  }
+ 
  .nav li::after {
    content: ""; 
    position: absolute;

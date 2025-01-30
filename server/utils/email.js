@@ -19,8 +19,9 @@ const sendEmail = async options => {
          await transporter.verify();
          console.log("✅ Email server is ready to take messages");
 
-         // if i went use in gmail activate in gmail 'les secure app' option
-      //2.defind the email options
+       // if i went use in gmail activate in gmail 'les secure app' option
+     
+       //2.defind the email options
       const mailOption = {
          from: 'Link Invest development team <yydevlink@gmail.com>',
          to: options.email,

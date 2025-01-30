@@ -1,35 +1,97 @@
-.loginContainer{
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.loginContainer {
+   position: absolute;
+   top: 50%;
+   left: 50%; 
+   transform: translate(-50%, -50%);
    display: flex;
    flex-direction: column;
-   justify-content:center;
+   justify-content: center;
    align-items: center;
-   text-align: center;
-   border:none;
    height: 420px;
    width: 510px;
    min-width: 300px;
    min-height: 350px;
-   margin-top: 150px;
-   margin-left: 50%;
-   margin-right: 50%; 
-   margin: 150px 33% 50px -50%;
-   border-radius: 5px;
-   box-shadow: 0px 2px 20px 0px rgb(119, 110, 110);
+   border: solid 1px white;
+   border-radius: 2px 30px 2px 30px;
+   font-family: "Secular One", serif;
+
 }
+
 .head{
-   font-size: 17px;
-   color: rgba(3, 10, 54, 0.707);
-   /* padding: 0px 0px 40px 80px; */
+   font-size: 20px;
+   color:  rgba(160, 152, 152, 0.696);
+   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.521);
+
 }
 .inputs{
-   padding-top: 15px;
-   /* gap: 120; */
+   margin-top: 28px;
+   /* display: flex; */
+   /* flex-direction: column; */
+   gap: 12px;
+ 
 
 }
 .input{
-   border: 18px;
-   height: 40px;
+   /* border: 18px; */
+   /* height: 30px; */
+   width: 220px;
+   display: flex;
+   align-items: center;
+   margin-top: 12px;
+   margin-bottom: 10px;
+   /* margin: auto; */
    width: 200px;
-   border-radius: 15px;
+   height: 35px;
+   /* border-radius: 6px; */
 
-} 
+}
+.input input{
+   height: 35px;
+   width: 100%;
+   border: none;
+   color: #292626;
+   font-size: 15px;
+ } 
+
+.loginBtn{
+   margin-top: 10px;
+   color: white;
+   font-size: 18px;
+   font-weight: 100;
+   padding-top:4px ;
+   padding-bottom:4px ;
+   width: 180px;
+   background-color: transparent;
+   border: solid 1px white;
+   border-radius: 2px 30px 2px 30px;
+   transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.loginBtn:hover{
+   border-color:#6cd3ef ;
+   cursor: pointer;
+ 
+ }
+
+ .forgotPassword{
+   margin-top: 15px;
+   color: #ffc400;
+ }
+
+ .forgotPassword:hover{
+   color:#6cd3ef ;
+   cursor: pointer;
+ 
+ }
+
+/* @media only screen and (max-width: 45rem) {
+   .loginContainer {
+      display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-items: center;
+     margin-left: 50%;
+   }
+ } */

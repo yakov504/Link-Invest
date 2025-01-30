@@ -49,7 +49,10 @@ export default function Login() {
                {/* {errors.password && <span>{errors.password}</span>} */}
             </div>  
             {error && <p className="error-message">{error}</p>}
-            <button type="submit">היכנס</button>
+            <div className='forgotPassword'>
+               <span>שכחתי סיסמה</span>
+            </div>
+            <button className='loginBtn' type="submit">היכנס</button>
          </form>
       </div>
    </div>

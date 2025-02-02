@@ -256,7 +256,7 @@
   object-fit: cover; 
   /* יצירת מעבר הדרגתי עם מסכה */
   -webkit-mask-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 1) 30%, rgb(0, 0, 0) 70%, transparent);
-  mask-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 80%, transparent);
+  mask-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 80%, transparent);
 }
 
 .contactBtn{

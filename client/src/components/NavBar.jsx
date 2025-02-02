@@ -11,9 +11,12 @@ export default function NavBar(props) {
   return (
     <nav className={props.className}> 
       <ul>
-        <li> 
-          <Link to='/Login'>איזור אישי לסוכנים</Link> 
+      <li> 
+          <Link to='/AgentProfile'>איזור אישי לסוכנים</Link> 
         </li> 
+        {/* <li> 
+          <Link to='/Login'>איזור אישי לסוכנים</Link> 
+        </li>  */}
         <li> 
           <Link to='/HomePage'>עמוד הבית</Link>
         </li> 

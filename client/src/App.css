@@ -1,12 +1,13 @@
 body {
    direction: rtl;
    text-align: right;
+   color: white;
    font-family: 'Assistant', sans-serif;
    flex-direction: column;
    justify-content:center;
    align-items: center;
    background: rgb(2,0,36);
-  background: linear-gradient(0deg, rgb(2, 2, 35) 0%, rgb(6, 51, 71) 50%, rgb(2, 2, 35) 100%);
+   background: linear-gradient(0deg, rgb(2, 2, 35) 0%, rgb(6, 51, 71) 50%, rgb(2, 2, 35) 100%);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

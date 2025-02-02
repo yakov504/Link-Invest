@@ -6,14 +6,13 @@ import './App.css';
 import './index.css';
 
 import HomePage from './components/HomePage/HomePage';
-import AgentProfile from './components/AgentProfile';
+import AgentProfile from './components/Profile/AgentProfile';
 import NavBar from './components/NavBar';
 import Login from './components/Login';
 import BuySellRent from './components/HomePage/BuySellRent'
 
 export default function App() {
   const location = useLocation(); 
-  const [isScroll, setIsScroll] = useState(false);
   const [navClass, setNavClass] = useState('nav');
   // const [ user, setUser ] = useState(null)
   // const [ loading, setLoading ] = useState(true);

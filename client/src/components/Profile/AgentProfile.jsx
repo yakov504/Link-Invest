@@ -1,44 +1,31 @@
-import { useEffect, useState } from 'react' 
-import axios from 'axios'
-import './Profile.css'
+import './Profile.css';
+import { UserContext } from '../../context/UserContext';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AgentProfile() {
-  // const [ user, setUser ] = useState(null)
-  // const [ loading, setLoading ] = useState(true);
+  const navigate = useNavigate();
+  const { user, loading } = useContext(UserContext);
 
-  // useEffect(() => {
-  //   const fetchUserDate = async () => {
-  //     try{
-  //       const token = localStorage.getItem('token');
-  //       if(!token){
-  //         setLoading(false)
-  //         console.log(token,user);
-          
-  //         return;
-  //       }
-  //       const res = await axios.get('http://127.0.0.1:3000/api/v1/users/logme/:name', {
-  //         headers: {Authorization: `Beares ${token}`},
-  //       })
-  //       setUser( res.data.data.user);
-  //     }catch( err ){
-  //       console.log('error fetching user',err);
-  //     } finally{
-  //       setLoading(false)
-  //     }
-  //   };
-  //   fetchUserDate();
-  // },[])
-
-  // if(loading) return <p>Loading...</p>
-  // if(!user) return <p>you are not logged in.</p>
-
+  // אם המשתמש לא מחובר, ננווט לדף ההתחברות
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/login');
+    }
+  }, [loading, user, navigate]);
 
   return (
-    <div className='agentProfile'>
-      <h1>ברוכים הבאים, yakov!</h1>
-      <p>Email: </p>
-      <p>Phone Number: </p>
-      <p>Role: </p>
+    <div className="agentProfile">
+      {loading ? (
+        <p>Loading...</p>
+      ) : user ? (
+        <>
+          <h1>ברוכים הבאים, {user.name}!</h1>
+          <p>Email: {user.email}</p>
+          <p>Phone Number: {user.phone}</p>
+          <p>Role: {user.role}</p>
+        </>
+      ) : null}
     </div>
-  )
+  );
 }

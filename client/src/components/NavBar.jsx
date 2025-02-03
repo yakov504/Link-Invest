@@ -1,19 +1,29 @@
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import'./NavBar.css'
+import { UserContext } from '../context/UserContext';
 import logo from '../assets/image/link_logo.png'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 export default function NavBar(props) {
+  const { user, loading } = useContext(UserContext);
+
+  // useEffect(() => {
+  //   if (!loading && !user) {
+  //     navigate('/login');
+  //   }
+  // }, [loading, user, navigate]);
 
   return (
     <nav className={props.className}> 
       <ul>
-      <li> 
-          <Link to='/AgentProfile'>איזור אישי לסוכנים</Link> 
-        </li> 
+        <li>
+          <Link to={user ? '/AgentProfile' : '/Login'}>
+            איזור אישי לסוכנים
+          </Link>
+        </li>
         {/* <li> 
           <Link to='/Login'>איזור אישי לסוכנים</Link> 
         </li>  */}

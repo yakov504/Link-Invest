@@ -1,16 +1,16 @@
 const fs = require('fs')
-const Agents = require('../modules/agentsModuls');
+const Indicator = require('../modules/indicatorsModuls');
 // const { Agent } = require('http');
 
-exports.getAllAgents =async ( req, res ) =>{
+exports.getAllIndicators =async ( req, res ) =>{
    try{
-      const agents = await Agents.find();
+      const indicator = await Indicator.find();
 
       res.status(200).json({
          status: 'success',
-         results: agents.length,
+         results: indicator.length,
          data:{
-            agents
+            Indicator
          }
       })
    } catch(err){
@@ -21,13 +21,13 @@ exports.getAllAgents =async ( req, res ) =>{
    }
 }
 
-exports.getAgent = async ( req, res ) =>{
+exports.getIndicator = async ( req, res ) =>{
    try{
-      agent = await Agents.findById(req.params.id);
+      indicator = await Indicator.findById(req.params.id);
       res.status(200).json({
          status: 'success', 
          data: {
-            agent
+            indicator
          }
       })
    }catch(err) {
@@ -38,14 +38,14 @@ exports.getAgent = async ( req, res ) =>{
    }   
 }
 
-exports.createAgent = async ( req, res ) => {
+exports.createIndicator = async ( req, res ) => {
    try{
-      const newAgent = await Agents.create( req.body );
+      const newIndicator = await Indicator.create( req.body );
 
       res.status(201).json({
          status:'success',
          data: {
-            agents: newAgent
+            Indicator: newIndicator
          }
       });
    } catch (err) {
@@ -56,16 +56,16 @@ exports.createAgent = async ( req, res ) => {
    }
 };
 
-exports.updateAgent = async ( req, res ) => {
+exports.updateIndicator = async ( req, res ) => {
    try{
-      const agent = await Agents.findByIdAndUpdate(req.params.id , req.body, {
+      const indicator = await Indicator.findByIdAndUpdate(req.params.id , req.body, {
          new: true,
          runValidators: true
       });
       res.status(200).json({
          status:'success',
          data:{
-            agent:agent
+            indicator:indicator
          }
      })
    }catch(err){
@@ -76,9 +76,9 @@ exports.updateAgent = async ( req, res ) => {
    }
 };
 
-exports.deleteAgent = async ( req, res ) => {
+exports.deleteIndicatort = async ( req, res ) => {
    try{
-      await Agents.findByIdAndDelete(req.params.id)
+      await Indicator.findByIdAndDelete(req.params.id)
       res.status(204).json({
          status:'success',
          data: null

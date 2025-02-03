@@ -8,7 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
 
-const agentsRouter = require('./routes/agentsRouter');
+const indicatorsRouter = require('./routes/indicatorsRouter');
 const userRouter = require('./routes/usersRouter')
 dotenv.config({path:'./config.env'})
 
@@ -29,7 +29,6 @@ const limiter = rateLimit({
 app.use('/api', limiter)
 
 // Error handling middleware 
-
 /// Body parser, reading data from body into req.body
 app.use(express.json());
 
@@ -67,7 +66,7 @@ mongoose.connect(process.env.DATABASE_MONGO_CONNECTION || process.env.DATABASE_L
 });
 
 /// ROUTER ///
-app.use('/api/v1/agents', agentsRouter)
+app.use('/api/v1/indicators', indicatorsRouter)
 app.use('/api/v1/users', userRouter)
 
 /// HANDAL ERR ROUTER ///

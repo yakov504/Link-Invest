@@ -1,5 +1,5 @@
 const User = require('../modules/usersModuls')
-const Agents = require('../modules/agentsModuls');
+const Indicator = require('../modules/indicatorsModuls');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 // const validator = require('validator')
@@ -12,7 +12,7 @@ const filterObj = (obj, ...allowedField) =>{
 }
 
 exports.getAllUsers = catchAsync(async ( req, res, next ) =>{
-      const users = await Users.find();
+      const users = await User.find();
 
       res.status(200).json({
          status: 'success',
@@ -24,7 +24,7 @@ exports.getAllUsers = catchAsync(async ( req, res, next ) =>{
 })
 
 exports.getUser = catchAsync(async ( req, res ) =>{
-      const user = await Users.findOne({email: req.params.email})
+      const user = await User.findOne({email: req.params.email})
       // const user = await Users.findById(req.params.id);
       res.status(200).json({
          status: 'success', 

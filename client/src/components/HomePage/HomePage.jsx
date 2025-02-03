@@ -47,9 +47,9 @@ export default function HomePage() {
           <div className='whoText'>
             <h2>WHO WE ARE</h2>
             {/* <h2>מי אנחנו</h2> */}
-            <div class="company-intro">
+            <div className="company-intro">
               <p>
-                <span class="highlight">אנחנו חברת לינק!</span><br />
+                <span className="highlight">אנחנו חברת לינק!</span><br />
                 מומחים בתיווך נכסים, מחויבים להפוך את חלום הבית שלכם למציאות. 
               </p>
               <p>

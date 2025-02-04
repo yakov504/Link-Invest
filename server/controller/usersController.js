@@ -12,7 +12,8 @@ const filterObj = (obj, ...allowedField) =>{
 }
 
 exports.getAllUsers = catchAsync(async ( req, res, next ) =>{
-      const users = await User.find();
+      const users = await User.find()
+      // .populate('indicators');
 
       res.status(200).json({
          status: 'success',
@@ -24,7 +25,8 @@ exports.getAllUsers = catchAsync(async ( req, res, next ) =>{
 })
 
 exports.getUser = catchAsync(async ( req, res ) =>{
-      const user = await User.findOne({email: req.params.email})
+      const user = await User.findById(req.params.id)
+      // .populate('indicators')
       // const user = await Users.findById(req.params.id);
       res.status(200).json({
          status: 'success', 

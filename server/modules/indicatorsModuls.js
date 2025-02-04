@@ -33,13 +33,15 @@ const indicatorsSchema = new mongoose.Schema({
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },
-   agent: [
-      {
+   agent: {
          type: mongoose.Schema.ObjectId,
-         ref: 'User'
+         ref: 'User',
+         required: [true, 'indicator must belong to agent']
       }
-   ]
-
+   // {
+   //    toJson: {virtuals: true},
+   //    toObject: {virtuals: true}
+   // }
 });
 
 const Indicator = mongoose.model('Indicator', indicatorsSchema);
@@ -54,7 +56,7 @@ const Indicator = mongoose.model('Indicator', indicatorsSchema);
 indicatorsSchema.pre(/^find/, function(next) {
    this.populate({
       path:'agent',
-      selcet:'-_v -passwordChangeAt'
+      selcet:'name'
    })
    next();
 })

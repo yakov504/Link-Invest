@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const slugify =  require('slugify')
+const Indicator = require('./indicatorsModuls')
 
 const usersSchema = new mongoose.Schema({
    name: {
@@ -62,11 +63,27 @@ const usersSchema = new mongoose.Schema({
         message: 'Passwords are not the same!'
       }
     },
+
+   // indicators: 
+   //      [{
+   //          type: mongoose.Schema.ObjectId,
+   //          ref: 'Indicator',
+   //          // required: [true, 'indicator must belong to agent']
+   //       }],
+
    passwordChangedAt: Date,
    passwordResetToken: String,
    passwordResetExpires: Date
 
 });
+
+
+/// Virtual populate
+usersSchema.virtual('indicators', {
+   ref: 'Indicator',
+   foreignField: 'agent',
+   localField: '_id'
+})
 
 usersSchema.pre('save', async function(next) {
    /// מריץ את הפונקציה רק אם הסיסמה שונתה ///

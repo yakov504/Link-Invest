@@ -5,7 +5,11 @@ const AppError = require('../utils/appError');
 
 
 exports.getAllIndicators = catchAsync(async ( req, res ) =>{
-   const indicator = await Indicator.find();
+   const indicator = await Indicator.find().populate(
+      { 
+       path: 'agent',
+      //  selcet:'name role'
+      });
 
       res.status(200).json({
          status: 'success',

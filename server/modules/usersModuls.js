@@ -64,10 +64,10 @@ const usersSchema = new mongoose.Schema({
       }
     },
 
-   // indicators: 
+   // agentIndicators: 
    //      [{
    //          type: mongoose.Schema.ObjectId,
-   //          ref: 'Indicator',
+   //          ref: 'AgentIndicators',
    //          // required: [true, 'indicator must belong to agent']
    //       }],
 
@@ -77,10 +77,9 @@ const usersSchema = new mongoose.Schema({
 
 });
 
-
 /// Virtual populate
 usersSchema.virtual('indicators', {
-   ref: 'Indicator',
+   ref: 'Indicators',
    foreignField: 'agent',
    localField: '_id'
 })

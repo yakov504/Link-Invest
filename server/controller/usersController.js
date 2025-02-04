@@ -2,6 +2,8 @@ const User = require('../modules/usersModuls')
 const Indicator = require('../modules/indicatorsModuls');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const factory = require('./handlerFactory')
+
 // const validator = require('validator')
 
 const filterObj = (obj, ...allowedField) =>{
@@ -11,30 +13,10 @@ const filterObj = (obj, ...allowedField) =>{
    return newObj;
 }
 
-exports.getAllUsers = catchAsync(async ( req, res, next ) =>{
-      const users = await User.find()
-      // .populate('indicators');
-
-      res.status(200).json({
-         status: 'success',
-         results: users.length,
-         data:{
-            users
-         }
-      })
-})
-
-exports.getUser = catchAsync(async ( req, res ) =>{
-      const user = await User.findById(req.params.id)
-      // .populate('indicators')
-      // const user = await Users.findById(req.params.id);
-      res.status(200).json({
-         status: 'success', 
-         data: {
-            user
-         }
-      })
-})
+exports.getMe = (req , res, next) => {
+   req.params.id = req.user.id;
+   next();
+}
 
 exports.updateMe = catchAsync(async( req, res, next ) =>{
    //1.create err if user post password data
@@ -48,7 +30,7 @@ exports.updateMe = catchAsync(async( req, res, next ) =>{
       new: true,
       runValidators:true
    })
-
+   
    res.status(200).json({
       status: 'succes',
       data: {
@@ -58,34 +40,9 @@ exports.updateMe = catchAsync(async( req, res, next ) =>{
    //3.
 })
 
-exports.createUser = catchAsync(async ( req, res ) => {
-      const newUser = await User.create( req.body );
+exports.getAllUsers = factory.getAll(User)
+exports.getUser = factory.getOne(User)
+exports.createUser = factory.createOne(User)
+exports.updateUser = factory.updateOne(User)
+exports.deleteUser = factory.deleteOne(User)
 
-      res.status(201).json({
-         status:'success',
-         data: {
-            users: newUser
-         }
-      });
-})
-
-exports.updateUser = catchAsync(async( req, res ) => {
-      const user = await User.findByIdAndUpdate(req.params.id , req.body, {
-         new: true,
-         runValidators: true
-      });
-      res.status(200).json({
-         status:'success',
-         data:{
-            user: user
-         }
-     })
-})
-
-exports.deleteUser = catchAsync(async( req, res ) => {
-      await User.findByIdAndDelete(req.params.id)
-      res.status(204).json({
-         status:'success',
-         data: null
-     })
-})

@@ -1,73 +1,17 @@
-const fs = require('fs')
 const Indicator = require('../modules/indicatorsModuls');
-const catchAsync = require('../utils/catchAsync')
-const AppError = require('../utils/appError');
+// const catchAsync = require('../utils/catchAsync')
+// const AppError = require('../utils/appError');
+const User = require('../modules/usersModuls')
+const factory = require('./handlerFactory')
 
+exports.setUserIds = (req, res, next) => {
+   if(!req.body.user) req.body.user = req.user.id;
+   
+   next()
+}
 
-exports.getAllIndicators = catchAsync(async ( req, res ) =>{
-   const indicator = await Indicator.find().populate(
-      { 
-       path: 'agent',
-      //  selcet:'name role'
-      });
-
-      res.status(200).json({
-         status: 'success',
-         results: indicator.length,
-         data:{
-            indicator
-         }
-      })
-})
-
-exports.getIndicator = catchAsync(async ( req, res, next ) =>{
-   const indicator = await Indicator.findById(req.params.id).populate(
-         { 
-          path: 'agent',
-          selcet:'-_v -passwordChangeAt'
-         });
-
-   if(!indicator){
-      return next(AppError('no indicator with id ',404))
-   } 
-      res.status(200).json({
-         status: 'success', 
-         data: {
-            indicator
-         }
-      })
-})
-
-exports.createIndicator =  catchAsync(async ( req, res ) => {
-   const newIndicator = await Indicator.create( req.body );
-
-      res.status(201).json({
-         status:'success',
-         data: {
-            Indicator: newIndicator
-         }
-      });
-})
-
-exports.updateIndicator =  catchAsync(async ( req, res ) => {
-   const indicator = await Indicator.findByIdAndUpdate(req.params.id , req.body, {
-         new: true,
-         runValidators: true
-      });
-      res.status(200).json({
-         status:'success',
-         data:{
-            indicator:indicator
-         }
-     })
-})
-
-exports.deleteIndicatort =  catchAsync(async ( req, res ) => {
-   await Indicator.findByIdAndDelete(req.params.id)
-      res.status(204).json({
-         status:'success',
-         data: null
-     })
-      
-
-})
+exports.getAllIndicators = factory.getAll(Indicator, {path: 'agent', select: 'name role'})
+exports.getIndicator = factory.getOne(Indicator, {path: 'agent', select: 'name role'})
+exports.createIndicator = factory.createOne(Indicator)
+exports.updateIndicator = factory.updateOne(Indicator)
+exports.deleteIndicator = factory.deleteOne(Indicator)

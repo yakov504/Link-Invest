@@ -1,11 +1,8 @@
 const mongoose = require('mongoose')
-const slugify =  require('slugify')
+const slugify =  require('slugify');
+const User = require('./usersModuls');
 
-const agentsSchema = new mongoose.Schema({
-   name:{
-      type: String,
-      required: [true, 'agent must have name'],
-   },
+const indicatorsSchema = new mongoose.Schema({
 
    פגישות:{
       type: Number,
@@ -36,10 +33,31 @@ const agentsSchema = new mongoose.Schema({
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },
+   agent: [
+      {
+         type: mongoose.Schema.ObjectId,
+         ref: 'User'
+      }
+   ]
 
 });
 
-const Agents = mongoose.model('Agents', agentsSchema);
+const Indicator = mongoose.model('Indicator', indicatorsSchema);
+
+
+// indicatorsSchema.pre('save', async function(next){
+//    const agentPromises = this.agent.map(async id => User.findById(id))
+//    this.agent = await Promise.all(agentPromises);
+//    next()
+// })
+
+indicatorsSchema.pre(/^find/, function(next) {
+   this.populate({
+      path:'agent',
+      selcet:'-_v -passwordChangeAt'
+   })
+   next();
+})
 
 // const testAgent = new Agents({
 //    שם:"יעקוב",
@@ -58,4 +76,4 @@ const Agents = mongoose.model('Agents', agentsSchema);
    
 // })
 
-module.exports = Agents;
+module.exports = Indicator;

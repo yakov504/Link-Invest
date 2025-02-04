@@ -1,46 +1,41 @@
 const fs = require('fs')
 const Indicator = require('../modules/indicatorsModuls');
-// const { Agent } = require('http');
+const catchAsync = require('../utils/catchAsync')
+const AppError = require('../utils/appError');
 
-exports.getAllIndicators =async ( req, res ) =>{
-   try{
-      const indicator = await Indicator.find();
+
+exports.getAllIndicators = catchAsync(async ( req, res ) =>{
+   const indicator = await Indicator.find();
 
       res.status(200).json({
          status: 'success',
          results: indicator.length,
          data:{
-            Indicator
+            indicator
          }
       })
-   } catch(err){
-      res.status(404).json({
-         status: 'fail',
-         message: err
-      });
-   }
-}
+})
 
-exports.getIndicator = async ( req, res ) =>{
-   try{
-      indicator = await Indicator.findById(req.params.id);
+exports.getIndicator = catchAsync(async ( req, res, next ) =>{
+   const indicator = await Indicator.findById(req.params.id).populate(
+         { 
+          path: 'agent',
+          selcet:'-_v -passwordChangeAt'
+         });
+
+   if(!indicator){
+      return next(AppError('no indicator with id ',404))
+   } 
       res.status(200).json({
          status: 'success', 
          data: {
             indicator
          }
       })
-   }catch(err) {
-      res.status(404).json({
-         status: 'fail',
-         messege: err.message
-       })
-   }   
-}
+})
 
-exports.createIndicator = async ( req, res ) => {
-   try{
-      const newIndicator = await Indicator.create( req.body );
+exports.createIndicator =  catchAsync(async ( req, res ) => {
+   const newIndicator = await Indicator.create( req.body );
 
       res.status(201).json({
          status:'success',
@@ -48,17 +43,10 @@ exports.createIndicator = async ( req, res ) => {
             Indicator: newIndicator
          }
       });
-   } catch (err) {
-      res.status(400).json({
-         status:'fail',
-         message: err 
-      })
-   }
-};
+})
 
-exports.updateIndicator = async ( req, res ) => {
-   try{
-      const indicator = await Indicator.findByIdAndUpdate(req.params.id , req.body, {
+exports.updateIndicator =  catchAsync(async ( req, res ) => {
+   const indicator = await Indicator.findByIdAndUpdate(req.params.id , req.body, {
          new: true,
          runValidators: true
       });
@@ -68,26 +56,14 @@ exports.updateIndicator = async ( req, res ) => {
             indicator:indicator
          }
      })
-   }catch(err){
-      res.status(404).json({
-            status:'fail',
-            messege: err
-      })
-   }
-};
+})
 
-exports.deleteIndicatort = async ( req, res ) => {
-   try{
-      await Indicator.findByIdAndDelete(req.params.id)
+exports.deleteIndicatort =  catchAsync(async ( req, res ) => {
+   await Indicator.findByIdAndDelete(req.params.id)
       res.status(204).json({
          status:'success',
          data: null
      })
       
-   }catch(err){
-      res.status(404).json({
-         status:'fail',
-         messege: err
-     })
- }
-};
+
+})

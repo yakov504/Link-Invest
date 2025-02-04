@@ -11,23 +11,22 @@ router.use('/:userId/indicators', indicatorsRouter)
 
 router.post('/signUp', authController.signUp)
 router.post('/login', authController.login)
-
-// router.get('/logme', authController.protect, usersController.getUser)
-
 router.post('/forgotPassword', authController.forgotPassword)
 router.patch('/resetPassword/:token', authController.resetPassword)
 
-router.patch('/updateMyPassword', authController.protect, authController.updatePassword)
+router.use(authController.protect)
 
-router.get('/me', authController.protect, usersController.getMe, usersController.getUser)
-router.patch('/updateMe', authController.protect, usersController.updateMe)
+router.patch('/updateMyPassword',authController.updatePassword)
 
-router.route('/').get(usersController.getAllUsers)
+// router.get('/logme', usersController.getUser)
+router.get('/me', usersController.getMe, usersController.getUser)
+router.patch('/updateMe', usersController.updateMe)
+
+router.route('/').get(usersController.getAllUsers, authController.restrictTo('admin'))
 .post(usersController.createUser);
 
-router.route('/:id').get(usersController.getUser)
+router.route('/:id').get(usersController.getUser, authController.restrictTo('admin', 'agent'))
 .patch(usersController.updateUser)
-.delete(authController.protect,authController.restrictTo('admin'),
-   usersController.deleteUser)
+.delete(authController.restrictTo('admin'),usersController.deleteUser)
 
 module.exports = router

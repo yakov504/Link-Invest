@@ -3,15 +3,18 @@ const indicatorsController = require('../controller/indicatorsController');
 const authController = require('../controller/authController')
 
 const router = express.Router({mergeParams: true});
+router.use(authController.protect)
 
-router.route('/').get(authController.protect, 
-   authController.restrictTo('admin'), 
-   indicatorsController.getAllIndicators)
-   .post(authController.protect, indicatorsController.createIndicator, indicatorsController.setUserIds);
+router.route('/').get(authController.restrictTo('admin'), indicatorsController.getAllIndicators)
+   .post(authController.restrictTo('agent','admin'),
+      indicatorsController.createIndicator, 
+      indicatorsController.setUserIds);
+
+router.use(authController.restrictTo('agent','admin'))
 
 router.route('/:id')
-   .get(authController.protect, indicatorsController.getIndicator)
+   .get(indicatorsController.getIndicator)
    .patch(indicatorsController.updateIndicator)
-   .delete(authController.protect,indicatorsController.deleteIndicator)
+   .delete(indicatorsController.deleteIndicator)
 
 module.exports = router

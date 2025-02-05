@@ -47,14 +47,46 @@ const indicatorsSchema = new mongoose.Schema({
    // }
 });
 
+
+indicatorsSchema.statics.getIndicatorsSummary = async function(agentId, timeFrame = 'weekly') {
+   let startDate;
+
+   // קביעת טווח הזמן
+   if (timeFrame === 'weekly') {
+      startDate = new Date(new Date().setDate(new Date().getDate() - 7));  // שבוע אחורה
+   } else if (timeFrame === 'monthly') {
+      startDate = new Date(new Date().setMonth(new Date().getMonth() - 1)); // חודש אחורה
+   } else if (timeFrame === 'all') {
+      startDate = new Date('2025-01-01');
+   } else {
+      throw new Error('Invalid time frame. Use weekly, monthly, or all');  // אם הזמן לא תקין
+   }
+
+   // שאילתת אגרגציה לסיכום הנתונים
+   const stats = await this.aggregate([
+      {
+         $match: {
+            agent: new mongoose.Types.ObjectId(agentId),
+            createdAt: { $gte: startDate }
+         }
+      },
+      {
+         $group: {
+            _id: {agentId},
+            totalMeetings: { $sum: '$פגישות' },
+            totalExclusives: { $sum: '$בלעדיות' },
+            totalPriceUpdates: { $sum: '$עדכון_מחיר' },
+            totalBuyerTours: { $sum: '$סיור_קונים' },
+            totalPriceOffers: { $sum: '$הצעות_מחיר' },
+            totalDeals: { $sum: '$עסקאות' }
+         }
+      }
+   ]);
+
+   return stats.length > 0 ? stats[0] : null; // החזרת התוצאה או null אם לא נמצאו נתונים
+};
+
 const Indicator = mongoose.model('Indicator', indicatorsSchema);
-
-
-// indicatorsSchema.pre('save', async function(next){
-//    const agentPromises = this.agent.map(async id => User.findById(id))
-//    this.agent = await Promise.all(agentPromises);
-//    next()
-// })
 
 indicatorsSchema.pre(/^find/, function(next) {
    this.populate({
@@ -65,7 +97,6 @@ indicatorsSchema.pre(/^find/, function(next) {
 })
 
 // const testAgent = new Agents({
-//    שם:"יעקוב",
 //    פגישות:0,
 //    בלעדיות:0,
 //    עדכון_מחיר:0,

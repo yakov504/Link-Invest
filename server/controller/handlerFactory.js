@@ -43,7 +43,7 @@ exports.createOne = Model => catchAsync(async ( req, res ) => {
    const doc = await query
 
    if(!doc){
-      return next(AppError('no request with same id ',404))
+      return next(new AppError('no request with same id ',404))
    } 
       res.status(200).json({
          status: 'success', 

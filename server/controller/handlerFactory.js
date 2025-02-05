@@ -1,17 +1,18 @@
 const catchAsync = require("../utils/catchAsync")
 const AppError = require("../utils/appError")
 
-exports.deleteOne = Model => catchAsync(async( res, req, next) => {
-   const doc = await Model.findByIdAndDelete(req.params.id)
+exports.deleteOne = Model => catchAsync(async (req, res, next) => { 
+   const doc = await Model.findByIdAndDelete(req.params.id);
 
-   if(!doc){
-      return next(new AppError('no document found with same id'),404)
+   if (!doc) {
+       return next(new AppError('No document found with the given ID', 404)); 
    }
+
    res.status(204).json({
-      status:'success',
-      data: null
-  })
-})
+       status: 'success',
+       data: null
+   });
+});
 
 exports.updateOne =  Model => catchAsync(async ( req, res ) => {
    const doc = await Model.findByIdAndUpdate(req.params.id , req.body, {

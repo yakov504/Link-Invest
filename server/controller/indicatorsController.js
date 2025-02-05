@@ -11,7 +11,7 @@ exports.setUserIds = (req, res, next) => {
    next()
 }
 
-exports.getIndicatorsSummary = catchAsync(async (req, res) => {
+exports.getIndicatorsSummary = catchAsync(async (req, res, next) => {
    const { agentId, timeFrame } = req.params;
    const stats = await Indicator.getIndicatorsSummary(agentId, timeFrame);
       if(!stats){
@@ -21,6 +21,10 @@ exports.getIndicatorsSummary = catchAsync(async (req, res) => {
          status: 'success',
          data: stats
       });
+
+      console.log('Request Params:', req.params);
+console.log('Agent ID:', agentId);
+console.log('Time Frame:', timeFrame);
 });
 
 exports.getAllIndicators = factory.getAll(Indicator, {path: 'agent', select: 'name role'})

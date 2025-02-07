@@ -7,6 +7,7 @@ const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
+const cookieParser = require('cookie-parser')
 
 const indicatorsRouter = require('./routes/indicatorsRouter');
 const userRouter = require('./routes/usersRouter')
@@ -31,6 +32,12 @@ app.use('/api', limiter)
 // Error handling middleware 
 /// Body parser, reading data from body into req.body
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(cors({
+   origin: 'http://localhost:5173',
+   credentials: true
+}));
 
 /// Data sanitization against NoSql query injection 
 app.use(mongoSanitize());
@@ -43,8 +50,6 @@ app.use(xss());
 /// Serving static files
 app.use(express.static(`${__dirname}/public`))
 
-app.use(cors())
-
 app.use((err, req, res, next) => { 
    res.status(err.status || 500).json({
        status: 'fail', message: err.message, errors: err.errors || {} 
@@ -53,7 +58,7 @@ app.use((err, req, res, next) => {
 
 app.use(( req, res ,next ) => {
    req.requestTime = new Date().toISOString();
-   // console.log(req.headers);
+   console.log(req.cookies);
 
    next();
 })

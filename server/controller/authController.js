@@ -17,21 +17,24 @@ const createSendToken = ( user, statusCode, res ) => {
    const token = signToken(user._id)
    const cookieOptions = {
       expires: new Date(
-         Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000
+         Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
       ),
-
-         // expires: new Date(
-         //    Date.now() + process.env.JWT_COOKIE_EXPIRES_IN *24*60*60*1000
-         // ),
-      httpOnly: true
-   
+      httpOnly: true, // מונע גישה מה-frontend
+      sameSite: 'None' // כדי לאפשר שליחת ה-cookie בבקשות רגילות
+      
    };
-   console.log('JWT_COOKIE_EXPIRES_IN:', process.env.JWT_COOKIE_EXPIRES_IN)
-   console.log('User:', user);
 
-   if(process.env.NODE_ENV === 'production') cookieOptions.secure = true
-   
-   res.cookie('jwt',token, cookieOptions)
+   if(process.env.NODE_ENV === 'production')cookieOptions.secure = true;
+   res.cookie('jwt',token , cookieOptions)
+
+   // console.log('JWT_COOKIE_EXPIRES_IN:', process.env.JWT_COOKIE_EXPIRES_IN)
+   // console.log('User:', user);
+
+   // if(process.env.NODE_ENV === 'production'){
+   //    cookieOptions.secure = true
+   // }else{
+   //    cookieOptions.secure = false
+   // } 
 
    //remove the password from the output
    user.password = undefined
@@ -65,7 +68,7 @@ exports.login = catchAsync(async( req, res, next ) => {
    if (!user || !(await user.correctPassword(password, user.password))) {
       return next(new AppError('incorrect email or password', 401))
    }
-   // console.log(user);
+   // console.log('Cookies received:', req.cookies);
 
    ///3. אם הכל נכון לשלוח token ללקוח 
    createSendToken(user, 200, res)
@@ -78,12 +81,14 @@ exports.protect = catchAsync(async( req, res, next )=> {
       req.headers.authorization.startsWith('Bearer')
    ){
       token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookie.jwt) {
+      token = req.cookie.jwt
     }
+    
 
     if (!token) {
       return next(new AppError('you are not logedin',401))
-    };
-    
+    } 
    /// 2. verifiction
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
     

@@ -1,7 +1,7 @@
-import React from 'react'
-import './Login.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './Login.css'
+import AgentProfile from './Profile/AgentProfile'
 import axios from 'axios'
 
 export default function Login() {
@@ -19,12 +19,16 @@ export default function Login() {
   
    const handleSubmit = async (e) => {
       e.preventDefault();
+      console.log('נשלח לשרת:', values);
       try{
-         const response = await axios.post('http://127.0.0.1:3000/api/v1/users/login', values)
+         const response = await axios.post('http://127.0.0.1:3000/api/v1/users/login', values, {
+            withCredentials: true
+         });
+         
          console.log(response.data);
          navigate('/AgentProfile')
       } catch (err) {
-         console.error(err);
+         console.error(err.response ? err.response.data : err);
          setError('שגיאה בהתחברות, בדוק את המייל או הסיסמה שלך')
       }
    }

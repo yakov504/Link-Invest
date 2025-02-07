@@ -74,39 +74,34 @@ exports.login = catchAsync(async( req, res, next ) => {
    createSendToken(user, 200, res)
 })
 
-exports.protect = catchAsync(async( req, res, next )=> {
+/// only rendering pages no errors
+exports.isLoggedIn = catchAsync(async( req, res, next )=> {
    ///1. get the token and check if there ///
-   let token;
-   if (req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
-   ){
-      token = req.headers.authorization.split(' ')[1];
-    } else if (req.cookie.jwt) {
-      token = req.cookie.jwt
-    }
-    
+   if (req.cookie.jwt){
 
-    if (!token) {
-      return next(new AppError('you are not logedin',401))
-    } 
    /// 2. verifiction
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
+    const decoded = await promisify(jwt.verify)
+      (req.cookies.jwt, 
+      process.env.JWT_SECRET
+      )
     
     /// 3. check if user still exsits ///
     const currentUser = await User.findById (decoded.id);
     if(!currentUser){
-      return next(new AppError 
-         ('the user beloning to this token does no longer exist',401))
+      return next()
     }
 
     /// 4. check if user changed password after the token was issued
     if(currentUser.changedPasswordAfter(decoded.iat)) {
-      return next(
-         new AppError('user recently changed password please login again', 401)
-      )
+      return next()
     };
-    req.user = currentUser
+
+    // there is logged user
+    req.locals.user = currentUser
     next()
+   }
+   next()
+
 })
 
 exports.restrictTo = (...roles) => {
@@ -208,3 +203,39 @@ await user.save();
 //4.log user in send JWT
 createSendToken(user, 200, res)
 })
+
+exports.protect = catchAsync(async( req, res, next )=> {
+   ///1. get the token and check if there ///
+   let token;
+   if (req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer')
+   ){
+      token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookie.jwt) {
+      token = req.cookie.jwt
+    }
+    
+
+    if (!token) {
+      return next(new AppError('you are not logedin',401))
+    } 
+   /// 2. verifiction
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
+    
+    /// 3. check if user still exsits ///
+    const currentUser = await User.findById (decoded.id);
+    if(!currentUser){
+      return next(new AppError 
+         ('the user beloning to this token does no longer exist',401))
+    }
+
+    /// 4. check if user changed password after the token was issued
+    if(currentUser.changedPasswordAfter(decoded.iat)) {
+      return next(
+         new AppError('user recently changed password please login again', 401)
+      )
+    };
+    req.user = currentUser
+    next()
+})
+

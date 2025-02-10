@@ -1,22 +1,22 @@
 import './Profile.css';
-import { UserContext } from '../../context/UserContext';
-import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { AuthProvider } from '../../context/UserContext';
+// import { useContext, useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 export default function AgentProfile() {
-  const navigate = useNavigate();
-  const { user, loading } = useContext(UserContext);
+  // const navigate = useNavigate();
+  // const { user, loading } = useContext(AuthProvider);
 
-  // אם המשתמש לא מחובר, ננווט לדף ההתחברות
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate('/login');
-    }
-  }, [loading, user, navigate]);
+  // // אם המשתמש לא מחובר, ננווט לדף ההתחברות
+  // useEffect(() => {
+  //   if (!loading && !user) {
+  //     navigate('/login');
+  //   }
+  // }, [loading, user, navigate]);
 
   return (
     <div className="agentProfile">
-      {loading ? (
+      {/* {loading ? (
         <p>Loading...</p>
       ) : user ? (
         <>
@@ -25,7 +25,7 @@ export default function AgentProfile() {
           <p>Phone Number: {user.phone}</p>
           <p>Role: {user.role}</p>
         </>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }

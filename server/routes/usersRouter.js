@@ -14,6 +14,7 @@ router.post('/login', authController.login)
 router.post('/forgotPassword', authController.forgotPassword)
 router.patch('/resetPassword/:token', authController.resetPassword)
 
+router.use('/refreshToken', authController.refreshToken)
 router.use(authController.protect)
 
 router.patch('/updateMyPassword',authController.updatePassword)

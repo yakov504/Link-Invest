@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import'./NavBar.css'
-import { UserContext } from '../context/UserContext';
+// import { AuthProvider } from '../context/AuthProvider';
 import logo from '../assets/image/link_logo.png'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 export default function NavBar(props) {
-  const { user, loading } = useContext(UserContext);
+  // const { user, loading } = useContext(AuthProvider);
 
   // useEffect(() => {
   //   if (!loading && !user) {
@@ -20,7 +20,10 @@ export default function NavBar(props) {
     <nav className={props.className}> 
       <ul>
         <li>
-          <Link to={user ? '/AgentProfile' : '/Login'}>
+          {/* <Link to={user ? '/AgentProfile' : '/Login'}>
+            איזור אישי לסוכנים
+          </Link> */}
+          <Link to={'/Login'}>
             איזור אישי לסוכנים
           </Link>
         </li>

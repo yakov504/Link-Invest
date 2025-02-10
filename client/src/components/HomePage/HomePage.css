@@ -273,10 +273,7 @@
   justify-content: center;
   text-align: center;
   /* background-color: rgb(255, 255, 255); */
-  /* border-radius: 2px 30px 2px 30px; */
-  /* color: black; */
   font-size: 22px;
-  /* height: 180px; */
   width: 340px;
   padding: 0px 0px 15px 0px;
   transition: all 0.3s ease;
@@ -284,7 +281,6 @@
 
 .reasons h4{
   font-size: 60px;
-  /* color: #c45fd4; */
   color:#6cd3ef ;
   text-align: center;
   align-items: center;

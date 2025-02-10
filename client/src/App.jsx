@@ -17,7 +17,7 @@ export default function App() {
   const [navClass, setNavClass] = useState('nav');
 
   useEffect(() => {
-    if (location.pathname === '/HomePage') {
+    if (location.pathname === '/') {
       const handleScroll = () => {
         if (window.scrollY > 390) {
           setNavClass('nav scrolled');
@@ -44,7 +44,7 @@ export default function App() {
         <Routes>
           <Route path="/Login" element={<Login />} />
           <Route path="/AgentProfile" element={<AgentProfile/>} />
-          <Route path="/HomePage" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path='/BuySellRent' element={<BuySellRent/>}/>
         </Routes>
       </UserProvider>

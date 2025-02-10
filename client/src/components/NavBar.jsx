@@ -28,7 +28,7 @@ export default function NavBar(props) {
           <Link to='/Login'>איזור אישי לסוכנים</Link> 
         </li>  */}
         <li> 
-          <Link to='/HomePage'>עמוד הבית</Link>
+          <Link to='/'>עמוד הבית</Link>
         </li> 
       </ul>
       <ul className='icons'>
@@ -47,7 +47,7 @@ export default function NavBar(props) {
             <WhatsAppIcon />
           </a>
         </li> 
-        <Link to='/HomePage'><img className='logo' src={logo} alt="logo" /></Link>
+        <Link to='/'><img className='logo' src={logo} alt="logo" /></Link>
       </ul>
     </nav>
   )

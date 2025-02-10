@@ -19,6 +19,7 @@ const createSendToken = ( user, statusCode, res ) => {
       expires: new Date(
          Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
       ),
+      secure:true,
       httpOnly: true, // מונע גישה מה-frontend
       sameSite: 'None' // כדי לאפשר שליחת ה-cookie בבקשות רגילות
       
@@ -68,7 +69,7 @@ exports.login = catchAsync(async( req, res, next ) => {
    if (!user || !(await user.correctPassword(password, user.password))) {
       return next(new AppError('incorrect email or password', 401))
    }
-   // console.log('Cookies received:', req.cookies);
+   console.log('Cookies received:', req.cookies);
 
    ///3. אם הכל נכון לשלוח token ללקוח 
    createSendToken(user, 200, res)

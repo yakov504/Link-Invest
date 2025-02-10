@@ -7,21 +7,6 @@
    align-items: center;
   }
 
-  /* vidoe */
- /* .video{
-  width: 100%;
-  object-fit: cover transparent;
-  opacity: 0.2; 
-  border-image-source: linear-gradient(0deg,transparent,opacity:1.0,0.2,transparent);
-  margin-top: -87px;
-  border: solid 1px transparent;
-  border-top: solid 2px white;
-  border-bottom: solid 2px white;
-  border-image-source: linear-gradient(to right, transparent, white, white, transparent);
-  border-image-slice: 1;
-
- } */
-
  .video {
   width: 100%;
   object-fit: cover;
@@ -63,46 +48,6 @@
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.448);
  }
 
- /* .video-overlay {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-  z-index: 2;
-  font-family: Arial, sans-serif;
-} */
-/* 
-.video-overlay h1{
-  font-size: 45px;
-  font-family: "Sora", serif;
-  width: 300px;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  text-shadow: 3px 3px 6px rgb(0, 0, 0);
-
-} */
-/* 
- h1::after{
-  content: ""; 
-  position: absolute;
-  left: 0;
-  bottom: 0; 
-  width: 0; 
-  height: 2px; 
-  background-color: rgba(164, 161, 161, 0.277); 
-  transition: width 1s ease; 
-  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.482);
-} */
-
-/* h1:hover::after {
-   transform: scale(1.2);
-  width: 100%;
-  height: 100%;
-
-} */
-
-
  .options_buy_sell{
   display: flex;
   margin-top: 120px;
@@ -112,19 +57,15 @@
  }
 
  .options{
-  /* border: solid 2px; */
   height: 300px;
   width: 280px;
-  /* border-radius: 8px; */
   margin-left: 20px;
   margin-right: 20px;
  }
 
  .options img{
-  /* opacity: 0.9; */
   width: 100%;
   height: 100%;
-  /* border-radius: 8px; */
   transition: color 0.3s ease, background-color 0.3s ease;
 
  }
@@ -220,9 +161,7 @@
   line-height: 1.3;
   text-align: right;
   padding: 20px;
-  /* background: #f9f9f9; */
-  /* border-radius: 10px; */
-  /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+
 }
 
 .company-intro p {
@@ -283,6 +222,142 @@
 
 }
 
+.whyWeH{
+  font-family: "Secular One", serif;
+  font-size: 50px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.46);
+  font-weight: 100;
+  margin-top: 20px;
+  /* padding-bottom: -15px; */
+  margin-bottom: 20px;
+  align-items: center;
+  text-align: center;
+  position: relative; 
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.whyWeH::after {
+  content: ""; 
+  position: absolute;
+  left: 0;
+  bottom: 0; 
+  width: 0; 
+  height: 2px; 
+  background-color:white;
+  ; 
+  transition: width 1s ease; 
+}
+
+.whyWeH:hover::after {
+  width: 100%; /* Expand the line to full width on hover */
+}
+
+.whyW{
+  display: flex;
+  margin-top: 30px; 
+  margin-bottom: 60px; 
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+
+}
+
+.reasons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* background-color: rgb(255, 255, 255); */
+  /* border-radius: 2px 30px 2px 30px; */
+  /* color: black; */
+  font-size: 22px;
+  /* height: 180px; */
+  width: 340px;
+  padding: 0px 0px 15px 0px;
+  transition: all 0.3s ease;
+}
+
+.reasons h4{
+  font-size: 60px;
+  /* color: #c45fd4; */
+  color:#6cd3ef ;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 0px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.reasons h4:hover{
+   transform: scale(1.2); 
+}
+
+.offers {
+  margin-top: 20px; 
+  margin-bottom: 100px; 
+  width: 100%;
+  overflow: cover;
+}
+
+.offers img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 30%, rgb(0, 0, 0) 70%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 0%, transparent);
+}
+
+.services-conteiner h3{
+  font-family: "Secular One", serif;
+  font-size: 40px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.46);
+  font-weight: 100;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  text-align: center;
+  position: relative; 
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.services{
+  display: flex;
+  margin-top: 30px; 
+  margin-bottom: 100px; 
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap; 
+  gap: 18px;
+}
+
+.service{
+  border: solid white 1px;
+  border-radius: 2px 30px 2px 30px;
+  height: 180px;
+  width: 220px;
+  padding: 10px 20px 20px 20px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.services h4{
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.service:hover{
+  background-color: #4d6d7661;
+}
+
+
 
 /* FOOTER */
   .footer {
@@ -299,7 +374,16 @@
    border-image-source: linear-gradient(to right, transparent, #6cd3ef, #6cd3ef, transparent);
    border-image-slice: 1;
  }
- @media only screen and (max-width: 50em) {
+ @media only screen and (max-width: 45em) {
+
+    .whyW {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .reasons {
+      width: 50%; /* מתאים את ה-div לרוחב המסך */
+    }
    .footer {
      grid-template-columns: 1fr;
      grid-row-gap: 1.25rem;

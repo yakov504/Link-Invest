@@ -3,13 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import Footer from './Footer'
 import './HomePage.css'
 
-// import sell from '../../assets/image/haifaNghit.jpg'
+import haifaN from '../../assets/image/haifaNghit.jpg'
 import sell from '../../assets/image/sell.jpg'
 import buy from '../../assets/image/buy1.jpg'
 import rent from '../../assets/image/rent.jpg'
 import agentVideo from '../../assets/video/agentsVideo.mp4'
 import linkVideo from '../../assets/video/linkVideo.mp4'
 
+import { FaHandshake } from "react-icons/fa";
+import { GrUpdate } from "react-icons/gr";
+import { FaPersonRays } from "react-icons/fa6";
 
 export default function HomePage() {
  const navigate = useNavigate()
@@ -27,6 +30,35 @@ export default function HomePage() {
       <h2 onClick={() => navigate('/BuySellRent')}>{option.verb}</h2>
     </div>
   ));
+
+  const reasons = [
+    {reason: "מחויבות לשקיפות וליושר", icon:<FaHandshake/>},
+    {reason: 'עדכונים שוטפים לאורך כל הדרך', icon:<GrUpdate/>},
+    {reason: "הבנה עמוקה של הצרכים וההעדפות שלכם", icon:<FaPersonRays/>},
+  ];
+
+  const reasonsMap = reasons.map(reason => (
+    <div key={reason.reason} className='reasons'>
+      <h4>{reason.icon}</h4>
+      <p>{reason.reason}</p>
+    </div>
+  ))
+
+  const services = [
+    {service: "מכירת נכסים", paragragh:"ייעוץ וליווי אישי בתהליך מכירת הנכס ומציאת הנכס הבא שלך",icon:<FaHandshake/>},
+    {service: "ליווי משקיעים", paragragh:"השקעה לטווח ארוך ? השקעה לטווח קצר ? תנו ליועצים שלנו לעשות עבורך את העבודה.", icon:<GrUpdate/>},
+    {service: 'נדל"ן מסחרי' , paragragh:"מקסמו את הרווחים שלכם ומזערו את הסיכונים עם הנחיות מדויקות בעולם המסחרי.", icon:<FaPersonRays/>},
+    {service: 'שיווק פרויקטים' , paragragh:'הקמת משרדי מכירות. גיוס והכשרת אנשי נדל"ן מותאמים לפי צרכי היזם.', icon:<FaPersonRays/>},
+    {service: 'התחדשות עירונית (פינוי בינוי)', paragragh:"העתיד כבר כאן. החתמת דיירים ליזמים. שיתופי פעולה עם קבלנים וותיקים ומובילים.", icon:<FaPersonRays/>},
+
+  ];
+
+  const servicesMap = services.map(service => (
+    <div key={service.service} className='service'>
+      <h4>{service.service}</h4>
+      <p>{service.paragragh}</p>
+    </div>
+  ))
 
   return (
     <div>
@@ -51,8 +83,9 @@ export default function HomePage() {
               <p>
                 <span className="highlight">אנחנו חברת לינק!</span><br />
                 מומחים בתיווך נכסים, מחויבים להפוך את חלום הבית שלכם למציאות. 
-              </p>
-              <p>
+                <br /> 
+              {/* </p>
+              <p> */}
                 צוות סוכני הנדל"ן המנוסים שלנו ימצא עבורכם את הנכס המושלם,
                 <br /> 
                 בין אם זהו הבית הראשון שלכם או בית חלומותיכם.אנו נלווה אתכם לאורך
@@ -60,14 +93,6 @@ export default function HomePage() {
                  כל שלבי התהליך – 
                 <strong>מטיפול בניירת ועד ניהול משא ומתן</strong> – כדי להבטיח חוויה חלקה ומהנה.
               </p>
-              {/* <p>
-                <strong>למה לבחור בנו?</strong>
-                <ul>
-                  <li>מחויבות לשקיפות וליושר.</li>
-                  <li>עדכונים שוטפים לאורך כל הדרך.</li>
-                  <li>הבנה עמוקה של הצרכים וההעדפות שלכם.</li>
-                </ul>
-              </p> */}
               <p>
                 <strong>צרו קשר עוד היום</strong> או בקרו במשרדינו. נשמח לעזור לכם למצוא את בית חלומותיכם! 
               </p>
@@ -80,6 +105,19 @@ export default function HomePage() {
             <source src={agentVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+        </div>
+        <h3 className='whyWeH'>למה לבחור בנו?</h3>
+        <div className='whyW'>
+          {reasonsMap}
+        </div>
+        <div className='offers'>
+          <img src= {haifaN} alt="haifanohjt" />
+        </div>
+        <div className='services-conteiner'>
+          <h3>השירותים שלנו</h3>
+          <div className='services'>
+           {servicesMap}
+          </div>
         </div>
       </div>
       <Footer/>

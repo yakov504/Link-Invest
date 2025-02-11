@@ -43,7 +43,7 @@ app.use(cors({
 app.use(mongoSanitize());
 
 /// Data sanitization againt XSS
-// app.use(xss());
+app.use(xss());
 
 // app.use(hpp());
 

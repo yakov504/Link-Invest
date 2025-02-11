@@ -208,22 +208,31 @@ await user.save();
 createSendToken(user, 200, res)
 })
 
+// console.log(jwt);
+
 exports.protect = catchAsync(async( req, res, next )=> {
    ///1. get the token and check if there ///
+   // let token;
+   // if (req.headers.authorization &&
+   //    req.headers.authorization.startsWith('Bearer')
+   // ){
+   //    token = req.headers.authorization.split(' ')[1];
+   //  } else if (req.cookie.jwt) {
+   //    token = req.cookie.jwt
+   //  }
    let token;
-   if (req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
-   ){
+   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
-    } else if (req.cookie.jwt) {
-      token = req.cookie.jwt
-    }
+   } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+   }
     if (!token) {
       return next(new AppError('you are not logedin',401))
     } 
    /// 2. verifiction
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
-    
+   //  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
+   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
     /// 3. check if user still exsits ///
     const currentUser = await User.findById (decoded.id);
     if(!currentUser){

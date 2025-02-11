@@ -75,9 +75,11 @@ exports.refreshToken = catchAsync(async (req, res, next) => {
 
  exports.login = catchAsync(async (req, res, next) => {
    const { email, password } = req.body;
+   console.log("Login attempt:", email);
 
    // 1️⃣ בדיקה אם התקבלו אימייל וסיסמה
    if (!email || !password) {
+      console.error("Email or password not provided");
       return next(new AppError("Please provide email and password", 400));
    }
 

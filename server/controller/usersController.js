@@ -1,5 +1,6 @@
 const User = require('../modules/usersModuls')
 const Indicator = require('../modules/indicatorsModuls');
+const jwt = require('jsonwebtoken')
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory')

@@ -2,19 +2,21 @@ const express = require('express')
 const usersController = require('../controller/usersController');
 const authController = require('../controller/authController');
 const indicatorsController = require('../controller/indicatorsController')
+const newAuthController = require('../controller/newAuthController')
 const indicatorsRouter = require('../routes/indicatorsRouter')
 
 const router = express.Router();
 
 router.use('/:userId/indicators', indicatorsRouter)
-/// הראטור לא עובד מביא לי הרר שאני לא מחובר כנראה יש בעיה בחיבור בין הראוטר של אינדיקטור ויוסרים לבדוק בהמשך
 
 router.post('/signUp', authController.signUp)
-router.post('/login', authController.login)
+// router.post('/login', authController.login)
+router.post('/login', newAuthController.login)
+router.post('/refreshToken', newAuthController.refreshToken)
+
 router.post('/forgotPassword', authController.forgotPassword)
 router.patch('/resetPassword/:token', authController.resetPassword)
 
-router.use('/refreshToken', authController.refreshToken)
 router.use(authController.protect)
 
 router.patch('/updateMyPassword',authController.updatePassword)

@@ -31,8 +31,8 @@ app.use('/api', limiter)
 
 // Error handling middleware 
 /// Body parser, reading data from body into req.body
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 
 app.use(cors({
    origin: 'http://localhost:5173',
@@ -43,7 +43,7 @@ app.use(cors({
 app.use(mongoSanitize());
 
 /// Data sanitization againt XSS
-app.use(xss());
+// app.use(xss());
 
 // app.use(hpp());
 

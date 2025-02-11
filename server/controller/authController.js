@@ -9,7 +9,7 @@ const sendEmail = require('../utils/email')
 
 
 const signToken = id => {
-   return  jwt.sign({ id }, process.env.JWT_SECRET, {
+   return jwt.sign({ id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
    });
 }
@@ -218,8 +218,6 @@ exports.protect = catchAsync(async( req, res, next )=> {
     } else if (req.cookie.jwt) {
       token = req.cookie.jwt
     }
-    
-
     if (!token) {
       return next(new AppError('you are not logedin',401))
     } 
@@ -243,65 +241,4 @@ exports.protect = catchAsync(async( req, res, next )=> {
     next()
 })
 
-exports.withAuth = async (config) =>{
-   const token = config.headers.Authorization?.split(' ')[1];
 
-   //Verifies access token if present
-   const verified = token ? await verifyToken(token) : false;
-
-   // returns 403 access token is invalid and auth enabled
-   if (env.USE_AUTH && !verify){
-      return [403, {message: "Unauthorized"}];
-   }
-
-   //calls the original mock function
-   return typeof data[0] === 'function' ? data[0](config) : data
-   // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
-
-};
-
-exports.verifyToken = async(token, options = undefined) => {
-   try{
-      const verifiction = await jose.jwtVerify(token, process.env.JWT_SECRET);
-      return options?.returnPayload ? verifiction.payload : true;
-
-   }catch {
-      return false
-   }
-}
-
-exports.generateRefreshToken = async (data) => {
-   return await new jose.signToken({data})
-   .setProtectedHeader({alg: 'HS256'})
-   .setExpirationTime(process.env.JWT_EXPIRES_IN)
-   .sign(process.env.JWT_SECRET)
-}
-
-exports.refreshToken = catchAsync(async (req, res, next) => {
-   // 1) קבלת ה-Refresh Token מהעוגייה
-   const refreshToken = req.cookies.refreshToken;
-   if (!refreshToken) {
-     return next(new AppError("No refresh token found", 403));
-   }
- 
-   try {
-     // 2) אימות ה-Refresh Token
-     const decoded = await promisify(jwt.verify)(refreshToken, process.env.JWT_SECRET);
- 
-     // 3) בדיקה אם המשתמש קיים
-     const user = await User.findById(decoded.id);
-     if (!user) {
-       return next(new AppError("User no longer exists", 403));
-     }
- 
-     // 4) יצירת Access Token חדש
-     const newAccessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-       expiresIn: "15m", // תוקף של 15 דקות
-     });
- 
-     res.status(200).json({ accessToken: newAccessToken });
-   } catch (error) {
-     return next(new AppError("Invalid refresh token", 403));
-   }
- });
- 

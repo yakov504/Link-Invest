@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthProvider"; // שימוש בקונטקסט
+import { useAuth } from "../context/AuthProvider"
 import './Login.css'
 import AgentProfile from './Profile/AgentProfile'
 import axios from "axios";
@@ -8,6 +8,7 @@ export default function Login() {
   const { setAccessToken } = useAuth();
   const [values, setValues] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
+
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -19,11 +20,14 @@ export default function Login() {
       const response = await axios.post(
         "http://127.0.0.1:3000/api/v1/users/login",
         values,
-        { withCredentials: true }
+        console.log(values),
+        console.log (setAccessToken)
+
+      //   { withCredentials: true }
       );
 
       setAccessToken(response.data.accessToken);
-      console.log("✅ התחברות בוצעה בהצלחה!");
+      console.log("התחברות בוצעה בהצלחה!");
     } catch (err) {
       setError("שגיאה בהתחברות, נסה שוב");
     }
@@ -52,7 +56,7 @@ export default function Login() {
                <div className='forgotPassword'>
                   <span>שכחתי סיסמה</span>
                </div>
-               <button className='loginBtn' type="submit">היכנס</button>
+               <button className='loginBtn' type="submit" onClick={handleSubmit}>היכנס</button>
             </form>
          </div>
       </div>

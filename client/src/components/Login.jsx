@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from "../context/AuthProvider"
 import './Login.css'
 import AgentProfile from './Profile/AgentProfile'
@@ -9,6 +10,7 @@ export default function Login() {
   const [values, setValues] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate()
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -16,16 +18,14 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting login form:", values);
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:3000/api/v1/users/login",
+      const response = await axios.post("http://127.0.0.1:3000/api/v1/users/login",
         values,
-        console.log(values),
-        console.log (setAccessToken)
-
-      //   { withCredentials: true }
+        { withCredentials: true },
+        console.log(values)        
       );
-
+      navigate('/AgentProfile')
       setAccessToken(response.data.accessToken);
       console.log("התחברות בוצעה בהצלחה!");
     } catch (err) {

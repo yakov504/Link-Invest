@@ -7,7 +7,6 @@ const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
 const sendEmail = require('../utils/email')
 
-
 const signToken = id => {
    return jwt.sign({ id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
@@ -29,15 +28,6 @@ const createSendToken = ( user, statusCode, res ) => {
    if(process.env.NODE_ENV === 'production')cookieOptions.secure = true;
    res.cookie('jwt',token , cookieOptions)
 
-   // console.log('JWT_COOKIE_EXPIRES_IN:', process.env.JWT_COOKIE_EXPIRES_IN)
-   // console.log('User:', user);
-
-   // if(process.env.NODE_ENV === 'production'){
-   //    cookieOptions.secure = true
-   // }else{
-   //    cookieOptions.secure = false
-   // } 
-
    //remove the password from the output
    user.password = undefined
 
@@ -58,23 +48,23 @@ exports.signUp = catchAsync(async( req, res ,next ) => {
    createSendToken(newUser, 201, res)
 })
 
-exports.login = catchAsync(async( req, res, next ) => {
-   const { email, password } = req.body;
-   ///1.לבדוק אם המייל קיים///
-   if(!email || !password){
-      return next( new AppError('please provide eamil and password', 400))
-   }
-   ///2.לבדוק אם משתמש קיים והסיסמה נכונה ///
-   const user = await User.findOne({email}).select('+password')
+// exports.login = catchAsync(async( req, res, next ) => {
+//    const { email, password } = req.body;
+//    ///1.לבדוק אם המייל קיים///
+//    if(!email || !password){
+//       return next( new AppError('please provide eamil and password', 400))
+//    }
+//    ///2.לבדוק אם משתמש קיים והסיסמה נכונה ///
+//    const user = await User.findOne({email}).select('+password')
 
-   if (!user || !(await user.correctPassword(password, user.password))) {
-      return next(new AppError('incorrect email or password', 401))
-   }
-   console.log('Cookies received:', req.cookies);
+//    if (!user || !(await user.correctPassword(password, user.password))) {
+//       return next(new AppError('incorrect email or password', 401))
+//    }
+//    console.log('Cookies received:', req.cookies);
 
-   ///3. אם הכל נכון לשלוח token ללקוח 
-   createSendToken(user, 200, res)
-})
+//    ///3. אם הכל נכון לשלוח token ללקוח 
+//    createSendToken(user, 200, res)
+// })
 
 /// only rendering pages no errors
 
@@ -208,20 +198,13 @@ await user.save();
 createSendToken(user, 200, res)
 })
 
-// console.log(jwt);
 
 exports.protect = catchAsync(async( req, res, next )=> {
    ///1. get the token and check if there ///
-   // let token;
-   // if (req.headers.authorization &&
-   //    req.headers.authorization.startsWith('Bearer')
-   // ){
-   //    token = req.headers.authorization.split(' ')[1];
-   //  } else if (req.cookie.jwt) {
-   //    token = req.cookie.jwt
-   //  }
    let token;
-   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+   if (req.headers.authorization && 
+      req.headers.authorization.startsWith('Bearer')
+   ) {
       token = req.headers.authorization.split(' ')[1];
    } else if (req.cookies.jwt) {
       token = req.cookies.jwt;
@@ -230,8 +213,7 @@ exports.protect = catchAsync(async( req, res, next )=> {
       return next(new AppError('you are not logedin',401))
     } 
    /// 2. verifiction
-   //  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
-   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
 
     /// 3. check if user still exsits ///
     const currentUser = await User.findById (decoded.id);

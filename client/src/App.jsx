@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import AuthProvider from './context/AuthProvider';
 import axios from 'axios'
 
 import './App.css';
@@ -38,13 +39,15 @@ export default function App() {
 
   return (
     <div>
-      <NavBar className={navClass} />
-      <Routes>
-        <Route path="/Login" element={<Login />} />
-        <Route path="/AgentProfile" element={<AgentProfile/>} />
-        <Route path="/" element={<HomePage />} />
-        <Route path='/BuySellRent' element={<BuySellRent/>}/>
-      </Routes>
+      <AuthProvider>
+        <NavBar className={navClass} />
+        <Routes>
+          <Route path="/Login" element={<Login />} />
+          <Route path="/AgentProfile" element={<AgentProfile/>} />
+          <Route path="/" element={<HomePage />} />
+          <Route path='/BuySellRent' element={<BuySellRent/>}/>
+        </Routes>
+      </AuthProvider>
     </div>
   );
 }

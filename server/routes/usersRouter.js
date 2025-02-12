@@ -12,18 +12,19 @@ router.use('/:userId/indicators', indicatorsRouter)
 router.post('/signUp', authController.signUp)
 // router.post('/login', authController.login)
 router.post('/login', newAuthController.login)
-router.post('/refreshToken', newAuthController.refreshToken)
+router.post('/refreshToken', newAuthController.refresh)
 
 router.post('/forgotPassword', authController.forgotPassword)
 router.patch('/resetPassword/:token', authController.resetPassword)
 
-router.use(authController.protect)
+// router.use(authController.protect)
 
 router.patch('/updateMyPassword',authController.updatePassword)
 
 // router.get('/logme', usersController.getUser)
-router.get('/me', usersController.getMe, usersController.getUser)
+router.get('/me',authController.protect, usersController.getMe, usersController.getUser)
 router.patch('/updateMe', usersController.updateMe)
+
 
 router.route('/').get(usersController.getAllUsers, authController.restrictTo('admin'))
 .post(usersController.createUser);

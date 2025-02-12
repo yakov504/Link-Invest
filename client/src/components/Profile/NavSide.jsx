@@ -1,9 +1,32 @@
-import React from 'react'
+import { useState } from "react";
+import "./NavSide.css";
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+
+import { CgProfile } from "react-icons/cg";
+import { GoGraph } from "react-icons/go";
+import { IoLogInOutline } from "react-icons/io5";
 
 export default function NavSide() {
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
-    <div>
-      
+    <div className="nav-container">
+      <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
+        <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
+          ☰
+        </button>
+        <ul>
+          <li>
+            <Link to={'/Indicators'}><GoGraph className="icon"/> {isOpen && "מדדים"}</Link>
+          </li>
+          <li>
+            <Link to={'/AgentProfile'}><CgProfile className="icon"/> {isOpen && "פרופיל"}</Link>
+          </li>
+          <li>
+            <Link to={'/Login'}><IoLogInOutline className="icon"/> {isOpen && "התנתק"}</Link>
+          </li>
+        </ul>
+      </div>
     </div>
-  )
+  );
 }

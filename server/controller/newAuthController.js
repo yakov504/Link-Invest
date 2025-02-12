@@ -45,7 +45,7 @@ exports.login = catchAsync(async (req, res, next) => {
    // 4️. create secure cookie with refresh token
    res.cookie("jwt", refreshToken, {
       httpOnly: true, // מונע גישה מהלקוח (XSS)
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "None", // מגביל שליחת עוגיות רק מהשרת שלנו
       maxAge: 7 * 24 * 60 * 60 * 1000, // תוקף של 7 ימים
    });

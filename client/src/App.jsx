@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
+import { useAuth } from './context/AuthProvider';
 import axios from 'axios'
 
 import './App.css';
@@ -13,8 +14,16 @@ import Login from './components/Login';
 import BuySellRent from './components/HomePage/BuySellRent'
 
 export default function App() {
+  // const { user, getUserData } = useAuth();
   const location = useLocation(); 
   const [navClass, setNavClass] = useState('nav');
+
+
+  // useEffect(() => {
+  //   if (user) {
+  //     getUserData();
+  //   }
+  // }, [user, getUserData]);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -33,19 +42,16 @@ export default function App() {
     }
   }, [location.pathname]);
 
-  // function checkLoginStatus(){
-  //   axios.get('http://127.0.0.1:3000/api/v1/users/logme',)
-  // }
-
   return (
     <div>
       <AuthProvider>
         <NavBar className={navClass} />
         <Routes>
           <Route path="/Login" element={<Login />} />
-          <Route path="/AgentProfile" element={<AgentProfile/>} />
+          <Route path="/AgentProfile" element={<AgentProfile/>}/> 
+          {/* // user={user} />} /> */}
           <Route path="/" element={<HomePage />} />
-          <Route path='/BuySellRent' element={<BuySellRent/>}/>
+          <Route path='/BuySellRent' element={<BuySellRent />} />
         </Routes>
       </AuthProvider>
     </div>

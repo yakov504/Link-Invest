@@ -15,103 +15,51 @@ export default function AuthProvider({ children }) {
   const [accessToken, setAccessToken] = useState(null);
   const [user, setUser] = useState(null);
 
-  const getNewAccessToken = async () => {
+  const login = async (email, password) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:3000/api/v1/users/refreshToken",
-        {},
-        { withCredentials: true } // מעביר את `withCredentials` בהגדרות ולא בגוף הבקשה
+        "http://127.0.0.1:3000/api/v1/users/login",
+        { email, password },
+        { withCredentials: true }
       );
+
       setAccessToken(response.data.accessToken);
-      return response.data.accessToken;
+      setUser(response.data.user);
+
+      return { success: true };
     } catch (error) {
-      setAccessToken(null);
-      return null;
+      console.error("Login failed:", error);
+      return { success: false, message: error.response?.data?.message || "Login failed" };
     }
   };
 
-
- // טוען משתמש לאחר טעינת הדף או שינוי ב-accessToken
- useEffect(() => {
-  const fetchUser = async () => {
-    if (!accessToken) {
-      const newToken = await getNewAccessToken(); // נסה להביא טוקן חדש אם אין
-      if (!newToken) return; // אם נכשל, אל תמשיך
-    }
-
+  const getUserData = async () => {
     try {
-      const response = await axios.get(
-        "http://127.0.0.1:3000/api/v1/users/me",
-        {
-          headers: { Authorization: `Bearer ${accessToken || await getNewAccessToken()}` },
+      const response = await axios.get("http://127.0.0.1:3000/api/v1/users/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
         }
-      );
+      });
       setUser(response.data);
     } catch (error) {
-      console.error("Failed to fetch user:", error);
-      setUser(null);
+      console.error("Failed to fetch user data:", error);
     }
   };
 
-  fetchUser();
-}, [accessToken]);
-
-  // רץ ברינדור הראשוני + כל 14 דקות
-  // useEffect(() => {
-  //   getNewAccessToken(); // מריץ פעם אחת בהתחלה
-  //   const interval = setInterval(() => {
-  //     getNewAccessToken();
-  //   }, 14 * 60 * 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     if (!accessToken) return; 
-
-  //     try {
-  //       const response = await axios.get("http://127.0.0.1:3000/api/v1/users/me", {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       });
-
-  //       setUser(response.data); // שמירת נתוני המשתמש בסטייט
-  //     } catch (error) {
-  //       console.error("Failed to fetch user:", error);
-  //       setUser(null); // במידה ויש שגיאה, מאפסים את המשתמש
-  //     }
-  //   };
-
-  //   fetchUser();
-  // }, [accessToken]); // מופעל בכל פעם שה-`accessToken` משתנה
+  const logout = async () => {
+    await axios.post("http://127.0.0.1:3000/api/v1/users/logout", {}, { withCredentials: true });
+    setAccessToken(null);
+    setUser(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ accessToken, getNewAccessToken, user }}>
+    <AuthContext.Provider value={{ accessToken, user, login, logout, getUserData }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
 
-  // Axios Interceptor: מוסיף את ה-Access Token אוטומטית לבקשות
-  // useLayoutEffect(() => {
-  //   const requestInterceptor = axios.interceptors.request.use(async (config) => {
-  //     if (!accessToken) {
-  //       const newToken = await getNewAccessToken();
-  //       if (newToken) {
-  //         config.headers.Authorization = `Bearer ${newToken}`;
-  //       }
-  //     } else {
-  //       config.headers.Authorization = `Bearer ${accessToken}`;
-  //     }
-  //     return config;
-  //   });
-
-  //   return () => {
-  //     axios.interceptors.request.eject(requestInterceptor);
-  //   };
-  // }, [accessToken]);
 
 
 
@@ -126,86 +74,3 @@ export default function AuthProvider({ children }) {
 
 
 
-
-
-// import { createContext, useState, useEffect, useContext, useLayoutEffect } from "react";
-// import axios from "axios";
-
-// const AuthContext = createContext(undefined);
-
-// export const useAuth = () => {
-//    const authContext = useContext(AuthContext);
-
-//    if(!authContext) {
-//       throw new Error('useAuth must by used whitn AuthProvider')
-//    }
-
-//    return authContext;
-// }
-
-// export default function AuthProvider() {
-//    const [ token, setToken ] = useState();
-
-//    useEffect(() =>{
-//       const fetchMe = async () => {
-//          try{
-//             const response = await axios.get("http://127.0.0.1:3000/api/v1/me");
-//             setToken(response.data.accessToken);
-//          }catch{
-//             setToken(null)
-//          }
-//       };
-//       fetchMe()
-//    }, []);
-
-//    useLayoutEffect(() => {
-//       const authInterceptor = axios.interceptors.request.use((config) =>{
-//          config.headers.Authorization =
-//             !config._retry && token 
-//             ? `Bearer ${token}`
-//             : config.headers.Authorization;
-//          return config;
-//       });
-//       return () => {
-//          axios.interceptors.request.eject(authInterceptor);
-//       };
-//    }, [token]);
-
-
-//    useLayoutEffect(() => {
-//       const refreshInterceptor = axios.interceptors.response.use(
-//          (response) => response,
-//          async (error) =>{
-//             const originalRequest = error.config;
-
-//             if(
-//                error.response.status === 403 &&
-//                error.response.data.message === 'Unauthotized'
-//             ){
-//                try{
-//                   const response = await axios.get("http://127.0.0.1:3000/api/v1/refeshToken");
-
-//                   setToken(response.data.accessToken);
-
-//                   originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
-//                   originalRequest._retry = true;
-
-//                   return axios(originalRequest);
-//                }catch{
-//                   setToken(null)
-//                }
-//             }
-
-//             return Promise.reject(error)
-//          },
-//       );
-//       return () => {
-//          axios.interceptors.response.eject(refreshInterceptor);
-//       }
-//    })
-//   return (
-//     <div>
-      
-//     </div>
-//   )
-// }

@@ -6,11 +6,11 @@ import AgentProfile from './Profile/AgentProfile'
 import axios from "axios";
 
 export default function Login() {
-  const { setAccessToken } = useAuth();
+  const { login } = useAuth();
   const [values, setValues] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -18,52 +18,75 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting login form:", values);
-    try {
-      const response = await axios.post("http://127.0.0.1:3000/api/v1/users/login",
-        values,
-        { withCredentials: true },
-        console.log(values)        
-      );
-      navigate('/AgentProfile')
-      setAccessToken(response.data.accessToken);
-      console.log("התחברות בוצעה בהצלחה!");
-    } catch (err) {
-      setError("שגיאה בהתחברות, נסה שוב");
+    const result = await login(values.email, values.password);
+
+    if (!result.success) {
+      setError(result.message);
+      return; 
     }
+    setTimeout(() => {
+      navigate('/AgentProfile');
+    }, 2000); // 1 שנייה עיכוב
   };
 
   return (
-      <div className='loginContainer '>
-         <div className="head">
-            <h1>התחבר לפני שאתה ממשיך</h1>
-         </div>
-         <div className="loginPlace">
-            <form action="" onSubmit={handleSubmit}>
-               <div className="inputs">
-                  <div className='input'>
-                     <input type="email" name='email' placeholder='מייל'
-                     value={values.email} onChange={handleInput}/>
-                  </div>
-                  {/* {errors.email && <span>{errors.email}</span>} */}
-                  <div className='input'>
-                     <input type="password" name='password' placeholder='סיסמה'
-                      value={values.password} onChange={handleInput}/>
-                  </div>
-                  {/* {errors.password && <span>{errors.password}</span>} */}
-               </div>  
-               {error && <p className="error-message">{error}</p>}
-               <div className='forgotPassword'>
-                  <span>שכחתי סיסמה</span>
-               </div>
-               <button className='loginBtn' type="submit" onClick={handleSubmit}>היכנס</button>
-            </form>
-         </div>
+    <div className='loginContainer'>
+      <div className="head">
+        <h1>התחבר לפני שאתה ממשיך</h1>
       </div>
-     )
-   }
+      <div className="loginPlace">
+        <form action="" onSubmit={handleSubmit}>
+          <div className="inputs">
+            <div className='input'>
+              <input 
+                type="email" 
+                name='email' 
+                placeholder='מייל'
+                value={values.email} 
+                onChange={handleInput} 
+              />
+            </div>
+            {/* {errors.email && <span>{errors.email}</span>} */}
+            <div className='input'>
+              <input 
+                type="password" 
+                name='password' 
+                placeholder='סיסמה'
+                value={values.password} 
+                onChange={handleInput} 
+              />
+            </div>
+            {/* {errors.password && <span>{errors.password}</span>} */}
+          </div>  
+          {error && <p className="error-message">{error}</p>}
+          <div className='forgotPassword'>
+            <span>שכחתי סיסמה</span>
+          </div>
+          <button className='loginBtn' type="submit">היכנס</button>
+        </form>
+      </div>
+    </div>
+  );
+}
 
 
+
+   // const handleSubmit = async (e) => {
+      //     e.preventDefault();
+      //     console.log("Submitting login form:", values);
+      //     try {
+      //       const response = await axios.post("http://127.0.0.1:3000/api/v1/users/login",
+      //         values,
+      //         { withCredentials: true },
+      //         console.log(values)        
+      //       );
+      //       navigate('/AgentProfile')
+      //       setAccessToken(response.data.accessToken);
+      //       console.log("התחברות בוצעה בהצלחה!");
+      //     } catch (err) {
+      //       setError("שגיאה בהתחברות, נסה שוב");
+      //     }
+      //   };
 
 
 // import { useState } from 'react'

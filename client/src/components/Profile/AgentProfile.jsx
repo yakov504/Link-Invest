@@ -1,24 +1,38 @@
 import "./Profile.css";
-import { useEffect } from "react";
-import { useAuth } from "../../context/AuthProvider";
+import { useEffect, useState } from "react";
+import { CiMail } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
+import { IoIosPhonePortrait } from "react-icons/io";
+import { FaPersonCircleQuestion } from "react-icons/fa6";
+// import { useAuth } from "../../context/AuthProvider";
+import axios from "axios";
+import NavSide from "./NavSide";
 
 export default function AgentProfile() {
-  const { user, getNewAccessToken } = useAuth();
+  // const { user, logout } = useAuth();
+  const [ demo, setDemo ] = useState({name:"יעקוב יעקובוב",
+     email:"yakov202.yy@gmail.com",
+     phone: "0546080824",
+     role:"admin"
+  })
 
-  useEffect(() => {
-    if (!user) {
-      getNewAccessToken(); // אם אין יוזר, מנסה להביא טוקן חדש
-    }
-  }, [user]);
+  const logout = () => {
+    setDemo(null); 
+  };
 
-  if (!user) return <p>טוען...</p>;
+  if (!demo) return <p>יש להתחבר כדי לצפות בפרופיל</p>;
 
   return (
     <div className="agentProfile">
-      <h1>ברוכים הבאים, {user.name}!</h1>
-      <p>Email: {user.email}</p>
-      <p>Phone Number: {user.phone}</p>
-      <p>Role: {user.role}</p>
+      <NavSide/>
+      <h1>ברוכים הבאים, {demo.name}!</h1>
+      <div className="userData">
+        <CgProfile className="profIcon"/>
+        <p><CiMail className="icon"/> <span>{demo.email}</span></p>
+        <p><IoIosPhonePortrait className="icon"/> <span>{demo.phone}</span></p>
+        <p><FaPersonCircleQuestion className="icon"/> <span>{demo.role}</span></p>
+        <button onClick={logout}>התנתק</button>
+      </div>
     </div>
   );
 }

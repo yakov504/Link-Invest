@@ -45,8 +45,9 @@ exports.login = catchAsync(async (req, res, next) => {
    // 4️. create secure cookie with refresh token
    res.cookie("jwt", refreshToken, {
       httpOnly: true, // מונע גישה מהלקוח (XSS)
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "None", // מגביל שליחת עוגיות רק מהשרת שלנו
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      // secure: process.env.NODE_ENV === "production",
+       // מגביל שליחת עוגיות רק מהשרת שלנו
       maxAge: 7 * 24 * 60 * 60 * 1000, // תוקף של 7 ימים
    });
 
@@ -144,6 +145,25 @@ exports.verifyJWT = ( req, res, next ) => {
    })
 
 }
+
+// מידלוואר לאימות המשתמש על בסיס הטוקן מהקוקי
+exports.authMiddleware = (req, res, next) => {
+    const token = req.cookies.accessToken;
+
+    if (!token) {
+        return res.status(401).json({ message: 'Access denied. No token provided.' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded; // הוספת המשתמש המבוסס על ה-ID לטוקן
+        next();
+    } catch (error) {
+        console.error('Token verification failed:', error.message);
+        res.status(403).json({ message: 'Invalid or expired token.' });
+    }
+};
+
 
 // exports.withAuth = async (config) =>{
 //    const token = config.headers.Authorization?.split(' ')[1];

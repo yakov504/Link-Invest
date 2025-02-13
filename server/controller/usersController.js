@@ -14,8 +14,10 @@ const filterObj = (obj, ...allowedField) =>{
    return newObj;
 }
 
-exports.getMe = (req , res, next) => {
-   req.params.id = req.user.id;
+exports.getMe = async(req , res, next) => {
+   const user = await User.findById(req.user.id).select('-password');
+   res.json(user);
+   // req.params.id = req.user.id;
    next();
 }
 

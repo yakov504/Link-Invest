@@ -1,19 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from "../context/AuthProvider"
-import './Login.css'
-import AgentProfile from './Profile/AgentProfile'
-import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../context/AuthProvider";
+import './Login.css';
 
 export default function Login() {
   const { login } = useAuth();
   const [values, setValues] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
-
   const navigate = useNavigate();
 
   const handleInput = (e) => {
-    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -22,11 +19,9 @@ export default function Login() {
 
     if (!result.success) {
       setError(result.message);
-      return; 
+      return;
     }
-    setTimeout(() => {
-      navigate('/AgentProfile');
-    }, 2000); // 1 שנייה עיכוב
+    navigate('/AgentProfile');
   };
 
   return (
@@ -35,7 +30,7 @@ export default function Login() {
         <h1>התחבר לפני שאתה ממשיך</h1>
       </div>
       <div className="loginPlace">
-        <form action="" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="inputs">
             <div className='input'>
               <input 
@@ -44,9 +39,9 @@ export default function Login() {
                 placeholder='מייל'
                 value={values.email} 
                 onChange={handleInput} 
+                required
               />
             </div>
-            {/* {errors.email && <span>{errors.email}</span>} */}
             <div className='input'>
               <input 
                 type="password" 
@@ -54,9 +49,9 @@ export default function Login() {
                 placeholder='סיסמה'
                 value={values.password} 
                 onChange={handleInput} 
+                required
               />
             </div>
-            {/* {errors.password && <span>{errors.password}</span>} */}
           </div>  
           {error && <p className="error-message">{error}</p>}
           <div className='forgotPassword'>
@@ -68,6 +63,78 @@ export default function Login() {
     </div>
   );
 }
+
+
+// import { useState } from "react";
+// import { useNavigate } from 'react-router-dom'
+// import { useAuth } from "../context/AuthProvider"
+// import './Login.css'
+// import AgentProfile from './Profile/AgentProfile'
+// import axios from "axios";
+
+// export default function Login() {
+//   const { login } = useAuth();
+//   const [values, setValues] = useState({ email: "", password: "" });
+//   const [error, setError] = useState(null);
+
+//   const navigate = useNavigate();
+
+//   const handleInput = (e) => {
+//     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     const result = await login(values.email, values.password);
+
+//     if (!result.success) {
+//       setError(result.message);
+//       return; 
+//     }
+//     setTimeout(() => {
+//       navigate('/AgentProfile');
+//     }, 2000); // 1 שנייה עיכוב
+//   };
+
+//   return (
+//     <div className='loginContainer'>
+//       <div className="head">
+//         <h1>התחבר לפני שאתה ממשיך</h1>
+//       </div>
+//       <div className="loginPlace">
+//         <form action="" onSubmit={handleSubmit}>
+//           <div className="inputs">
+//             <div className='input'>
+//               <input 
+//                 type="email" 
+//                 name='email' 
+//                 placeholder='מייל'
+//                 value={values.email} 
+//                 onChange={handleInput} 
+//               />
+//             </div>
+//             {/* {errors.email && <span>{errors.email}</span>} */}
+//             <div className='input'>
+//               <input 
+//                 type="password" 
+//                 name='password' 
+//                 placeholder='סיסמה'
+//                 value={values.password} 
+//                 onChange={handleInput} 
+//               />
+//             </div>
+//             {/* {errors.password && <span>{errors.password}</span>} */}
+//           </div>  
+//           {error && <p className="error-message">{error}</p>}
+//           <div className='forgotPassword'>
+//             <span>שכחתי סיסמה</span>
+//           </div>
+//           <button className='loginBtn' type="submit">היכנס</button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
 
 
 

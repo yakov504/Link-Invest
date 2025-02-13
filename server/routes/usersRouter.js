@@ -22,7 +22,10 @@ router.patch('/resetPassword/:token', authController.resetPassword)
 router.patch('/updateMyPassword',authController.updatePassword)
 
 // router.get('/logme', usersController.getUser)
-router.get('/me',authController.protect, usersController.getMe, usersController.getUser)
+router.get('/me',authController.protect, 
+   newAuthController.authMiddleware, 
+   usersController.getMe)
+   // , usersController.getUser)
 router.patch('/updateMe', usersController.updateMe)
 
 

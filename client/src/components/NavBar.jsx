@@ -20,12 +20,12 @@ export default function NavBar(props) {
     <nav className={props.className}> 
       <ul>
         <li>
-          <Link to={'/AgentProfile'}>
-            איזור אישי לסוכנים
-          </Link>
-          {/* <Link to={'/Login'}>
+          {/* <Link to={'/AgentProfile'}>
             איזור אישי לסוכנים
           </Link> */}
+          <Link to={'/Login'}>
+            איזור אישי לסוכנים
+          </Link>
         </li>
         {/* <li> 
           <Link to='/Login'>איזור אישי לסוכנים</Link> 

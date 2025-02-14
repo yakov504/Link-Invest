@@ -1,12 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../context/AuthProvider";
+// import LoadingSpiner from '../assets/UIElemnt/LoadingSpinner'
 import './Login.css';
 
 export default function Login() {
-  const { login } = useAuth();
+  // const { login, error } = useAuth();
   const [values, setValues] = useState({ email: "", password: "" });
-  const [error, setError] = useState(null);
+  const [ error, setError ] = useState()
+  // const [ isLoading , setIsLoading ] = useState(true)
   const navigate = useNavigate();
 
   const handleInput = (e) => {
@@ -15,17 +17,45 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await login(values.email, values.password);
+    try{
+      const result = fetch("http://127.0.0.1:3000/api/v1/users/login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password
+        })
+        
+      })
+      
+      const responseData = await (await result).json();
+      if(!result.ok){
+        throw new Error(responseData.message)
+      }
+      navigate('/AgentProfile');
+      console.log(responseData);
+      handleSubmit()
+      // setIsLoading(false)
+      
+    }catch(err){
 
-    if (!result.success) {
-      setError(result.message);
-      return;
+      if (!result.success) {
+        console.log(err);
+        // setIsLoading(false)
+        setError(err.message || 'משהו השתבש, נסה מאוחר יותר');
+        return;
+      }
     }
-    navigate('/AgentProfile');
+  
   };
 
+
   return (
+    // <React.Fragment>
     <div className='loginContainer'>
+      {/* {isLoading && <LoadingSpiner asOverlay/>} */}
       <div className="head">
         <h1>התחבר לפני שאתה ממשיך</h1>
       </div>
@@ -61,6 +91,7 @@ export default function Login() {
         </form>
       </div>
     </div>
+    // </React.Fragment>
   );
 }
 

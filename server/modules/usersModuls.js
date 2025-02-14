@@ -18,7 +18,7 @@ const usersSchema = new mongoose.Schema({
       lowercase: true,
       validate: {
          validator: validator.isEmail,
-         message: 'המייל שסיפקת לא תקין'
+         message: 'המייל שסיפקת קיים מערכת'
      }
    },
 

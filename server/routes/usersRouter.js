@@ -23,9 +23,9 @@ router.patch('/updateMyPassword',authController.updatePassword)
 
 // router.get('/logme', usersController.getUser)
 router.get('/me',authController.protect, 
-   newAuthController.authMiddleware, 
-   usersController.getMe)
-   // , usersController.getUser)
+   usersController.getMe
+   , usersController.getUser)
+   // newAuthController.authMiddleware, 
 router.patch('/updateMe', usersController.updateMe)
 
 

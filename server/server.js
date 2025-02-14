@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose')
 const cors = require('cors')
 const dotenv = require('dotenv')
+const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit')
 const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
@@ -17,6 +18,21 @@ dotenv.config({path:'./config.env'})
 const app = express();
 
 /// GLOBAL MIDDELEWARES ///
+
+// Middleware לניתוח JSON
+app.use(bodyParser.json());
+// Middleware לניתוח נתונים מטופס (URL Encoded)
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(( req, res, next) => {
+   res.setHeader('Access-Control-Allow-Origin', '*')
+   res.setHeader('Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+   );
+   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+
+   next()
+});
 
 /// set security HTTP headers
 app.use(helmet())

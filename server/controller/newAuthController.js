@@ -1,11 +1,11 @@
-// const crypto = require('crypto')
+const crypto = require('crypto')
 const { promisify } = require('util')
 // const jose = require('jose')
 const jwt = require('jsonwebtoken')
 const User = require('../modules/usersModuls')
 const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
-const { error } = require('console')
+// const { error } = require('console')
 
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -30,8 +30,9 @@ exports.login = catchAsync(async (req, res, next) => {
        name: user.name 
       }, 
       process.env.JWT_SECRET, {
-      expiresIn: "10s", 
+      expiresIn: "15m", 
    });
+   console.log("Access Token Sent:", accessToken);
 
    const refreshToken = jwt.sign(
       { 
@@ -189,181 +190,6 @@ exports.authMiddleware = (req, res, next) => {
 //       .sign(new TextEncoder().encode(process.env.JWT_SECRET)); // חתימה עם הסוד
 // };
 
-// const verifyToken = async (token, options = undefined) => {
-//    try {
-//       const verification = await jose.jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
-//       return options?.returnPayload ? verification.payload : true;
-//    } catch (error) {
-//       console.error("Token verification failed:", error);
-//       return false;
-//    }
-// };
-
-   
-// exports.refreshToken = catchAsync(async (req, res, next) => {
-//    // 1) קבלת ה-Refresh Token מהעוגייה
-//    console.log("Cookies received:", req.cookies);
-//    const refreshToken = req.cookies.refreshToken;
-
-//    if (!refreshToken) {
-//      return next(new AppError("No refresh token found", 403));
-//    }
- 
-//    try {
-//      // 2) אימות ה-Refresh Token
-//      const decoded = await promisify(jwt.verify)(refreshToken, process.env.JWT_SECRET);
- 
-//      // 3) בדיקה אם המשתמש קיים
-//      const user = await User.findById(decoded.id);
-//      if (!user) {
-//        return next(new AppError("User no longer exists", 403));
-//      }
- 
-//      // 4) יצירת Access Token חדש
-//      const newAccessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-//        expiresIn: "15m", // תוקף של 15 דקות
-//      });
- 
-//      res.status(200).json({ accessToken: newAccessToken });
-//    } catch (error) {
-//      return next(new AppError("Invalid refresh token", 403));
-//    }
-//  });
-   
-// const signToken = (id) => {
-//    return jwt.sign({ id }, process.env.JWT_SECRET, {
-//       expiresIn: "15m",
-//    });
-// };
-
-// // פונקציה ליצירת Refresh Token
-// exports.generateRefreshToken = async (data) => {
-//    return await new jose.SignJWT(data)
-//       .setProtectedHeader({ alg: "HS256" })
-   
-//       .setExpirationTime("7d")
-//       .sign(new TextEncoder().encode(process.env.JWT_SECRET));
-// };
-
-// // אימות טוקן
-// const verifyToken = async (token, options = undefined) => {
-//    try {
-//       const verification = await jose.jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
-//       return options?.returnPayload ? verification.payload : true;
-//    } catch (error) {
-//       console.error("Token verification failed:", error);
-//       return false;
-//    }
-// };
-
-// // פונקציה להגנה על ראוטים (Middleware)
-// exports.protect = catchAsync(async (req, res, next) => {
-//    let token;
-
-//    // 1️⃣ קבלת ה-Access Token מה-Header או מה-Cookie
-//    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-//       token = req.headers.authorization.split(' ')[1];
-//    } else if (req.cookies.refreshToken) {
-//       console.log("Trying to use refresh token for new access token...");
-//       return next(); // המערכת תנסה להוציא Access Token חדש עם ה-Refresh Token
-//    }
-
-//    if (!token) {
-//       return next(new AppError('You are not logged in', 401));
-//    }
-
-//    // 2️⃣ אימות ה-Access Token
-//    try {
-//       const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
-//       // 3️⃣ בדיקה אם המשתמש קיים
-//       const currentUser = await User.findById(decoded.id);
-//       if (!currentUser) {
-//          return next(new AppError('The user belonging to this token does no longer exist', 401));
-//       }
-
-//       // 4️⃣ בדיקה אם המשתמש שינה סיסמה אחרי יצירת ה-Token
-//       if (currentUser.changedPasswordAfter(decoded.iat)) {
-//          return next(new AppError('User recently changed password, please log in again', 401));
-//       }
-
-//       req.user = currentUser;
-//       next();
-//    } catch (err) {
-//       console.error("Access Token verification failed:", err);
-//       return next(new AppError('Invalid or expired token, please log in again', 401));
-//    }
-// });
-
-// // פונקציה לרענון ה-Access Token עם Refresh Token
-// exports.refreshToken = catchAsync(async (req, res, next) => {
-//    console.log("Cookies received:", req.cookies);
-//    const refreshToken = req.cookies.refreshToken;
-
-//    if (!refreshToken) {
-//       return next(new AppError("No refresh token found", 403));
-//    }
-
-//    try {
-//       // 1️⃣ אימות ה-Refresh Token
-//       const decoded = await verifyToken(refreshToken, { returnPayload: true });
-
-//       // 2️⃣ בדיקה אם המשתמש קיים
-//       const user = await User.findById(decoded.id);
-//       if (!user) {
-//          return next(new AppError("User no longer exists", 403));
-//       }
-
-//       // 3️⃣ יצירת Access Token חדש
-//       const newAccessToken = signToken(user._id);
-
-//       res.status(200).json({ accessToken: newAccessToken });
-//    } catch (error) {
-//       return next(new AppError("Invalid refresh token", 403));
-//    }
-// });
-
-// // פונקציה להתחברות משתמש
-// exports.login = catchAsync(async (req, res, next) => {
-//    const { email, password } = req.body;
-//    console.log("Login attempt:", email);
-
-//    if (!email || !password) {
-//       return next(new AppError("Please provide email and password", 400));
-//    }
-
-//    const user = await User.findOne({ email }).select("+password");
-
-//    if (!user || !(await user.correctPassword(password, user.password))) {
-//       return next(new AppError("Incorrect email or password", 401));
-//    }
-
-//    // יצירת Access Token + Refresh Token
-//    const accessToken = signToken(user._id);
-//    const refreshToken = await exports.generateRefreshToken({ id: user._id });
-
-//    console.log("Generated tokens", { accessToken, refreshToken });
-
-//    // שמירת ה-Refresh Token בעוגייה מאובטחת
-//    res.cookie("refreshToken", refreshToken, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production",
-//       sameSite: "Strict",
-//       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ימים
-//    });
-
-//    user.password = undefined;
-
-//    res.status(200).json({
-//       status: "success",
-//       data: {
-//          accessToken,
-//          user
-//       }
-//    });
-
-//    console.log("Login successful for user:", user._id);
-// });
 
 
 

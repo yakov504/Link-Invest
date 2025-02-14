@@ -12,63 +12,68 @@ export const useAuth = () => {
 };
 
 export default function AuthProvider({ children }) {
-  const [accessToken, setAccessToken] = useState(null);
+  // const [accessToken, setAccessToken] = useState(null);
   const [user, setUser] = useState(null);
   const [ error, setError ] = useState()
 
 
-  const login = async (e) => {
+  const login = async (email, password) => {
     try{
-
-      const result = fetch("http://127.0.0.1:3000/api/v1/users/login", {
+      const response = await fetch("http://127.0.0.1:3000/api/v1/users/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: values.email,
-          password: values.password
+          email: email,
+          password: password
         })
         
       })
       
-      const responseData = await (await result).json();
-     console.log(responseData);
-      
-    }catch(err){
-
-      if (!result.success) {
-        setError(result.message);
-        console.log(error);
-        return;
+      const responseData = await response.json();
+      if(!response.ok){
+       throw new Error(responseData.message|| "Login failed")
       }
+     setUser(responseData)
+    //  console.log(responseData);
+    console.log("user data",responseData); 
+     console.log("user:",user);
+     
+     return { success: true, responseData };
+    // useAuth.login()
+    }catch(err){
+      setError(err.message);
+      console.log(error);
+      return { success: false, message: err.message };
     }
   }
   
-  const getUserData = async (token) => {
-    try {
-      const response = await axios.get("http://127.0.0.1:3000/api/v1/users/me", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        },
-        withCredentials: true
-      });
-      console.log("User Data Response:", response);
-      setUser(response.data);
-    } catch (error) {
-      console.error("Failed to fetch user data:", error);
-    }
-  };
+  // const getUserData = async (token) => {
+  //   try {
+  //     const response = await axios.get("http://127.0.0.1:3000/api/v1/users/me", {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`
+  //       },
+  //       withCredentials: true
+  //     });
+  //     console.log("User Data Response:", response);
+  //     setUser(response.data);
+  //   } catch (error) {
+  //     console.error("Failed to fetch user data:", error);
+  //   }
+  // };
   
 
-  const logout = async () => {
-    await axios.post("http://127.0.0.1:3000/api/v1/users/logout", {}, { withCredentials: true });
-    setAccessToken(null);
-    setUser(null);
-  };
+  // const logout = async () => {
+  //   await axios.post("http://127.0.0.1:3000/api/v1/users/logout", {}, { withCredentials: true });
+  //   setAccessToken(null);
+  //   setUser(null);
+  // };
 
   return (
-    <AuthContext.Provider value={{ accessToken, user, login, logout, getUserData }}>
+    <AuthContext.Provider value={{ user, login, error }}>
+       {/* getUserData,logout */}
       {children}
     </AuthContext.Provider>
  

@@ -5,9 +5,9 @@ import { useAuth } from "../context/AuthProvider";
 import './Login.css';
 
 export default function Login() {
-  // const { login, error } = useAuth();
+  const { login, error } = useAuth();
   const [values, setValues] = useState({ email: "", password: "" });
-  const [ error, setError ] = useState()
+  // const [ error, setError ] = useState()
   // const [ isLoading , setIsLoading ] = useState(true)
   const navigate = useNavigate();
 
@@ -17,39 +17,49 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const result = fetch("http://127.0.0.1:3000/api/v1/users/login", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password
-        })
-        
-      })
-      
-      const responseData = await (await result).json();
-      if(!result.ok){
-        throw new Error(responseData.message)
-      }
-      navigate('/AgentProfile');
-      console.log(responseData);
-      handleSubmit()
-      // setIsLoading(false)
-      
-    }catch(err){
-
-      if (!result.success) {
-        console.log(err);
-        // setIsLoading(false)
-        setError(err.message || 'משהו השתבש, נסה מאוחר יותר');
-        return;
-      }
+    const response = await login(values.email, values.password);
+    if (response.success) {
+      navigate("/AgentProfile");
+    } else {
+      console.log(response.message);
     }
-  
   };
+  
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try{
+  //     const result = fetch("http://127.0.0.1:3000/api/v1/users/login", {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         email: values.email,
+  //         password: values.password
+  //       })
+        
+  //     })
+      
+  //     const responseData = await (await result).json();
+  //     if(!result.ok){
+  //       throw new Error(responseData.message)
+  //     }
+  //     navigate('/AgentProfile');
+  //     console.log(responseData);
+  //     handleSubmit()
+  //     // setIsLoading(false)
+      
+  //   }catch(err){
+
+  //     if (!result.success) {
+  //       console.log(err);
+  //       // setIsLoading(false)
+  //       setError(err.message || 'משהו השתבש, נסה מאוחר יותר');
+  //       return;
+  //     }
+  //   }
+  
+  // };
 
 
   return (

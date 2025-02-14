@@ -9,7 +9,7 @@ import axios from "axios";
 import NavSide from "./NavSide";
 
 export default function AgentProfile() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   // const [ demo, setDemo ] = useState({name:"יעקוב יעקובוב",
   //    email:"yakov202.yy@gmail.com",
   //    phone: "0546080824",
@@ -31,7 +31,7 @@ export default function AgentProfile() {
         <p><CiMail className="icon"/> <span>{user.email}</span></p>
         <p><IoIosPhonePortrait className="icon"/> <span>{user.phone}</span></p>
         <p><FaPersonCircleQuestion className="icon"/> <span>{user.role}</span></p>
-        <button onClick={logout}>התנתק</button>
+        {/* <button onClick={logout}>התנתק</button> */}
       </div>
     </div>
   );

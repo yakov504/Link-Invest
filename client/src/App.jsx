@@ -12,6 +12,9 @@ import AgentProfile from './components/Profile/AgentProfile';
 import NavBar from './components/NavBar';
 import Login from './components/Login';
 import BuySellRent from './components/HomePage/BuySellRent'
+import DailyIndicator from './components/Profile/Indicators/DailyIndicator';
+import AllIndicators from './components/Profile/Indicators/AllIndicators'
+// import AllAgents from './components/Profile/Agents/Agents'
 
 export default function App() {
   // const { user, getUserData } = useAuth();
@@ -51,7 +54,10 @@ export default function App() {
           <Route path="/AgentProfile" element={<AgentProfile/>}/> 
           {/* // user={user} />} /> */}
           <Route path="/" element={<HomePage />} />
-          <Route path='/BuySellRent' element={<BuySellRent />} />
+          <Route path='/BuySellRent' element={<BuySellRent />}/>
+          <Route path='/DailyIndicator' element={<DailyIndicator />}/>
+          <Route path='/AllIndicators' element={<AllIndicators />}/>
+          {/* <Route path='/AllAgents' element={<AllAgents />}/> */}
         </Routes>
       </AuthProvider>
     </div>

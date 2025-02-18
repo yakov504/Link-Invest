@@ -22,6 +22,7 @@ export default function AuthProvider({ children }) {
     try{
       const response = await fetch("http://127.0.0.1:3000/api/v1/users/login", {
         method: 'POST',
+        credentials:'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -36,12 +37,11 @@ export default function AuthProvider({ children }) {
       if(!response.ok){
        throw new Error(responseData.message|| "Login failed")
       }
-     setUser(responseData)
-    //  console.log(responseData);
-    console.log("user data",responseData); 
-     console.log("user:",user);
+      setUser(responseData.data.user)
+      console.log("user data",responseData); 
+
      
-     return { success: true, responseData };
+      return { success: true, responseData };
     // useAuth.login()
     }catch(err){
       setError(err.message);
@@ -50,6 +50,27 @@ export default function AuthProvider({ children }) {
     }
   }
   
+  // const getUserData = async() => {
+  //   try{
+  //     const response = await fetch("http://127.0.0.1:3000/api/v1/users/login", {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify()
+  //     })
+
+  //     const responseData = await response.json();
+  //     if(!response.ok){
+  //       throw new Error(responseData.message|| "cont fetch user data")
+  //      }
+  //      return { success: true, responseData };
+  //   }catch(err){
+  //     setError(err.message);
+  //     console.log(error);
+  //     return { success: false, message: err.message };
+  //   }
+  // }
   // const getUserData = () => {
   //   useEffect(() => {
   //     const sendRequest = async () => {
@@ -83,7 +104,7 @@ export default function AuthProvider({ children }) {
   // };
 
   return (
-    <AuthContext.Provider value={{ user, login, error }}>
+    <AuthContext.Provider value={{ user, login, error}}>
        {/* getUserData,logout */}
       {children}
     </AuthContext.Provider>

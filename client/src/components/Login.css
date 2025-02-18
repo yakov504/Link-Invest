@@ -13,9 +13,14 @@
    width: 510px;
    min-width: 300px;
    min-height: 350px;
-   border: solid 1px white;
-   border-radius: 2px 30px 2px 30px;
-   font-family: "Secular One", serif;
+   border: solid 1px transparent;
+   border-top: solid 2px white;
+   border-bottom: solid 2px white;
+   border-image-source: linear-gradient(to right, transparent, white, white, transparent);
+   border-image-slice: 1;
+   /* border: solid 1px white;
+   border-radius: 2px 30px 2px 30px; */
+   /* font-family: "Secular One", serif;s */
 
 }
 
@@ -26,7 +31,7 @@
 
 }
 .inputs{
-   margin-top: 28px;
+   margin-top: 20px;
    display: flex;
    flex-direction: column;
    gap: 12px;

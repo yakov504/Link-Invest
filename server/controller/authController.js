@@ -6,6 +6,7 @@ const User = require('../modules/usersModuls')
 const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
 const sendEmail = require('../utils/email')
+const { log } = require('console')
 
 const signToken = (id, email) => {
    return jwt.sign({id, email}, process.env.JWT_SECRET, {
@@ -21,15 +22,16 @@ const createSendToken = ( user, statusCode, res ) => {
          Date.now()+ process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000 // 7d
       ),
       httpOnly: true, // מונע גישה מה-frontend
-      secure: process.env.NODE_ENV === 'production',
+      secure: false,
       sameSite: 'None' // כדי לאפשר שליחת ה-cookie בבקשות רגילות
       
    };
    //remove the password from the output
 
-   res.cookie('jwt', token, cookieOptions);
+   res.cookie('token', token, cookieOptions);
    user.password = undefined
-
+   
+   console.log("token:",token);
    res.status(statusCode).json({
       status: 'success',
       token,
@@ -51,6 +53,8 @@ exports.signUp = catchAsync(async( req, res ,next ) => {
 
 exports.login = catchAsync(async( req, res, next ) => {
    const { email, password } = req.body;
+   console.log(email, password ,"req body");
+   
    ///1.לבדוק אם המייל קיים///
    if(!email || !password){
       return next( new AppError('please provide eamil and password', 400))
@@ -61,9 +65,7 @@ exports.login = catchAsync(async( req, res, next ) => {
    if (!user || !(await user.correctPassword(password, user.password))) {
       return next(new AppError('incorrect email or password', 401))
    }
-
    console.log('Cookies received:', req.cookies);
-
    ///3. אם הכל נכון לשלוח token ללקוח 
    createSendToken(user, 200, res)
 })

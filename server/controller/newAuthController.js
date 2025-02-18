@@ -189,7 +189,64 @@ exports.authMiddleware = (req, res, next) => {
 // };
 
 
-
+// / exports.login = catchAsync(async (req, res, next) => {
+   //    const { email, password } = req.body;
+   
+   //    // 1️ בדיקה אם התקבלו אימייל וסיסמה
+   //    if (!email || !password) {
+   //       return next(new AppError("Please provide email and password", 400));
+   //    }
+   
+   //    // 2️ בדיקה אם המשתמש קיים ואם הסיסמה נכונה
+   //    const user = await User.findOne({ email }).select("+password");
+   
+   //    if (!user || !(await user.correctPassword(password, user.password))) {
+   //       return next(new AppError("Incorrect email or password", 401));
+   //    }
+   
+   //    // 3️ יצירת Access Token + Refresh Token
+   //    const accessToken = jwt.sign(
+   //       {
+   //        id: user._id,
+   //        name: user.name 
+   //       }, 
+   //       process.env.JWT_SECRET, {
+   //       expiresIn: "10s", 
+   //       expiresIn: "15m", 
+   //    });
+   //    console.log("Access Token Sent:", accessToken);
+   
+   //    const refreshToken = jwt.sign(
+   //       { 
+   //         id: user._id ,
+   //         name: user.name   
+   //       },  process.env.JWT_SECRET, {
+   //          expiresIn: process.env.JWT_COOKIE_EXPIRES_IN , //7d
+   //       }); 
+   //    console.log("Generated tokens", { accessToken, refreshToken })
+   
+   //    // 4️. create secure cookie with refresh token
+   //    res.cookie("jwt", refreshToken, {
+   //       httpOnly: true, // מונע גישה מהלקוח (XSS)
+   //       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+   //       // secure: process.env.NODE_ENV === "production",
+   //        // מגביל שליחת עוגיות רק מהשרת שלנו
+   //       maxAge: 7 * 24 * 60 * 60 * 1000, // תוקף של 7 ימים
+   //    });
+   
+   //    user.password = undefined
+   
+   //    // 5️ שליחת ה-Access Token ללקוח בתגובה
+   //    res.status(200).json({
+   //       status: "success",
+   //       data: {
+   //          accessToken,
+   //          user
+   //       }
+   //    });
+   
+   //    console.log("Login successful for user:", user._id);
+   // });
 
 
 

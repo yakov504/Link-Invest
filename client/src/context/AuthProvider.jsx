@@ -17,7 +17,7 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [ error, setError ] = useState()
 
-  console.log("stam")
+  console.log("dafa satm")
   const login = async (email, password) => {
     try{
       const response = await fetch("http://127.0.0.1:3000/api/v1/users/login", {

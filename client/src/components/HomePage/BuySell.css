@@ -1,0 +1,161 @@
+.buySellForm {
+   position: absolute;
+   top: 50%;
+   left: 50%; 
+   transform: translate(-50%, -50%);
+   /* margin-top: 50px; */
+   /* width: 100%; */
+   height: 400px;
+   width: 650px;
+   display: flex;
+   /* justify-content: center; */
+   /* align-items: center; */
+   padding: 20px;
+   border: solid 1px transparent;
+   border-top: solid 2px white;
+   border-bottom: solid 2px white;
+   border-image-source: linear-gradient(to right, transparent, white, white, transparent);
+   border-image-slice: 1;
+ }
+ 
+ .buySellText {
+   flex: 1;
+   margin-left: 20px;
+   margin-right: 20px;
+   width: 100%;
+   display: flex;
+   flex-direction: column; /* הופך את התוכן לעמודה */
+   justify-content: center;
+ }
+
+ .buySellText h2{
+   font-size: 25px;
+   transition: color 0.3s ease, background-color 0.3s ease;
+   margin: 0 10px;
+   padding-bottom: 5px;
+   align-items: center;
+   position: relative; 
+   display: inline-block;
+ }
+
+ .buySellText h2::after {
+   content: ""; 
+   position: absolute;
+   left: 0;
+   bottom: 0; 
+   width: 0; 
+   height: 2px; 
+   background-color: white; 
+   transition: width 1s ease; 
+ }
+
+ .buySellText h2:hover::after {
+   width: 100%; /* Expand the line to full width on hover */
+ }
+
+ .buySellText p{
+   margin-top: 15px;
+ }
+
+ .yad2Btn{
+   text-align: center;
+   /* font-family: "Fredoka", serif; */
+   /* font-family: "Secular One", serif; */
+   color: white;
+   font-size: 18px;
+   font-weight: 100;
+   padding-top:3px ;
+   padding-bottom:3px ;
+   width: 250px;
+   /* background-color: none; */
+   background-color: transparent;
+   border: solid 1px white;
+   border-radius: 2px 30px 2px 30px;
+   transition: color 0.3s ease, background-color 0.3s ease;
+ 
+ }
+ 
+ .yad2Btn:hover{
+   border-color:#6cd3ef ;
+   cursor: pointer;
+ 
+ }
+
+ .buySellForm img {
+   flex: 1;
+   max-width: 50%;
+   height: 100%;
+   object-fit: cover; /* שומר על יחס הממדים של התמונה */
+   -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 20%, rgb(0, 0, 0) 700%, transparent);
+   mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 0%, transparent);
+}
+ 
+ .inputs input, select {
+   display: flex;
+   flex-direction: column;
+   margin-bottom: 10px;
+   padding: 10px;
+ }
+ 
+ .sendBtn {
+   text-align: center;
+   /* font-family: "Fredoka", serif; */
+   /* font-family: "Secular One", serif; */
+   color: white;
+   font-size: 18px;
+   font-weight: 100;
+   padding-top:3px ;
+   padding-bottom:3px ;
+   width: 250px;
+   /* background-color: none; */
+   background-color: transparent;
+   border: solid 1px white;
+   border-radius: 2px 30px 2px 30px;
+   transition: color 0.3s ease, background-color 0.3s ease;
+   
+}
+    
+.sendBtn:hover{
+   border-color:#6cd3ef ;
+   cursor: pointer;
+}
+
+ @media only screen and (max-width: 40em) {
+   .buySellForm {
+      position: absolute;
+      top: 50%;
+     display: flex;
+     flex-direction: column; /* ממיר את כל התוכן לעמודה */
+     align-items: center; /* ממורכז את התוכן */
+     justify-content: center; /* ממורכז את התוכן */
+     border: none;
+     margin-top: 50px;
+     padding: 20px;
+   }
+ 
+   .buySellText {
+      flex-direction: column; /* ממיר את כל התוכן לעמודה */
+     align-items: center; /* ממורכז את התוכן */
+     justify-content: center; 
+     width: 100%; 
+     margin-bottom: 20px; /* קצת ריווח בין הטקסט לטופס */
+   }
+ 
+   .inputs {
+     width: 100%; /* ודא שהטופס תופס את כל רוחב המסך */
+     display: flex;
+     flex-direction: column; /* הופך את שדות הטופס לעמודה */
+     gap: 10px; /* ריווח בין השדות */
+   }
+ 
+   .buySellForm img {
+     max-width: 60%; /* התמונה תופסת את כל רוחב המסך */
+     height: auto; /* שומר על יחס הממדים של התמונה */
+     margin-top: 20px; /* ריווח בין הטופס לתמונה */
+   }
+ 
+   .sendBtn {
+     width: 100%; /* כפתור שנמתח לכל רוחב המסך */
+   }
+ }
+ 

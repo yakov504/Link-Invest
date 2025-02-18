@@ -90,6 +90,11 @@ mongoose.connect(process.env.DATABASE_MONGO_CONNECTION || process.env.DATABASE_L
 app.use('/api/v1/indicators', indicatorsRouter)
 app.use('/api/v1/users', userRouter)
 
+///DEMY ROUTER
+app.get('/api/v1/test', (req, res) => {
+   res.json ({ message:'test route'})
+})
+
 /// HANDAL ERR ROUTER ///
 app.all('*', (req, res, next) => {
    res.status(404).json({

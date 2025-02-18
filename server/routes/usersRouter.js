@@ -10,24 +10,24 @@ const router = express.Router();
 router.use('/:userId/indicators', indicatorsRouter)
 
 router.post('/signUp', authController.signUp)
-// router.post('/login', authController.login)
-router.post('/login', newAuthController.login)
+router.post('/login', authController.login)
+// router.post('/login', newAuthController.login)
 router.post('/refreshToken', newAuthController.refresh)
 
 router.post('/forgotPassword', authController.forgotPassword)
 router.patch('/resetPassword/:token', authController.resetPassword)
 
-// router.use(authController.protect)
+router.use(authController.protect)
 
 router.patch('/updateMyPassword',authController.updatePassword)
 
 // router.get('/logme', usersController.getUser)
-router.get('/me',authController.protect, 
-   usersController.getMe
-   , usersController.getUser)
-   // newAuthController.authMiddleware, 
+router.get('/me',usersController.getMe)
+   // , usersController.getUser)
+   // newAuthController.authMiddleware,
+    
 router.patch('/updateMe', usersController.updateMe)
-
+router.get('/logout', authController.logout)  
 
 router.route('/').get(usersController.getAllUsers, authController.restrictTo('admin'))
 .post(usersController.createUser);

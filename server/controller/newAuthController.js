@@ -1,4 +1,4 @@
-const crypto = require('crypto')
+// const crypto = require('crypto')
 const { promisify } = require('util')
 // const jose = require('jose')
 const jwt = require('jsonwebtoken')
@@ -6,7 +6,6 @@ const User = require('../modules/usersModuls')
 const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
 // const { error } = require('console')
-
 
 exports.login = catchAsync(async (req, res, next) => {
    const { email, password } = req.body;
@@ -65,7 +64,6 @@ exports.login = catchAsync(async (req, res, next) => {
 
    console.log("Login successful for user:", user._id);
 });
-
 
 exports.refresh = ( req, res ) => {
    const cookies = req.cookies

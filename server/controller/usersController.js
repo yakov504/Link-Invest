@@ -14,12 +14,23 @@ const filterObj = (obj, ...allowedField) =>{
    return newObj;
 }
 
-exports.getMe = async(req , res, next) => {
-   const user = await User.findById(req.user.id).select('-password');
-   res.json(user);
-   // req.params.id = req.user.id;
-   next();
-}
+exports.getMe = async (req, res, next) => {
+   try {
+     const user = await User.findById(req.user.id);
+     if (!user) {
+       return res.status(404).json({ message: 'User not found' });
+     }
+     res.json(user);
+   } catch (err) {
+     next(err);  // העבר את השגיאה ל-middlewares נוספים אם יש
+   }
+ };
+// exports.getMe = async(req , res, next) => {
+//    const user = await User.findById(req.user.id).select('-password');
+//    res.json(user);
+//    // req.params.id = req.user.id;
+//    next();
+// }
 
 exports.updateMe = catchAsync(async( req, res, next ) =>{
    //1.create err if user post password data

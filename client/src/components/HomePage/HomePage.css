@@ -58,7 +58,7 @@
 
  .options{
   height: 300px;
-  width: 280px;
+  width: 380px;
   margin-left: 20px;
   margin-right: 20px;
  }
@@ -71,7 +71,7 @@
  }
 
  /* .options img:hover{
-  transform: scale(1.1); 
+  transform: scale(1.03); 
 
  } */
 
@@ -372,12 +372,22 @@
  }
  @media only screen and (max-width: 45em) {
 
+  .options_buy_sell{
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+  }
+
+  .options_buy_sell .options{
+    margin-top: 100px;
+  }
     .whyW {
       flex-direction: column;
       align-items: center;
     }
   
-    .reasons {
+    .whyW .reasons {
+      margin-top: -25px;
       width: 50%; /* מתאים את ה-div לרוחב המסך */
     }
    .footer {

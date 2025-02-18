@@ -4,11 +4,19 @@ import Footer from './Footer'
 import './HomePage.css'
 
 import haifaN from '../../assets/image/haifaNghit.jpg'
-import sell from '../../assets/image/sell.jpg'
-import buy from '../../assets/image/buy1.jpg'
-import rent from '../../assets/image/rent.jpg'
+// import sell from '../../assets/image/sell.jpg'
+import sell from '../../assets/image/IMG_8928.jpg'
+
+// import buy from '../../assets/image/buy1.jpg'
+import buy from '../../assets/image/link-3-twr.jpg'
+
+// import rent from '../../assets/image/rent.jpg'
+import rent from '../../assets/image/link-tawer.jpg'
+
 import agentVideo from '../../assets/video/agentsVideo.mp4'
-import linkVideo from '../../assets/video/linkVideo.mp4'
+// import linkVideo from '../../assets/video/link-vid-nologo.mp4'
+import linkVideo from '../../assets/video/link-vid13sc.mp4'
+
 
 import { FaHandshake } from "react-icons/fa";
 import { GrUpdate } from "react-icons/gr";

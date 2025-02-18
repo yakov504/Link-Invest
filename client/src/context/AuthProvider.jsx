@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import customFetch from '../utils/customFetch'
 
 const AuthContext = createContext(undefined);
 
@@ -49,6 +50,16 @@ export default function AuthProvider({ children }) {
     }
   }
   
+  // const getUserData = () => {
+  //   useEffect(() => {
+  //     const sendRequest = async () => {
+  //       const response = await fetch("http://127.0.0.1:3000/api/v1/users/me")
+
+  //       const responseData = await response.json();
+  //     }
+  //     sendRequest();
+  //   }, []);
+  // }
   // const getUserData = async (token) => {
   //   try {
   //     const response = await axios.get("http://127.0.0.1:3000/api/v1/users/me", {

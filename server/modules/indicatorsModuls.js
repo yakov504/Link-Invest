@@ -4,32 +4,32 @@ const User = require('./usersModuls');
 
 const indicatorsSchema = new mongoose.Schema({
 
-   פגישות:{
+   meetings:{
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },
 
-   בלעדיות:{
+   meetings:{
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },
 
-   עדכון_מחיר:{
+   priceUpdates:{
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },
 
-   סיור_קונים:{
+   buyerTours:{
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },
 
-   הצעות_מחיר:{
+   priceOffers:{
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },
 
-   עסקאות:{
+   deals:{
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },
@@ -97,12 +97,12 @@ indicatorsSchema.pre(/^find/, function(next) {
 })
 
 // const testAgent = new Agents({
-//    פגישות:0,
-//    בלעדיות:0,
-//    עדכון_מחיר:0,
-//    סיור_קונים:5,
-//    הצעות_מחיר:1,
-//    עסקאות:0,
+//    meetings:0,
+//    exclusives:0,
+//    priceUpdates:0,
+//    buyerTours:5,
+//    priceOffers:1,
+//    deals:0,
 // });
 
 // testAgent.save().then(doc => {

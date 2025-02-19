@@ -17,7 +17,6 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [ error, setError ] = useState()
 
-  console.log("dafa satm")
   const login = async (email, password) => {
     try{
       const response = await fetch("http://127.0.0.1:3000/api/v1/users/login", {
@@ -99,12 +98,11 @@ export default function AuthProvider({ children }) {
 
   // const logout = async () => {
   //   await axios.post("http://127.0.0.1:3000/api/v1/users/logout", {}, { withCredentials: true });
-  //   setAccessToken(null);
   //   setUser(null);
   // };
 
   return (
-    <AuthContext.Provider value={{ user, login, error}}>
+    <AuthContext.Provider value={{ user, login, error }}>
        {/* getUserData,logout */}
       {children}
     </AuthContext.Provider>

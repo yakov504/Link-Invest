@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import'./NavBar.css'
-// import { AuthProvider } from '../context/AuthProvider';
+import { useAuth } from '../context/AuthProvider';
 import logo from '../assets/image/link_logo.png'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 export default function NavBar(props) {
-  // const { user, loading } = useContext(AuthProvider);
+  const { user } = useAuth();
 
   // useEffect(() => {
   //   if (!loading && !user) {
@@ -23,13 +23,11 @@ export default function NavBar(props) {
           {/* <Link to={'/AgentProfile'}>
             איזור אישי לסוכנים
           </Link> */}
-          <Link to={'/Login'}>
+          { user === null ? <Link to={'/Login'}>
+            איזור אישי לסוכנים</Link> : <Link to={'/AgentProfile'}>
             איזור אישי לסוכנים
-          </Link>
+          </Link> } 
         </li>
-        {/* <li> 
-          <Link to='/Login'>איזור אישי לסוכנים</Link> 
-        </li>  */}
         <li> 
           <Link to='/'>עמוד הבית</Link>
         </li> 

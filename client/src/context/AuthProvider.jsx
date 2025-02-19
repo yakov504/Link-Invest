@@ -43,7 +43,7 @@ export default function AuthProvider({ children }) {
       return { success: true, responseData };
     // useAuth.login()
     }catch(err){
-      setError(err.message);
+      setError('משהו השתבש נסה שוב');
       console.log(error);
       return { success: false, message: err.message };
     }

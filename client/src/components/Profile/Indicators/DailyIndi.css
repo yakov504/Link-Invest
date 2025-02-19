@@ -3,7 +3,7 @@
    top: 50%;
    left: 50%; 
    transform: translate(-50%, -50%);
-   height: 450px;
+   height: 300px;
    width: 630px;
    display: flex;
    flex-direction: column;
@@ -21,6 +21,7 @@
    text-align: center;
    transition: color 0.3s ease, background-color 0.3s ease;
    margin: 0 10px;
+   margin-top: 35px;
    margin-bottom: 20px;
    padding-bottom: 5px;
    position: relative; 
@@ -42,18 +43,22 @@
    width: 100%; /* Expand the line to full width on hover */
 }
 
-.dailyInputs{
-   align-items: center;
+.dailyInputs {
    display: flex;
-   flex-direction:column;
+   flex-wrap: wrap; /* מאפשר שבירה לשורה חדשה */
+   gap: 10px; /* רווחים בין האינפוטים */
+   justify-content: center; /* ממרכז את התוכן */
+   width: 100%;
+   max-width: 650px;
+   margin: 0 auto;
 }
 
-.dailyInputs input{
-   margin-top: 5px;
-   margin-bottom: 7px;
+.dailyInputs input {
+   flex: 1;
+   min-width: 150px; /* גודל מינימלי כדי למנוע כיווץ יתר */
    padding: 10px;
-   width: 30%;
    font-size: 15px;
+   /* text-align: center; */
 }
 
 .dailyStatusBtn{
@@ -77,11 +82,10 @@
 
 }
 
-
 @media only screen and (max-width: 40em) {
    .dailyIndicators {
-      position: absolute;
-      top: 50%;
+     position: absolute;
+     top: 50%;
      display: flex;
      flex-direction: column; /* ממיר את כל התוכן לעמודה */
      align-items: center; /* ממורכז את התוכן */
@@ -91,6 +95,6 @@
      padding: 20px;
    }
    .dailyInputs input{
-      width: 80%;
+      width: 50%;
    }
 }

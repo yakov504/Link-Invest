@@ -30,6 +30,7 @@ export default function BuySellRent() {
 
       if (response.ok) {
         console.log('Email sent successfully!');
+        setFormData({ name: '', phone: '', category: '' });
       } else {
         console.log('Failed to send email.');
       }

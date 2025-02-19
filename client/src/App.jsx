@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
-import { useAuth } from './context/AuthProvider';
+import IndicateProvider from './context/IndicateProvider'
+// import { useAuth } from './context/AuthProvider';
 import axios from 'axios'
 
 import './App.css';
@@ -42,18 +43,20 @@ export default function App() {
   return (
     <div>
       <AuthProvider>
-        <NavBar className={navClass} />
-        <Routes>
-          <Route path="/Login" element={<Login />} />
-          <Route path="/AgentProfile" element={<AgentProfile/>}/> 
-          {/* // user={user} />} /> */}
-          <Route path="/" element={<HomePage />} />
-          <Route path='/BuySellRent' element={<BuySellRent />}/>
-          <Route path='/DailyIndicator' element={<DailyIndicator />}/>
-          <Route path='/Indicators' element={<Indicators />}/>
-          <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
-          <Route path='/Agents' element={<Agents />}/>
-        </Routes>
+        <IndicateProvider>
+          <NavBar className={navClass} />
+          <Routes>
+            <Route path="/Login" element={<Login />} />
+            <Route path="/AgentProfile" element={<AgentProfile/>}/> 
+            {/* // user={user} />} /> */}
+            <Route path="/" element={<HomePage />} />
+            <Route path='/BuySellRent' element={<BuySellRent />}/>
+            <Route path='/DailyIndicator' element={<DailyIndicator />}/>
+            <Route path='/Indicators' element={<Indicators />}/>
+            <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
+            <Route path='/Agents' element={<Agents />}/>
+          </Routes>
+        </IndicateProvider>
       </AuthProvider>
     </div>
   );

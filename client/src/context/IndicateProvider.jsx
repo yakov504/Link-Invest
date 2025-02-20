@@ -12,42 +12,50 @@ export const useIndicate = () => {
     return indicateContext;
 };
 
-
 export default function IndicateProvider({children}) {
-   const { user } = useAuth()
+   const { user, setUser, checkAuthStatus } = useAuth()
    const [ error, setError ] = useState(null)
    
-   const createIndicator = async(meetings, exclusives, priceUpdates, buyerTours, priceOffers,deals, agent) => {
+   const createIndicator = async(formData) => {
       try{
          if (!user) {
-            setError("משתמש לא נמצא! לא ניתן ליצור אינדיקטור.");
-            console.error("User not found. Unable to create an indicator.");
-            return;
+            const storedUser = localStorage.getItem("user"); // שלוף את המשתמש מ-localStorage
+            if (storedUser) {
+                  // אם יש נתונים ב-localStorage, עדכן את ה-state
+                  setUser(JSON.parse(storedUser)); // עדכון ה-state עם הנתונים שנמצאו
+                  console.log("🔹 User from localStorage:", storedUser);
+            } else {
+               setError("משתמש לא נמצא! לא ניתן ליצור אינדיקטור.");
+               console.error("User not found. Unable to create an indicator.");
+               return;
+            }
          }
-         
+        // שלב 2: אם יש לך כבר משתמש, המשך עם יצירת האינדיקטור
+        if (!user) {
+         // אם עדיין אין לך משתמש (מקרה קיצוני אם לא נמצא ב-localStorage), עצור
+         setError("משתמש לא נמצא! לא ניתן ליצור אינדיקטור.");
+         console.error("User not found. Unable to create an indicator.");
+         return;
+        }
+
          const response = await fetch("http://127.0.0.1:3000/api/v1/indicators",{
             method: 'POST',
+            credentials: "include", // שולח את ה-cookie עם הבקשה
             headers: {
                'Content-Type': 'application/json'
          },
          body: JSON.stringify({
-            meetings: meetings,
-            exclusives: exclusives,
-            priceUpdates: priceUpdates,
-            buyerTours: buyerTours,
-            priceOffers: priceOffers,
-            deals: deals,
-            agent: user.id 
+            ...formData,
+            agent: [user._id ]
          })
       })
-      const data = await response.json();
-      
       if (!response.ok) {
          const errorMessage = await response.text();
          throw new Error(`Failed to create indicator: ${response.status} - ${errorMessage}`);
       }
-         console.log("Indicator created:", data);
-         return data;
+      const data = await response.json();
+      console.log("Indicator created successfully:", data);
+      return data;
 
    }catch(error){
       setError('סטטוס נכשל! נסה שוב מאוחר יותר')

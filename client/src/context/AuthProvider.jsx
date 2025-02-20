@@ -13,9 +13,85 @@ export const useAuth = () => {
 };
 
 export default function AuthProvider({ children }) {
-  // const [accessToken, setAccessToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [ error, setError ] = useState()
+
+  //  const checkAuthStatus = async () => {
+  //     try {
+  //       const token = getCookie('token'); // קבלת ה-token מהעוגיות
+  
+  //       if (!token) {
+  //         console.log("No token found.");
+  //         setUser(null);
+  //         setLoading(false);
+  //         return;
+  //       }
+  
+  //       // אם יש token, נבצע קריאה לשרת לאימות
+  //       const response = await fetch("http://127.0.0.1:3000/api/v1/users/me", {
+  //         method: "GET",
+  //         credentials: "include", // שולח את ה-cookie עם הבקשה
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Authorization": `Bearer ${token}`, // שליחה של token עם הבקשה
+  //         },
+  //       });
+  
+  //       if (!response.ok) {
+  //         throw new Error("User not authenticated");
+  //       }
+  
+  //       const responseData = await response.json();
+  //       setUser(responseData.data.user); // עדכון ה-state
+  //       localStorage.setItem("user", JSON.stringify(responseData.data.user)); // שמירה ב-localStorage
+  //     } catch (err) {
+  //       console.error("Failed to authenticate user:", err);
+  //       setUser(null);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  
+  //   // פונקציה לשליפת ה-token מה-cookie
+  //   const getCookie = (name) => {
+  //     const value = `; ${document.cookie}`;
+  //     const parts = value.split(`; ${name}=`);
+  //     if (parts.length === 2) return parts.pop().split(';').shift();
+  //   };
+  
+  //   useEffect(() => {
+  //     checkAuthStatus(); // בדיקת חיבור המשתמש בטעינת הדף
+  //   }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:3000/api/v1/users/me", {
+          method: "GET",
+          credentials: "include", // שולח את ה-cookie עם הבקשה
+          headers: {
+              "Content-Type": "application/json",
+          },
+      });
+
+      if (!response.ok) {
+          throw new Error("User not authenticated");
+      }
+
+      const responseData = await response.json();
+      setUser(responseData.data.user);
+      localStorage.setItem("user", JSON.stringify(responseData.data.user)); // 🔹 שומר ב-localStorage
+   
+      } catch (err) {
+        console.error("Failed to authenticate user:", err);
+        setUser(null);
+        localStorage.removeItem("user"); // 🔹 מוחק מהזיכרון אם האימות נכשל
+    }
+  };  
+
+  useEffect(() => {
+    checkAuthStatus(); // בדיקת חיבור המשתמש בטעינת הדף
+  }, []);
 
   const login = async (email, password) => {
     try{
@@ -23,7 +99,7 @@ export default function AuthProvider({ children }) {
         method: 'POST',
         credentials:'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: email,
@@ -37,8 +113,8 @@ export default function AuthProvider({ children }) {
        throw new Error(responseData.message|| "Login failed")
       }
       setUser(responseData.data.user)
+      localStorage.setItem("user", JSON.stringify(responseData.data.user));
       console.log("user data",responseData); 
-
      
       return { success: true, responseData };
     // useAuth.login()
@@ -47,54 +123,8 @@ export default function AuthProvider({ children }) {
       console.log(error);
       return { success: false, message: err.message };
     }
+    
   }
-  
-  // const getUserData = async() => {
-  //   try{
-  //     const response = await fetch("http://127.0.0.1:3000/api/v1/users/login", {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify()
-  //     })
-
-  //     const responseData = await response.json();
-  //     if(!response.ok){
-  //       throw new Error(responseData.message|| "cont fetch user data")
-  //      }
-  //      return { success: true, responseData };
-  //   }catch(err){
-  //     setError(err.message);
-  //     console.log(error);
-  //     return { success: false, message: err.message };
-  //   }
-  // }
-  // const getUserData = () => {
-  //   useEffect(() => {
-  //     const sendRequest = async () => {
-  //       const response = await fetch("http://127.0.0.1:3000/api/v1/users/me")
-
-  //       const responseData = await response.json();
-  //     }
-  //     sendRequest();
-  //   }, []);
-  // }
-  // const getUserData = async (token) => {
-  //   try {
-  //     const response = await axios.get("http://127.0.0.1:3000/api/v1/users/me", {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`
-  //       },
-  //       withCredentials: true
-  //     });
-  //     console.log("User Data Response:", response);
-  //     setUser(response.data);
-  //   } catch (error) {
-  //     console.error("Failed to fetch user data:", error);
-  //   }
-  // };
-  
 
   // const logout = async () => {
   //   await axios.post("http://127.0.0.1:3000/api/v1/users/logout", {}, { withCredentials: true });
@@ -102,7 +132,7 @@ export default function AuthProvider({ children }) {
   // };
 
   return (
-    <AuthContext.Provider value={{ user, login, error }}>
+    <AuthContext.Provider value={{ user, login, error, checkAuthStatus}}>
        {/* getUserData,logout */}
       {children}
     </AuthContext.Provider>

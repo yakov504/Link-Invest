@@ -6,7 +6,7 @@ const User = require('../modules/usersModuls')
 const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
 const sendEmail = require('../utils/email')
-const { log } = require('console')
+// const { log } = require('console')
 
 const signToken = (id, email) => {
    return jwt.sign({id, email}, process.env.JWT_SECRET, {
@@ -22,7 +22,7 @@ const createSendToken = ( user, statusCode, res ) => {
          Date.now()+ process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000 // 7d
       ),
       httpOnly: true, // מונע גישה מה-frontend
-      secure: false,
+      secure: true,
       sameSite: 'None' // כדי לאפשר שליחת ה-cookie בבקשות רגילות
       
    };
@@ -39,8 +39,6 @@ const createSendToken = ( user, statusCode, res ) => {
          user
       }
    });
-      
-
 }
 
 
@@ -120,7 +118,6 @@ exports.restrictTo = (...roles) => {
          return next (new AppError('you do not have the premission to preform this action',403)
          );
       }
-
       next()
    }
 };

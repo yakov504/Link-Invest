@@ -46,7 +46,10 @@ export default function IndicateProvider({children}) {
          },
          body: JSON.stringify({
             ...formData,
-            agent: [user._id ]
+            agent: 
+            [
+              user._id,
+            ]
          })
       })
       if (!response.ok) {
@@ -55,6 +58,7 @@ export default function IndicateProvider({children}) {
       }
       const data = await response.json();
       console.log("Indicator created successfully:", data);
+      setError('סטטוס נוצר בהצלחה!')
       return data;
 
    }catch(error){

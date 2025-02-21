@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import customFetch from '../utils/customFetch'
+import { toast } from "react-toastify";
 
 const AuthContext = createContext(undefined);
 
@@ -81,12 +82,13 @@ export default function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await axios.post("http://127.0.0.1:3000/api/v1/users/logout",
-       {}, 
-       { withCredentials: true });
+       {}, { withCredentials: true });
   
       localStorage.removeItem("user");
+      toast.success('התנתקת בהצלחה!')
       setUser(null);
     } catch (error) {
+      toast.error('שגיאה בהתנתקות, נסה שוב')
       console.error("Logout failed:", error);
     }
   };

@@ -16,7 +16,8 @@ createRoot(document.getElementById('root')).render(
       <IndicateProvider>
         <BrowserRouter>
           <App />
-          <ToastContainer position='top-center'/>
+          <ToastContainer className= 'custom-toast' position="top-center" autoClose={3000} 
+          rtl={true} pauseOnHover={true}/>
         </BrowserRouter>
       </IndicateProvider>
     </AuthProvider>

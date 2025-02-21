@@ -27,7 +27,7 @@ router.get('/me',usersController.getMe)
    // newAuthController.authMiddleware,
     
 router.patch('/updateMe', usersController.updateMe)
-router.get('/logout', authController.logout)  
+router.post('/logout', authController.logout)  
 
 router.route('/').get(usersController.getAllUsers, authController.restrictTo('admin'))
 .post(usersController.createUser);

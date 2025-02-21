@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthProvider";
 import { useIndicate } from '../../../context/IndicateProvider'
+import { toast } from 'react-toastify';
 import './DailyIndi.css'
 
 export default function DailyIndicator() {
@@ -29,6 +30,7 @@ export default function DailyIndicator() {
         return;
       }
       console.log("🔹 שולח נתונים לשרת:", { ...formData, agent: user.id });
+      toast.success('סטטוס יומי נשלח בהצלחה!')
       await createIndicator(formData); // קריאה לפונקציה מה-Provider
       // איפוס הטופס לאחר שליחת הנתונים
       setFormData({
@@ -40,6 +42,7 @@ export default function DailyIndicator() {
         deals: ""
       });
     }catch(error){
+     toast.error('הבקשה לא נשלחה נסה שוב')
       return console.log('error message',error);
     }
   };
@@ -67,7 +70,6 @@ export default function DailyIndicator() {
           <input type="number" name="buyerTours" placeholder="סיורים לקונים" value={formData.buyerTours} onChange={handleInput} />
           <input type="number" name="priceOffers" placeholder="הצעות מחיר" value={formData.priceOffers} onChange={handleInput} />
           <input type="number" name="deals" placeholder="סגירת עסקאות" value={formData.deals} onChange={handleInput} />
-          {error && <p className="error-message">{error}</p>}
           <button className="dailyStatusBtn" type="submit">הכנס נתונים</button>
         </div>
       </form>

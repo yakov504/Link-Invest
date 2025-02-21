@@ -43,7 +43,7 @@ export default function NavSide() {
           {/* <li>
             <Link to={'/'}><IoLogInOutline className="icon"/> {isOpen && "התנתק"}</Link>
           </li> */}
-          <li onClick={logout()}>
+          <li onClick={() => logout()}>
             <Link to={'/'}>
               <IoLogInOutline className="icon" />
               {isOpen && "התנתק"}

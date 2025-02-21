@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './BuySell.css'
+import { toast } from 'react-toastify';
 import rent from '../../assets/image/buy1.jpg'
 
 export default function BuySellRent() {
@@ -29,12 +30,13 @@ export default function BuySellRent() {
       });
 
       if (response.ok) {
-        console.log('Email sent successfully!');
+        toast.success('הפרטים נשלחו בהצלחה!')
         setFormData({ name: '', phone: '', category: '' });
       } else {
-        console.log('Failed to send email.');
+        toast.error("שגיאה! משהו השתבש...")
       }
     } catch (error) {
+      toast.error("שגיאה! משהו השתבש...")
       console.log('An error occurred while sending the email.');
     }
   };

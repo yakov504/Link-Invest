@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
 import IndicateProvider from './context/IndicateProvider'
-// import { useAuth } from './context/AuthProvider';
-import axios from 'axios'
+// import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer } from "react-toastify";
 
 import './App.css';
 import './index.css';

@@ -72,11 +72,13 @@ exports.login = catchAsync(async( req, res, next ) => {
 exports.logout = ( req, res ) => {
    res.cookie('token', 'logout', {
       httpOnly: true,
-      expires: new Date(Date.now()),
+      expires: new Date(0),
+      secure: true,
+      sameSite: 'None'
    })
    res.status(200).json({
       status: 'success',
-      message: 'user logged out'
+      message: 'User logged out'
    })
 }
 

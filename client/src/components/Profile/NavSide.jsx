@@ -12,7 +12,7 @@ import { CgAlignBottom } from "react-icons/cg";
 
 
 export default function NavSide() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -40,15 +40,15 @@ export default function NavSide() {
               <Link to={'/PersonalIndicator'}><GoGraph className="icon"/> {isOpen && "מדדים"}</Link>
             </li> 
           }
-          <li>
-            <Link to={'/Logout'}><IoLogInOutline className="icon"/> {isOpen && "התנתק"}</Link>
-          </li>
           {/* <li>
-            <Link onClick={() => logout()}>
+            <Link to={'/'}><IoLogInOutline className="icon"/> {isOpen && "התנתק"}</Link>
+          </li> */}
+          <li onClick={logout()}>
+            <Link to={'/'}>
               <IoLogInOutline className="icon" />
               {isOpen && "התנתק"}
             </Link>
-          </li> */}
+          </li>
         </ul>
       </div>
     </div>

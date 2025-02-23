@@ -10,6 +10,9 @@ export default function BuySellRent() {
     category: ''
   });
 
+  const [ isClicked, setIsClicked ] = useState(false)
+
+  const phoneNumberPattern = /^(?:\+?972|0)?[-.\s]?(5[0-9])[-.\s]?\d{3}[-.\s]?\d{4}$/;
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +22,11 @@ export default function BuySellRent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   
+    if (!phoneNumberPattern.test(formData.phone)) {
+      toast.error('מספר הטלפון אינו תקין, נסה שוב.');
+      return;
+    }
+    
     try {
       const response = await fetch("http://127.0.0.1:3000/api/v1/email/send-mail", {
         method: 'POST',
@@ -32,6 +39,7 @@ export default function BuySellRent() {
       if (response.ok) {
         toast.success('הפרטים נשלחו בהצלחה!')
         setFormData({ name: '', phone: '', category: '' });
+        setIsClicked(true)
       } else {
         toast.error("שגיאה! משהו השתבש...")
       }
@@ -62,7 +70,9 @@ export default function BuySellRent() {
             <option value="משכיר">משכיר</option>
           </select>
         </div>
-        <button className="sendBtn" type="submit">שלח פרטים!</button>
+        <button className={ isClicked? "sendBtn" : "sendBtn block"} 
+          type="submit"  disabled={isClicked} >שלח פרטים!
+        </button>
       </form>
     </div>
     <img src={rent} alt="nice pic" />

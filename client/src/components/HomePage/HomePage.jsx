@@ -23,15 +23,16 @@ export default function HomePage() {
  const navigate = useNavigate()
 
   const options = [
-    { verb: 'קונה', img:buy },
-    { verb: 'משכיר',img:rent },
-    { verb: 'מוכר', img:sell}
+    // { verb: 'קונה', img:buy },
+    // { verb: 'משכיר',img:rent },
+    { verb: 'להשארת פרטים', img:sell}
 
   ];
 
   const buy_sell_rent = options.map(option => (
     <div key={option.verb} className='options'>
-      <img src={option.img} alt={option.verb} />
+      <img src={option.img} alt={option.verb} 
+        onClick={() => navigate('/BuySellRent')}/>
       <h2 onClick={() => navigate('/BuySellRent')}>{option.verb}</h2>
     </div>
   ));

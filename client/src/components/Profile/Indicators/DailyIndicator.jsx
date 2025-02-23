@@ -47,25 +47,13 @@ export default function DailyIndicator() {
     }
   };
 
-  // const handleChange = async(e) => {
-  //   const { name, value } = e.target;
-  //   setFormData(prevState => ({
-  //     ...prevState,
-  //     [name]: value
-  //   }));
-  // };
-
-    // const newIndicator = {
-    //   ...formData,
-    //   agent: user.id // הוספת ה-user.id לאובייקט הנתונים
-    // };
   return (
     <div className="dailyIndicators">
       <h1>הזנת נתונים יומיים</h1>
       <form className="dailyForm" onSubmit={handleSubmit}>
         <div className="dailyInputs">
           <input type="number" name="meetings" placeholder="פגישות" value={formData.meetings} onChange={handleInput} />
-          <input type="number" name="exclusives" placeholder="בלעדיים" value={formData.exclusives} onChange={handleInput} />
+          <input type="number" name="exclusives" placeholder="בלעדיות" value={formData.exclusives} onChange={handleInput} />
           <input type="number" name="priceUpdates" placeholder="עדכוני מחיר" value={formData.priceUpdates} onChange={handleInput} />
           <input type="number" name="buyerTours" placeholder="סיורים לקונים" value={formData.buyerTours} onChange={handleInput} />
           <input type="number" name="priceOffers" placeholder="הצעות מחיר" value={formData.priceOffers} onChange={handleInput} />

@@ -120,6 +120,13 @@
    cursor: pointer;
 }
 
+.sendBtn:disabled {
+  background-color: #ccc;
+  color: #888;
+  cursor: not-allowed;
+  border-color: #aaa;
+}
+
  @media only screen and (max-width: 40em) {
    .buySellForm {
       position: absolute;

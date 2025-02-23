@@ -9,7 +9,7 @@ const indicatorsSchema = new mongoose.Schema({
       required: [true, 'גם 0 זה מספר']
    },
 
-   meetings:{
+   exclusives:{
       type: Number,
       required: [true, 'גם 0 זה מספר']
    },

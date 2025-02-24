@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
 import IndicateProvider from './context/IndicateProvider'
-// import "react-toastify/dist/ReactToastify.css";
-// import { ToastContainer } from "react-toastify";
+import AgentProvider from './context/AgentProvider';
 
 import './App.css';
 import './index.css';
@@ -44,18 +43,20 @@ export default function App() {
     <div>
       <AuthProvider>
         <IndicateProvider>
-          <NavBar className={navClass} />
-          <Routes>
-            <Route path="/Login" element={<Login />} />
-            <Route path="/AgentProfile" element={<AgentProfile/>}/> 
-            {/* // user={user} />} /> */}
-            <Route path="/" element={<HomePage />} />
-            <Route path='/BuySellRent' element={<BuySellRent />}/>
-            <Route path='/DailyIndicator' element={<DailyIndicator />}/>
-            <Route path='/Indicators' element={<Indicators />}/>
-            <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
-            <Route path='/Agents' element={<Agents />}/>
-          </Routes>
+          <AgentProvider>
+            <NavBar className={navClass} />
+            <Routes>
+              <Route path="/Login" element={<Login />} />
+              <Route path="/AgentProfile" element={<AgentProfile/>}/> 
+              {/* // user={user} />} /> */}
+              <Route path="/" element={<HomePage />} />
+              <Route path='/BuySellRent' element={<BuySellRent />}/>
+              <Route path='/DailyIndicator' element={<DailyIndicator />}/>
+              <Route path='/Indicators' element={<Indicators />}/>
+              <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
+              <Route path='/Agents' element={<Agents />}/>
+            </Routes>
+          </AgentProvider>
         </IndicateProvider>
       </AuthProvider>
     </div>

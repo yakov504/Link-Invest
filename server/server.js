@@ -40,12 +40,12 @@ app.use(( req, res, next) => {
 app.use(helmet())
 
 /// limit request from same IP
-const limiter = rateLimit({
-   max: 250,
-   windowMs: 60 * 60 * 1000,
-   message: 'too many requests from this IP please try again in an hour'
-});
-app.use('/api', limiter)
+// const limiter = rateLimit({
+//    max: 250,
+//    windowMs: 60 * 60 * 1000,
+//    message: 'too many requests from this IP please try again in an hour'
+// });
+// app.use('/api', limiter)
 
 // Error handling middleware 
 /// Body parser, reading data from body into req.body

@@ -15,7 +15,7 @@ export const useAuth = () => {
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [ error, setError ] = useState()
 
   const checkAuthStatus = async () => {
@@ -37,7 +37,7 @@ export default function AuthProvider({ children }) {
       localStorage.setItem("user", JSON.stringify(responseData.data.user)); // 🔹 שומר ב-localStorage
    
       } catch (err) {
-        console.error("Failed to authenticate user:", err);
+        // console.error("Failed to authenticate user:", err);
         setUser(null);
         localStorage.removeItem("user"); // 🔹 מוחק מהזיכרון אם האימות נכשל
     }
@@ -72,7 +72,6 @@ export default function AuthProvider({ children }) {
      
       return { success: true, responseData };
     }catch(err){
-      setError('משהו השתבש נסה שוב');
       console.log(error);
       return { success: false, message: err.message };
     }

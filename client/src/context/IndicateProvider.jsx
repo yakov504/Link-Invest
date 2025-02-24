@@ -7,7 +7,7 @@ const IndicateContext = createContext(undefined);
 export const useIndicate = () => {
    const indicateContext = useContext(IndicateContext);
    if (!indicateContext) {
-      throw new Error("useAuth must be used within AuthProvider");
+      throw new Error("useIndicate must be used within IndicateProvider");
     }
     return indicateContext;
 };

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../../context/AuthProvider";
 import { useIndicate } from '../../../context/IndicateProvider'
 import { toast } from 'react-toastify';
+import NavSide from "../NavSide";
 import './DailyIndi.css'
 
 export default function DailyIndicator() {
@@ -49,6 +50,7 @@ export default function DailyIndicator() {
 
   return (
     <div className="dailyIndicators">
+      {/* <NavSide/> */}
       <h1>הזנת נתונים יומיים</h1>
       <form className="dailyForm" onSubmit={handleSubmit}>
         <div className="dailyInputs">

@@ -22,9 +22,6 @@ export default function NavSide() {
           ☰
         </button>
         <ul>
-          {/* <li>
-            <Link to={'/AgentProfile'}><CgProfile className="icon"/> {isOpen && "פרופיל"}</Link>
-          </li> */}
           <li>
             {user.role === 'admin' ? 
             <Link to={'/Agents'}><FaPeopleGroup className="icon"/>
@@ -40,9 +37,6 @@ export default function NavSide() {
               <Link to={'/PersonalIndicator'}><GoGraph className="icon"/> {isOpen && "מדדים"}</Link>
             </li> 
           }
-          {/* <li>
-            <Link to={'/'}><IoLogInOutline className="icon"/> {isOpen && "התנתק"}</Link>
-          </li> */}
           <li onClick={() => logout()}>
             <Link to={'/'}>
               <IoLogInOutline className="icon" />

@@ -93,24 +93,3 @@ exports.getIndicator = factory.getOne(Indicator, {path: 'agent', select: 'name r
 exports.createIndicator = factory.createOne(Indicator)
 exports.updateIndicator = factory.updateOne(Indicator)
 exports.deleteIndicator = factory.deleteOne(Indicator)
-
-
-
-
-// exports.getIndicatorsSummary = catchAsync(async (req, res, next) => {
-//    const { timeFrame } = req.params;
-//    const { agent } = req.body.id;
-
-//    const stats = await Indicator.getIndicatorsSummary({ agent }, timeFrame);
-//       if(!stats){
-//          return next(new AppError('No data found for the selected time frame',404))
-//       }
-//       res.status(200).json({
-//          status: 'success',
-//          data: stats
-//       });
-
-//       console.log('Request Params:', req.params);
-//       console.log('Agent ID:', agent);
-//       console.log('Time Frame:', timeFrame);
-// });

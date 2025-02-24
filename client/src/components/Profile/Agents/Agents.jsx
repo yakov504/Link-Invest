@@ -10,6 +10,8 @@ export default function Agents() {
 const { agents } = useAgent()
 const [search, setSearch] = useState('');
 
+const navigate = useNavigate()
+
 const filteredAgents = agents.filter(agent =>
   agent.name.includes(search) || agent.email.includes(search)
 );
@@ -24,7 +26,7 @@ const mapAgents = filteredAgents.map(agent => (
       <p>{agent.phone_number}</p>
     </div>
     {/* <button>update</button> */}
-    <button className='indiBtnVeiw'>למדדי סוכן</button>
+    <button className='indiBtnVeiw'onClick={() => navigate("/PersonalIndicator")}>למדדי סוכן</button>
   </div>
 ));
 

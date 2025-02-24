@@ -10,7 +10,7 @@ const sendEmail = require('../utils/email')
 
 const signToken = (id, email) => {
    return jwt.sign({id, email}, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN
+      expiresIn:'10h'
    });
 }
 

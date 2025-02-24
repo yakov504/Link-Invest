@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
 import { useAuth } from "./AuthProvider";
 
 const IndicateContext = createContext(undefined);
@@ -13,30 +12,37 @@ export const useIndicate = () => {
 };
 
 export default function IndicateProvider({children}) {
-   const { user, setUser, checkAuthStatus } = useAuth()
+   const { user, setUser, login } = useAuth()
    const [ error, setError ] = useState(null)
-   
-   const createIndicator = async(formData) => {
-      try{
-         if (!user) {
-            const storedUser = localStorage.getItem("user"); // שלוף את המשתמש מ-localStorage
-            if (storedUser) {
-                  // אם יש נתונים ב-localStorage, עדכן את ה-state
-                  setUser(JSON.parse(storedUser)); // עדכון ה-state עם הנתונים שנמצאו
-                  console.log("🔹 User from localStorage:", storedUser);
-            } else {
-               setError("משתמש לא נמצא! לא ניתן ליצור אינדיקטור.");
-               console.error("User not found. Unable to create an indicator.");
-               return;
-            }
+   const [ dailyStatus, setDailyStatus ] = useState()
+
+   const ifUserExist = () => {
+      if (!user) {
+         const storedUser = localStorage.getItem("user"); // שלוף את המשתמש מ-localStorage
+         if (storedUser) {
+            // אם יש נתונים ב-localStorage, עדכן את ה-state
+            setUser(JSON.parse(storedUser)); // עדכון ה-state עם הנתונים שנמצאו
+            console.log("🔹 User from localStorage:", storedUser);
+         } else {
+            setError("משתמש לא נמצא! לא ניתן ליצור אינדיקטור.");
+            console.error("User not found. Unable to create an indicator.");
+            return false;  // לא נמצא משתמש, מחזיר false
          }
-        // שלב 2: אם יש לך כבר משתמש, המשך עם יצירת האינדיקטור
-        if (!user) {
-         // אם עדיין אין לך משתמש (מקרה קיצוני אם לא נמצא ב-localStorage), עצור
+      }
+      // שלב 2: אם יש לך כבר משתמש, המשך עם יצירת האינדיקטור
+      if (!user) {
          setError("משתמש לא נמצא! לא ניתן ליצור אינדיקטור.");
          console.error("User not found. Unable to create an indicator.");
-         return;
-        }
+         return false; // לא נמצא משתמש, מחזיר false
+      }
+      return true;  // אם המשתמש נמצא, מחזיר true
+   };
+
+   const createIndicator = async(formData) => {
+      try{
+         if (!ifUserExist()) {
+            return; // אם המשתמש לא נמצא, יצא מהפונקציה או ביצוע פעולה אחרת
+         }
 
          const response = await fetch("http://127.0.0.1:3000/api/v1/indicators",{
             method: 'POST',
@@ -56,18 +62,54 @@ export default function IndicateProvider({children}) {
          const errorMessage = await response.text();
          throw new Error(`Failed to create indicator: ${response.status} - ${errorMessage}`);
       }
-      const data = await response.json();
-      console.log("Indicator created successfully:", data);
-      setError('סטטוס נוצר בהצלחה!')
-      return data;
+      const responseData = await response.json();
+      console.log("Indicator created successfully:", responseData);
+      return responseData;
 
    }catch(error){
       setError('סטטוס נכשל! נסה שוב מאוחר יותר')
       console.error("Error creating indicator:", error.message);
    }
 }
+
+const personalDailyStatus = async () => {
+   try {
+      // if (!user) {
+      //    console.error("User not found.");
+      //    return;
+      // }
+
+      const response = await fetch("http://127.0.0.1:3000/api/v1/indicators/getIndicatorsByAgent", {
+         method: 'POST',
+         credentials: "include",
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+            id: { agent: user._id } // שולח את ה-agent בתוך אובייקט id
+         })
+      });
+
+      if (!response.ok) {
+         const errorMessage = await response.text();
+         throw new Error(`Failed to fetch indicators: ${response.status} - ${errorMessage}`);
+      }
+
+      const responseData = await response.json();
+      console.log("Indicators fetched successfully:", responseData);
+      setDailyStatus(responseData.data.indicators); 
+   } catch (err) {
+      console.log("Error fetching indicators:", err);
+   }
+};
+
+useEffect(() => {
+   personalDailyStatus()
+}, [login]); 
+
+
    return (
-      <IndicateContext.Provider value={{ createIndicator, error }}>
+      <IndicateContext.Provider value={{ createIndicator, dailyStatus }}>
         {children}
       </IndicateContext.Provider>
    

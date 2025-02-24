@@ -15,12 +15,17 @@ router.route('/').get(
 
 router.use(authController.restrictTo('agent','admin'))
 
+router.route('/getIndicatorsByAgent').post(indicatorsController.getIndicatorsByAgent)
+router.post('/summary/weekly', indicatorsController.getWeeklySummary)
+router.post('/summary/monthly', indicatorsController.getMonthlySummary)
+router.post('/summary/all', indicatorsController.getAllSummary)
+
+
 router.route('/:id')
    .get(indicatorsController.getIndicator)
    .patch(indicatorsController.updateIndicator)
    .delete(indicatorsController.deleteIndicator)
 
-router.get('/summary/:agentId/:timeFrame', indicatorsController.getIndicatorsSummary)
    
 
 module.exports = router

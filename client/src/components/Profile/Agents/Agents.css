@@ -1,0 +1,85 @@
+.all_agents{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.all_agents h1{
+  font-size: 45px;
+  text-align: center;
+  margin-top: 45px;
+}
+
+.searchBox {
+  width: 80%;
+  max-width: 300px;
+  padding: 8px;
+  font-size: 15px;
+  display: block;
+  border-radius: 5px;
+}
+
+.agentCard{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+  padding: 20px;
+}
+
+.agentData{
+  background-color: #4d6d7661;
+  /* border-radius: 2px 30px 2px 30px; */
+  border-radius: 2px 2px 2px 2px;
+  height: 250px;
+  width: 280px;
+  padding: 30px 20px 30px 20px;
+  margin: 20px 15px 20px 15px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  align-items: center;
+  text-align: center;
+}
+
+.agentData .iconProf{
+  font-size: 50px;
+  margin-bottom: -20px;
+  transition: none;
+}
+
+.indiBtnVeiw{
+  margin-top: 10px;
+  color: white;
+  font-size: 18px;
+  font-weight: 100;
+  padding-top:4px ;
+  padding-bottom:4px ;
+  width: 180px;
+  background-color: transparent;
+  border: solid 1px white;
+  border-radius: 2px 30px 2px 30px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.indiBtnVeiw:hover{
+  border-color:#6cd3ef ;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 70em) {
+  .agentCard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-items: center;
+    padding: 20px;
+  }
+}
+
+@media only screen and (max-width: 50em) {
+  .agentCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

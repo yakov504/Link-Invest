@@ -49,20 +49,22 @@ export default function DailyIndicator() {
   };
 
   return (
-    <div className="dailyIndicators">
+    <div>
       {/* <NavSide/> */}
-      <h1>הזנת נתונים יומיים</h1>
-      <form className="dailyForm" onSubmit={handleSubmit}>
-        <div className="dailyInputs">
-          <input type="number" name="meetings" placeholder="פגישות" value={formData.meetings} onChange={handleInput} />
-          <input type="number" name="exclusives" placeholder="בלעדיות" value={formData.exclusives} onChange={handleInput} />
-          <input type="number" name="priceUpdates" placeholder="עדכוני מחיר" value={formData.priceUpdates} onChange={handleInput} />
-          <input type="number" name="buyerTours" placeholder="סיורים לקונים" value={formData.buyerTours} onChange={handleInput} />
-          <input type="number" name="priceOffers" placeholder="הצעות מחיר" value={formData.priceOffers} onChange={handleInput} />
-          <input type="number" name="deals" placeholder="סגירת עסקאות" value={formData.deals} onChange={handleInput} />
-          <button className="dailyStatusBtn" type="submit">הכנס נתונים</button>
-        </div>
-      </form>
+      <div className="dailyIndicators">
+        <h1>הזנת נתונים יומיים</h1>
+        <form className="dailyForm" onSubmit={handleSubmit}>
+          <div className="dailyInputs">
+            <input type="number" name="meetings" placeholder="פגישות" value={formData.meetings} onChange={handleInput} />
+            <input type="number" name="exclusives" placeholder="בלעדיות" value={formData.exclusives} onChange={handleInput} />
+            <input type="number" name="priceUpdates" placeholder="עדכוני מחיר" value={formData.priceUpdates} onChange={handleInput} />
+            <input type="number" name="buyerTours" placeholder="סיורים לקונים" value={formData.buyerTours} onChange={handleInput} />
+            <input type="number" name="priceOffers" placeholder="הצעות מחיר" value={formData.priceOffers} onChange={handleInput} />
+            <input type="number" name="deals" placeholder="סגירת עסקאות" value={formData.deals} onChange={handleInput} />
+            <button className="dailyStatusBtn" type="submit">הכנס נתונים</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

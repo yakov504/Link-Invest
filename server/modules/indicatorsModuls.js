@@ -47,22 +47,9 @@ const indicatorsSchema = new mongoose.Schema({
    // }
 });
 
+indicatorsSchema.statics.getWeeklySummary = async function(agentId) {
+   const startDate = new Date(new Date().setDate(new Date().getDate() - 7));  // שבוע אחורה
 
-indicatorsSchema.statics.getIndicatorsSummary = async function(agentId, timeFrame = 'weekly') {
-   let startDate;
-
-   // קביעת טווח הזמן
-   if (timeFrame === 'weekly') {
-      startDate = new Date(new Date().setDate(new Date().getDate() - 7));  // שבוע אחורה
-   } else if (timeFrame === 'monthly') {
-      startDate = new Date(new Date().setMonth(new Date().getMonth() - 1)); // חודש אחורה
-   } else if (timeFrame === 'all') {
-      startDate = new Date('2025-01-01');
-   } else {
-      throw new Error('Invalid time frame. Use weekly, monthly, or all');  // אם הזמן לא תקין
-   }
-
-   // שאילתת אגרגציה לסיכום הנתונים
    const stats = await this.aggregate([
       {
          $match: {
@@ -73,18 +60,71 @@ indicatorsSchema.statics.getIndicatorsSummary = async function(agentId, timeFram
       {
          $group: {
             _id: {agentId},
-            totalMeetings: { $sum: '$פגישות' },
-            totalExclusives: { $sum: '$בלעדיות' },
-            totalPriceUpdates: { $sum: '$עדכון_מחיר' },
-            totalBuyerTours: { $sum: '$סיור_קונים' },
-            totalPriceOffers: { $sum: '$הצעות_מחיר' },
-            totalDeals: { $sum: '$עסקאות' }
+            totalMeetings: { $sum: '$meetings' },
+            totalExclusives: { $sum: '$exclusives' },
+            totalPriceUpdates: { $sum: '$priceUpdates' },
+            totalBuyerTours: { $sum: '$buyerTours' },
+            totalPriceOffers: { $sum: '$priceOffers' },
+            totalDeals: { $sum: '$deals' }
          }
       }
    ]);
 
    return stats.length > 0 ? stats[0] : null; // החזרת התוצאה או null אם לא נמצאו נתונים
 };
+
+indicatorsSchema.statics.getMonthlySummary = async function(agentId) {
+   const startDate = new Date(new Date().setMonth(new Date().getMonth() - 1)); // חודש אחורה
+
+   const stats = await this.aggregate([
+      {
+         $match: {
+            agent: new mongoose.Types.ObjectId(agentId),
+            createdAt: { $gte: startDate }
+         }
+      },
+      {
+         $group: {
+            _id: {agentId},
+            totalMeetings: { $sum: '$meetings' },
+            totalExclusives: { $sum: '$exclusives' },
+            totalPriceUpdates: { $sum: '$priceUpdates' },
+            totalBuyerTours: { $sum: '$buyerTours' },
+            totalPriceOffers: { $sum: '$priceOffers' },
+            totalDeals: { $sum: '$deals' }
+         }
+      }
+   ]);
+
+   return stats.length > 0 ? stats[0] : null;
+};
+
+indicatorsSchema.statics.getAllSummary = async function(agentId) {
+   const startDate = new Date('2025-01-01'); // מתחילים מ-2025-01-01
+
+   const stats = await this.aggregate([
+      {
+         $match: {
+            agent: new mongoose.Types.ObjectId(agentId),
+            createdAt: { $gte: startDate }
+         }
+      },
+      {
+         $group: {
+            _id: {agentId},
+            totalMeetings: { $sum: '$meetings' },
+            totalExclusives: { $sum: '$exclusives' },
+            totalPriceUpdates: { $sum: '$priceUpdates' },
+            totalBuyerTours: { $sum: '$buyerTours' },
+            totalPriceOffers: { $sum: '$priceOffers' },
+            totalDeals: { $sum: '$deals' }
+         }
+      }
+   ]);
+
+   return stats.length > 0 ? stats[0] : null;
+};
+
 
 const Indicator = mongoose.model('Indicator', indicatorsSchema);
 
@@ -113,3 +153,42 @@ indicatorsSchema.pre(/^find/, function(next) {
 // })
 
 module.exports = Indicator;
+
+
+// indicatorsSchema.statics.getIndicatorsSummary = async function(agentId, timeFrame = 'weekly') {
+//    let startDate;
+
+//    // קביעת טווח הזמן
+//    if (timeFrame === 'weekly') {
+//       startDate = new Date(new Date().setDate(new Date().getDate() - 7));  // שבוע אחורה
+//    } else if (timeFrame === 'monthly') {
+//       startDate = new Date(new Date().setMonth(new Date().getMonth() - 1)); // חודש אחורה
+//    } else if (timeFrame === 'all') {
+//       startDate = new Date('2025-01-01');
+//    } else {
+//       throw new Error('Invalid time frame. Use weekly, monthly, or all');  // אם הזמן לא תקין
+//    }
+
+//    // שאילתת אגרגציה לסיכום הנתונים
+//    const stats = await this.aggregate([
+//       {
+//          $match: {
+//             agent: new mongoose.Types.ObjectId(agentId),
+//             createdAt: { $gte: startDate }
+//          }
+//       },
+//       {
+//          $group: {
+//             _id: {agentId},
+//             totalMeetings: { $sum: '$meetings' },
+//             totalExclusives: { $sum: '$exclusives' },
+//             totalPriceUpdates: { $sum: '$priceUpdates' },
+//             totalBuyerTours: { $sum: '$buyerTours' },
+//             totalPriceOffers: { $sum: '$priceOffers' },
+//             totalDeals: { $sum: '$deals' }
+//          }
+//       }
+//    ]);
+
+//    return stats.length > 0 ? stats[0] : null; // החזרת התוצאה או null אם לא נמצאו נתונים
+// };

@@ -13,7 +13,7 @@ import { CgAlignBottom } from "react-icons/cg";
 
 export default function NavSide() {
   const { user, logout } = useAuth();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="nav-container">

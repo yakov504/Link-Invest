@@ -1,0 +1,22 @@
+.headStatus{
+  margin: 30px 15px 30px 20px;
+}
+
+.statusNum{
+  margin: 30px 15px 10px 10px;
+
+}
+
+.indicatorContainer{
+  margin: 10px 15px 30px 20px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+@media only screen and (max-width: 40rem) {
+  .indicatorContainer {
+     width: 50%;
+     /* width: 400px; */
+  }
+}

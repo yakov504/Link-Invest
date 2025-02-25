@@ -1,5 +1,4 @@
 const Indicator = require('../modules/indicatorsModuls');
-// const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError');
 const User = require('../modules/usersModuls');
 const catchAsync = require('../utils/catchAsync');

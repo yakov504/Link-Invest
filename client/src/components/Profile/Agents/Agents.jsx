@@ -3,11 +3,14 @@ import NavSide from '../NavSide'
 import './Agents.css'
 import { useNavigate } from "react-router-dom";
 import { useAgent } from '../../../context/AgentProvider';
+import { useIndicate } from '../../../context/IndicateProvider';
 
 import { CgProfile } from "react-icons/cg";
+import { GoGraph } from "react-icons/go";
 
 export default function Agents() {
 const { agents } = useAgent()
+const { setSelectedAgentId } = useIndicate();
 const [search, setSearch] = useState('');
 
 const navigate = useNavigate()
@@ -25,8 +28,11 @@ const mapAgents = filteredAgents.map(agent => (
       <p>{agent.role}</p>
       <p>{agent.phone_number}</p>
     </div>
-    {/* <button>update</button> */}
-    <button className='indiBtnVeiw'onClick={() => navigate("/PersonalIndicator")}>למדדי סוכן</button>
+    <button className='indiBtnVeiw' onClick={() => {
+        setSelectedAgentId(agent._id) 
+        navigate("/PersonalIndicator")
+      }}>למדדי סוכן
+    </button>
   </div>
 ));
 

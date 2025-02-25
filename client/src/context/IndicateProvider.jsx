@@ -18,7 +18,7 @@ export default function IndicateProvider({children}) {
    const [ weeklySummery, setWeeklySummery ] = useState([])
    const [ monthlySummery, setMonthlySummery ] = useState([])
    const [ allSummery, setAllSummery ] = useState([])
-
+   const [selectedAgentId, setSelectedAgentId] = useState(null)
 
 
    const ifUserExist = () => {
@@ -77,129 +77,78 @@ export default function IndicateProvider({children}) {
    }
 }
 
-const personalDailyStatus = async () => {
-   try {
-      const response = await fetch("http://127.0.0.1:3000/api/v1/indicators/getIndicatorsByAgent", {
-         method: 'POST',
-         credentials: "include",
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({
-            id: { agent: user._id } // שולח את ה-agent בתוך אובייקט id
-         })
-      });
+const fetchAgentData = async (agentId) => {
+   const agent = agentId || user._id;
 
-      if (!response.ok) {
-         const errorMessage = await response.text();
-         throw new Error(`Failed to fetch indicators: ${response.status} - ${errorMessage}`);
+   try {
+      const [dailyResponse, weeklyResponse, monthlyResponse, allResponse] = await Promise.all([
+         fetch("http://127.0.0.1:3000/api/v1/indicators/getIndicatorsByAgent", {
+            method: 'POST',
+            credentials: "include",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: { agent } })
+         }),
+         fetch("http://127.0.0.1:3000/api/v1/indicators/summary/weekly", {
+            method: 'POST',
+            credentials: "include",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: { agent } })
+         }),
+         fetch("http://127.0.0.1:3000/api/v1/indicators/summary/monthly", {
+            method: 'POST',
+            credentials: "include",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: { agent } })
+         }),
+         fetch("http://127.0.0.1:3000/api/v1/indicators/summary/all", {
+            method: 'POST',
+            credentials: "include",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: { agent } })
+         })
+      ]);
+
+      if (!dailyResponse.ok || !weeklyResponse.ok || !monthlyResponse.ok || !allResponse.ok) {
+         throw new Error("One or more requests failed");
       }
 
-      const responseData = await response.json();
-      console.log("Indicators fetched successfully:", responseData);
-      responseData.data.indicators === 0 ? 
-      setDailyStatus(null) :
-      setDailyStatus(responseData.data.indicators); 
+      const [dailyData, weeklyData, monthlyData, allData] = await Promise.all([
+         dailyResponse.json(),
+         weeklyResponse.json(),
+         monthlyResponse.json(),
+         allResponse.json()
+      ]);
+
+      console.log("All data fetched successfully:", { dailyData, weeklyData, monthlyData, allData });
+
+      setDailyStatus(dailyData.data.indicators.length === 0 ? null : dailyData.data.indicators);
+      setWeeklySummery(weeklyData.data === 0 ? null : weeklyData.data ? [weeklyData.data] : []);
+      setMonthlySummery(monthlyData.data === 0 ? null : monthlyData.data ? [monthlyData.data] : []);
+      setAllSummery(allData.data === 0 ? null : allData.data ? [allData.data] : []);
+
    } catch (err) {
-      console.log("Error fetching indicators:", err);
-   }
-};
-
-const personalWeeklySummery = async () => {
-   try {
-      const response = await fetch("http://127.0.0.1:3000/api/v1/indicators/summary/weekly", {
-         method: 'POST',
-         credentials: "include",
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({
-            id: { agent: user._id }
-         })
-      });
-
-      if (!response.ok) {
-         const errorMessage = await response.text();
-         throw new Error(`Failed to fetch weekly Summery: ${response.status} - ${errorMessage}`);
-      }
-
-      const responseData = await response.json();
-      console.log("weekly Summery fetched successfully:", responseData);
-      responseData.data === 0 ? 
-      setWeeklySummery(null) :
-      setWeeklySummery(responseData.data ? [responseData.data] : []); 
-   } catch (err) {
-      console.log("Error fetching weekly Summery:", err);
-   }
-};
-
-const personalMonthlySummery = async () => {
-   try {
-      const response = await fetch("http://127.0.0.1:3000/api/v1/indicators/summary/monthly", {
-         method: 'POST',
-         credentials: "include",
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({
-            id: { agent: user._id }
-         })
-      });
-
-      if (!response.ok) {
-         const errorMessage = await response.text();
-         throw new Error(`Failed to fetch Monthly Summery: ${response.status} - ${errorMessage}`);
-      }
-
-      const responseData = await response.json();
-      console.log("Monthly Summery fetched successfully:", responseData);
-      responseData.data === 0 ? 
-      setMonthlySummery(null) :
-      setMonthlySummery(responseData.data ? [responseData.data] : []); 
-   } catch (err) {
-      console.log("Error fetching Monthly Summery:", err);
-   }
-};
-
-const personalAllSummery = async () => {
-   try {
-      const response = await fetch("http://127.0.0.1:3000/api/v1/indicators/summary/all", {
-         method: 'POST',
-         credentials: "include",
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({
-            id: { agent: user._id }
-         })
-      });
-
-      if (!response.ok) {
-         const errorMessage = await response.text();
-         throw new Error(`Failed to fetch all Summery: ${response.status} - ${errorMessage}`);
-      }
-
-      const responseData = await response.json();
-      console.log("all Summery fetched successfully:", responseData);
-      responseData.data === 0 ? 
-      setAllSummery(null) :
-      setAllSummery(responseData.data ? [responseData.data] : []); 
-   } catch (err) {
-      console.log("Error fetching all Summery:", err);
+      console.error("Error fetching agent data:", err);
    }
 };
 
 useEffect(() => {
-   personalDailyStatus()
-   personalWeeklySummery()
-   personalMonthlySummery()
-   personalAllSummery()
-}, [login]); 
+   if (selectedAgentId || user) {
+      fetchAgentData(selectedAgentId);
+   }
+}, [selectedAgentId, login]); 
 
-   return (
-      <IndicateContext.Provider value={{ createIndicator, dailyStatus, weeklySummery, monthlySummery, allSummery }}>
-        {children}
-      </IndicateContext.Provider>
-   
-  );
+return (
+   <IndicateContext.Provider value={{ createIndicator, dailyStatus, 
+      weeklySummery, monthlySummery, allSummery, setSelectedAgentId }}>
+      {children}
+   </IndicateContext.Provider>
+);
 }

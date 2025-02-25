@@ -33,9 +33,9 @@ export default function IndicateProvider({children}) {
       if (!user) {
          setError("משתמש לא נמצא! לא ניתן ליצור אינדיקטור.");
          console.error("User not found. Unable to create an indicator.");
-         return false; // לא נמצא משתמש, מחזיר false
+         return false; 
       }
-      return true;  // אם המשתמש נמצא, מחזיר true
+      return true; 
    };
 
    const createIndicator = async(formData) => {
@@ -74,11 +74,6 @@ export default function IndicateProvider({children}) {
 
 const personalDailyStatus = async () => {
    try {
-      // if (!user) {
-      //    console.error("User not found.");
-      //    return;
-      // }
-
       const response = await fetch("http://127.0.0.1:3000/api/v1/indicators/getIndicatorsByAgent", {
          method: 'POST',
          credentials: "include",
@@ -97,6 +92,8 @@ const personalDailyStatus = async () => {
 
       const responseData = await response.json();
       console.log("Indicators fetched successfully:", responseData);
+      responseData.data.indicators === 0 ? 
+      setDailyStatus(null) :
       setDailyStatus(responseData.data.indicators); 
    } catch (err) {
       console.log("Error fetching indicators:", err);

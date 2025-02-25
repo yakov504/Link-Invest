@@ -374,6 +374,10 @@
    border-image-source: linear-gradient(to right, transparent, #6cd3ef, #6cd3ef, transparent);
    border-image-slice: 1;
  }
+
+ .icon{
+  font-size: 21px;
+ }
  @media only screen and (max-width: 45em) {
 
   .options_buy_sell{

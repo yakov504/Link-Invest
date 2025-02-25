@@ -23,15 +23,15 @@ export default function Footer () {
       <ul className="footer__nav">
         <li><Link to="/" onClick={() => scrollToSection('whoWeAre')}>מי אנחנו</Link></li>
         <li><a href="/BuySellRent">להשארת פרטים</a></li>
-        <li><a href="tel:+972528000284"><FaPhone/></a></li>
+        <li><a href="tel:+972528000284"><FaPhone className='icon'/></a></li>
         <li> 
           <a href="https://api.whatsapp.com/send/?phone=528000284&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-          <WhatsAppIcon />
+          <WhatsAppIcon className='icon'/>
           </a>
         </li> 
         <li> 
           <a href="https://www.instagram.com/linkinvests/" target="_blank" rel="noopener noreferrer">
-            <InstagramIcon />
+            <InstagramIcon className='icon'/>
           </a>
         </li> 
       </ul>

@@ -147,7 +147,7 @@ useEffect(() => {
 
 return (
    <IndicateContext.Provider value={{ createIndicator, dailyStatus, 
-      weeklySummery, monthlySummery, allSummery, setSelectedAgentId }}>
+      weeklySummery, monthlySummery, allSummery, setSelectedAgentId, selectedAgentId }}>
       {children}
    </IndicateContext.Provider>
 );

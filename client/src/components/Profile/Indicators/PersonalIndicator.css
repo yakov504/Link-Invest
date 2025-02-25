@@ -8,10 +8,47 @@
 }
 
 .indicatorContainer{
-  margin: 10px 15px 30px 20px;
+  margin: 10px 40px 30px 20px;
   display: flex;
   flex-direction: column;
   width: 80%;
+}
+
+
+.editBtn{
+  color: white;
+  font-size: 18px;
+  font-weight: 100;
+  padding-top:3px ;
+  padding-bottom:3px ;
+  width: 250px;
+  margin: 35px 10px 20px 10px;
+  background-color: transparent;
+  border: solid 1px white;
+  border-radius: 2px 30px 2px 30px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.editBtn .icon{
+  margin:0px 0px -3px 0px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.editBtn:hover{
+  border-color:#6cd3ef ;
+  cursor: pointer;
+  color: #6cd3ef;
+
+}
+
+@media screen and (min-width: 60rem) {
+  .indicatorContainer {
+    margin: 0 auto; 
+    margin-bottom: 50px;
+    width: 60%;
+  }
 }
 
 @media only screen and (max-width: 40rem) {

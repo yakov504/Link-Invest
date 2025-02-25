@@ -25,14 +25,12 @@ export default function NavSide() {
           <li>
             {user.role === 'admin' ? 
             <Link to={'/Agents'}><FaPeopleGroup className="icon"/>
-            {isOpen && "סוכנים"}</Link> : 
+            {isOpen && "מבט על סוכנים"}</Link> : 
             null}
           </li>
           {
-            user.role === 'admin'?
-            <li>
-              <Link to={'/Indicators'}><GoGraph className="icon"/> {isOpen && "מדדים"}</Link>
-            </li> :
+            user.role === 'admin' ?
+            null :
             <li>
               <Link to={'/PersonalIndicator'}><GoGraph className="icon"/> {isOpen && "מדדים"}</Link>
             </li> 

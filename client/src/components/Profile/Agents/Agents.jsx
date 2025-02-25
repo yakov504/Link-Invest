@@ -7,6 +7,7 @@ import { useIndicate } from '../../../context/IndicateProvider';
 
 import { CgProfile } from "react-icons/cg";
 import { GoGraph } from "react-icons/go";
+import { GoGoal } from "react-icons/go";
 
 export default function Agents() {
 const { agents } = useAgent()
@@ -28,11 +29,12 @@ const mapAgents = filteredAgents.map(agent => (
       <p>{agent.role}</p>
       <p>{agent.phone_number}</p>
     </div>
-    <button className='indiBtnVeiw' onClick={() => {
+    <button className='btnVeiw' onClick={() => {
         setSelectedAgentId(agent._id) 
         navigate("/PersonalIndicator")
       }}>למדדי סוכן
     </button>
+    <button className='btnVeiw'><GoGoal className='icon'/> הכנס יעד</button>
   </div>
 ));
 

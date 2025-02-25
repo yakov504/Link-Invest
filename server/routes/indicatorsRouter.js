@@ -26,6 +26,4 @@ router.route('/:id')
    .patch(indicatorsController.updateIndicator)
    .delete(indicatorsController.deleteIndicator)
 
-   
-
 module.exports = router

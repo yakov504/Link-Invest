@@ -1,22 +1,75 @@
-import React from 'react';
+import { useState } from 'react';
 import NavSide from '../NavSide';
 import './PersonalIndicator.css'
+import { toast } from 'react-toastify';
 import { useIndicate } from '../../../context/IndicateProvider';
+import { FaEdit } from "react-icons/fa";
+import { MdOutlinePublishedWithChanges } from "react-icons/md";
 
 export default function PersonalIndicator() {
-  const { dailyStatus, weeklySummery, monthlySummery, allSummery } = useIndicate();
+  const { dailyStatus, weeklySummery, monthlySummery, allSummery, updateIndicator } = useIndicate();
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedData, setEditedData] = useState([]);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+    setEditedData(dailyStatus)
+  };
+
+  const handleChange = (id, name, value) => {
+    const updatedData = editedData.map(item => 
+      item._id === id ? { ...item, [name]: value } : item
+    );
+    setEditedData(updatedData);
+  };
+
+  const handleSave = async () => {
+    try {
+      const promises = editedData.map(async (status) => {
+        await fetch(`http://127.0.0.1:3000/api/v1/indicators/${status._id}`, {
+          method: 'PATCH',
+          credentials: "include",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(status)
+        });
+      });
+      await Promise.all(promises);
+      toast.success('כל השינויים נשמרו בהצלחה!');
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating indicators:", error);
+      toast.error('שגיאה בשמירת השינויים');
+    }
+  };
+  
+  
   const mapDaily = dailyStatus && dailyStatus.length > 0 ? dailyStatus.map(status => (
     <tr key={status._id}>
-      <td>{status.meetings}</td>
-      <td>{status.deals}</td>
-      <td>{status.priceUpdates}</td>
-      <td>{status.buyerTours}</td>
-      <td>{status.priceOffers}</td>
-      <td>{status.exclusives}</td>
+      {isEditing ? (
+        <>
+          <td><input type="number" name="meetings" value={editedData.find(item => item._id === status._id)?.meetings || ''} onChange={(e) => handleChange(status._id, 'meetings', e.target.value)} /></td>
+          <td><input type="number" name="deals" value={editedData.find(item => item._id === status._id)?.deals || ''} onChange={(e) => handleChange(status._id, 'deals', e.target.value)} /></td>
+          <td><input type="number" name="priceUpdates" value={editedData.find(item => item._id === status._id)?.priceUpdates || ''} onChange={(e) => handleChange(status._id, 'priceUpdates', e.target.value)} /></td>
+          <td><input type="number" name="buyerTours" value={editedData.find(item => item._id === status._id)?.buyerTours || ''} onChange={(e) => handleChange(status._id, 'buyerTours', e.target.value)} /></td>
+          <td><input type="number" name="priceOffers" value={editedData.find(item => item._id === status._id)?.priceOffers || ''} onChange={(e) => handleChange(status._id, 'priceOffers', e.target.value)} /></td>
+          <td><input type="number" name="exclusives" value={editedData.find(item => item._id === status._id)?.exclusives || ''} onChange={(e) => handleChange(status._id, 'exclusives', e.target.value)} /></td>
+        </>
+      ) : (
+        <>
+          <td>{status.meetings}</td>
+          <td>{status.deals}</td>
+          <td>{status.priceUpdates}</td>
+          <td>{status.buyerTours}</td>
+          <td>{status.priceOffers}</td>
+          <td>{status.exclusives}</td>
+        </>
+      )}
       <td>{new Date(status.createdAt).toLocaleString()}</td>
     </tr>
-  )) : <tr><td colSpan="7">אין נתונים להצגה</td></tr>;
+  )) : <tr><td colSpan="8">אין נתונים להצגה</td></tr>;
 
   const mapWeekly = weeklySummery && Array.isArray(weeklySummery) && weeklySummery.length > 0 
     ? weeklySummery.map(week => (
@@ -54,18 +107,18 @@ export default function PersonalIndicator() {
       </tr>
     )) : <tr><td colSpan="6">אין נתונים להצגה</td></tr>;
 
-  return (
-    <div>
-      <NavSide />
-      {dailyStatus && dailyStatus.length > 0 ? (
-        <>
-          <h1 className='headStatus'>מדדים {dailyStatus[0]?.agent[0]?.name} - {dailyStatus[0]?.agent[0]?.role}</h1>
-          <p className='statusNum'>סה"כ סטטוסים שהוכנסו: {dailyStatus.length}</p>
-        </>
-      ) : (
-        <p>אין סטטוסים</p>
-      )}
-     <div className='indicatorContainer'>
+return (
+  <div>
+    <NavSide />
+    {dailyStatus && dailyStatus.length > 0 ? (
+      <>
+        <h1 className='headStatus'>מדדים {dailyStatus[0]?.agent[0]?.name} - {dailyStatus[0]?.agent[0]?.role}</h1>
+        <p className='statusNum'>סה"כ סטטוסים יומיים שהוכנסו: {dailyStatus.length}</p>
+      </>
+    ) : (
+      <p>אין סטטוסים</p>
+    )}
+    <div className='indicatorContainer'>
       <div className='dailyStatus'>
         <h2>סטטוס יומי</h2>
         <table border="1" cellPadding="5" cellSpacing="0">
@@ -82,8 +135,16 @@ export default function PersonalIndicator() {
           </thead>
           <tbody>{mapDaily}</tbody>
         </table>
+        {!isEditing ? (
+          <button className='editBtn' onClick={handleEdit}>
+            <FaEdit className='icon'/> ערוך הכל
+          </button>
+        ) : (
+          <button className='editBtn' onClick={handleSave}>
+            <MdOutlinePublishedWithChanges className='icon'/> שמור את כל השינויים
+          </button>
+        )}
       </div>
-
       <div className='weeklySummery'>
         <h2>סיכום שבועי</h2>
         <table border="1" cellPadding="7" cellSpacing="0">

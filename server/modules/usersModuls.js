@@ -4,6 +4,7 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const slugify =  require('slugify')
 const Indicator = require('./indicatorsModuls')
+const Goal = require('./goalsModuls')
 
 const usersSchema = new mongoose.Schema({
    name: {
@@ -80,6 +81,12 @@ const usersSchema = new mongoose.Schema({
 /// Virtual populate
 usersSchema.virtual('indicators', {
    ref: 'Indicators',
+   foreignField: 'agent',
+   localField: '_id'
+})
+
+usersSchema.virtual('goals', {
+   ref: 'Goal',
    foreignField: 'agent',
    localField: '_id'
 })

@@ -34,7 +34,11 @@ const mapAgents = filteredAgents.map(agent => (
         navigate("/PersonalIndicator")
       }}>למדדי סוכן
     </button>
-    <button className='btnVeiw'><GoGoal className='icon'/> הכנס יעד</button>
+    <button className='btnVeiw' onClick={() => {
+      setSelectedAgentId(agent._id); 
+      navigate('/AdminGoals')}}>
+      <GoGoal className='icon'/> הכנס יעד
+    </button>
   </div>
 ));
 

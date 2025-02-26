@@ -1,0 +1,100 @@
+.monthlyGoals{
+  position: absolute;
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  height: 300px;
+  width: 630px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  padding: 20px;
+  border: solid 1px transparent;
+  border-top: solid 2px white;
+  border-bottom: solid 2px white;
+  border-image-source: linear-gradient(to right, transparent, white, white, transparent);
+  border-image-slice: 1;
+}
+
+.monthlyGoals h1{
+  font-size: 32px;
+  text-align: center;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  margin: 0 10px;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  position: relative; 
+  display: inline-block;
+}
+
+.monthlyGoals h1::after {
+  content: ""; 
+  position: absolute;
+  left: 0;
+  bottom: 0; 
+  width: 0; 
+  height: 2px; 
+  background-color: white; 
+  transition: width 1s ease; 
+}
+
+.monthlyGoals h1:hover::after {
+  width: 100%; /* Expand the line to full width on hover */
+}
+
+.goalInputs {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px; 
+  justify-content: center; 
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.goalInputs input {
+  flex: 1;
+  min-width: 150px; 
+  padding: 10px;
+  font-size: 15px;
+  /* text-align: center; */
+}
+
+.goalBtn{
+  color: white;
+  font-size: 18px;
+  font-weight: 100;
+  padding-top:3px ;
+  padding-bottom:3px ;
+  width: 250px;
+  margin-top: 35px;
+  background-color: transparent;
+  border: solid 1px white;
+  border-radius: 2px 30px 2px 30px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.goalBtn:hover{
+  border-color:#6cd3ef ;
+  cursor: pointer;
+
+}
+
+@media only screen and (max-width: 40em) {
+  .goalInputs {
+    position: absolute;
+    top: 50%;
+    display: flex;
+    flex-direction: column; /* ממיר את כל התוכן לעמודה */
+    align-items: center; /* ממורכז את התוכן */
+    justify-content: center; /* ממורכז את התוכן */
+    width: 100%;
+    margin-top: 50px;
+    padding: 20px;
+  }
+  .goalInputs input{
+     width: 50%;
+  }
+}

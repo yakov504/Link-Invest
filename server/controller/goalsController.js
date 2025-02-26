@@ -11,10 +11,10 @@ exports.setUserIds = (req, res, next) => {
 }
 
 exports.getGoalByagentGoal = catchAsync(async (req, res, next) => {
-  const { agentGoal } = req.body.id;  // מקבל את ה-agent מה-body של הבקשה
+  const { agent } = req.body.id;  // מקבל את ה-agent מה-body של הבקשה
 
-  const goals = await Goal.find({ agentGoal }).populate({
-      path: 'agentGoal',
+  const goals = await Goal.find({ agent }).populate({
+      path: 'agent',
       select: 'name role'
   });
 
@@ -31,7 +31,7 @@ exports.getGoalByagentGoal = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllGoals = factory.getAll(Goal, {path: 'agentGoal', select: 'name role'})
+exports.getAllGoals = factory.getAll(Goal, {path: 'agent', select: 'name role'})
 exports.createGoal = factory.createOne(Goal)
 exports.updateGoal = factory.updateOne(Goal)
 exports.deleteGoal = factory.deleteOne(Goal)

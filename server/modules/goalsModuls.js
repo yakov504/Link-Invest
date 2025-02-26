@@ -36,7 +36,7 @@ const goalsSchema = new mongoose.Schema({
 
   createdAt: { type: Date, default: Date.now},
 
-  agentGoal:[{
+  agent:[{
   type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: [true, 'goal must belong to agent']
@@ -47,7 +47,7 @@ const Goal = mongoose.model('Goal', goalsSchema);
 
 goalsSchema.pre(/^find/, function(next) {
   this.populate({
-     path:'agentGoal',
+     path:'agent',
      select:'name'
   })
   next();

@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuth } from "./AuthProvider";
+import { toast } from "react-toastify";
 
 const IndicateContext = createContext(undefined);
 
@@ -69,6 +70,7 @@ export default function IndicateProvider({children}) {
       }
       const responseData = await response.json();
       console.log("Indicator created successfully:", responseData);
+      // toast.success('סטטוס נוצר בהצלחה!')
       return responseData;
 
    }catch(error){

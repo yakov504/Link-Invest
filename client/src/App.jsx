@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
 import IndicateProvider from './context/IndicateProvider'
 import AgentProvider from './context/AgentProvider';
+import GoalProvider from './context/GoalProvider';
 
 import './App.css';
 import './index.css';
@@ -15,6 +16,7 @@ import BuySellRent from './components/HomePage/BuySellRent'
 import DailyIndicator from './components/Profile/Indicators/DailyIndicator';
 import Agents from './components/Profile/Agents/Agents'
 import PersonalIndicator from './components/Profile/Indicators/PersonalIndicator';
+import AdminGoals from './components/Profile/Goals/AdminGoals';
 
 export default function App() {
   // const { user, getUserData } = useAuth();
@@ -43,17 +45,19 @@ export default function App() {
       <AuthProvider>
         <IndicateProvider>
           <AgentProvider>
-            <NavBar className={navClass} />
-            <Routes>
-              <Route path="/Login" element={<Login />} />
-              <Route path="/AgentProfile" element={<AgentProfile/>}/> 
-              {/* // user={user} />} /> */}
-              <Route path="/" element={<HomePage />} />
-              <Route path='/BuySellRent' element={<BuySellRent />}/>
-              <Route path='/DailyIndicator' element={<DailyIndicator />}/>
-              <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
-              <Route path='/Agents' element={<Agents />}/>
-            </Routes>
+            <GoalProvider>
+              <NavBar className={navClass} />
+              <Routes>
+                <Route path="/Login" element={<Login />} />
+                <Route path="/AgentProfile" element={<AgentProfile/>}/> 
+                <Route path="/" element={<HomePage />} />
+                <Route path='/BuySellRent' element={<BuySellRent />}/>
+                <Route path='/DailyIndicator' element={<DailyIndicator />}/>
+                <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
+                <Route path='/Agents' element={<Agents />}/>
+                <Route path='/AdminGoals' element={<AdminGoals />}/>
+              </Routes>
+            </GoalProvider>
           </AgentProvider>
         </IndicateProvider>
       </AuthProvider>

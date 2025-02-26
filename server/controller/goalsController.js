@@ -4,6 +4,12 @@ const User = require('../modules/usersModuls');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory')
 
+exports.setUserIds = (req, res, next) => {
+  if(!req.body.user) req.body.user = req.user.id;
+  
+  next()
+}
+
 exports.getGoalByagentGoal = catchAsync(async (req, res, next) => {
   const { agentGoal } = req.body.id;  // מקבל את ה-agent מה-body של הבקשה
 
@@ -24,3 +30,8 @@ exports.getGoalByagentGoal = catchAsync(async (req, res, next) => {
       }
   });
 });
+
+exports.getAllGoals = factory.getAll(Goal, {path: 'agentGoal', select: 'name role'})
+exports.createGoal = factory.createOne(Goal)
+exports.updateGoal = factory.updateOne(Goal)
+exports.deleteGoal = factory.deleteOne(Goal)

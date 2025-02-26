@@ -45,7 +45,7 @@ const goalsSchema = new mongoose.Schema({
 const Goal = mongoose.model('Goal', goalsSchema);
 
 
-indicatorsSchema.pre(/^find/, function(next) {
+goalsSchema.pre(/^find/, function(next) {
   this.populate({
      path:'agentGoal',
      select:'name'

@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser')
 
 const indicatorsRouter = require('./routes/indicatorsRouter');
 const userRouter = require('./routes/usersRouter')
+const goalsRouter = require('./routes/goalsRouter')
 const emailRouter = require('./routes/emailsRouter')
 dotenv.config({path:'./config.env'})
 
@@ -89,8 +90,9 @@ mongoose.connect(process.env.DATABASE_MONGO_CONNECTION || process.env.DATABASE_L
 });
 
 /// ROUTER ///
-app.use('/api/v1/indicators', indicatorsRouter)
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/indicators', indicatorsRouter)
+app.use('/api/v1/goals', goalsRouter)
 app.use('/api/v1/email', emailRouter)
 
 

@@ -67,7 +67,7 @@ export default function AuthProvider({ children }) {
       }
       setUser(responseData.data.user)
       localStorage.setItem("user", JSON.stringify(responseData.data.user));
-      console.log("user data",responseData); 
+      // console.log("user data",responseData); 
      
       return { success: true, responseData };
     }catch(err){

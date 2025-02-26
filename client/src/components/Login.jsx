@@ -22,7 +22,7 @@ export default function Login() {
       navigate("/AgentProfile");
     } else {
       toast.error('שגיאה בהתחברות נסה שוב!')
-      console.log(response.message);
+      // console.log(response.message);
     }
   };
   

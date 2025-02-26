@@ -16,6 +16,7 @@ export const useGoal = () => {
 export default function GoalProvider({children}) {
   const { user, setUser, login } = useAuth()
   const {selectedAgentId, setSelectedAgentId} = useIndicate()
+  const [agentGoal, setAgentGoal] = useState(null)
 
   const createGoal = async (formData) => {
     try {
@@ -45,8 +46,38 @@ export default function GoalProvider({children}) {
    }
 };
 
+const fetchGoal = async (agentId) => {
+  const agent = agentId || user._id;
+  try {
+    const goalResponse = await fetch("http://127.0.0.1:3000/api/v1/goals/getGoalByagentGoal", {
+      method: 'POST',
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: { agent } })
+    });
+    if (!goalResponse.ok) {
+      throw new Error("One or more requests failed");
+    }
+    const goalData = await goalResponse.json();
+    // console.log(goalData);
+    setAgentGoal(goalData.data.goals || []);
+    return { success: true };
+  } catch (err) {
+    console.log(err);
+    // toast.error('שגיאה בקבלת היעדים');
+  }
+};
+
+useEffect(() => {
+  if (selectedAgentId || user) {
+    fetchGoal(selectedAgentId);
+  }
+}, [selectedAgentId, login]); 
+
 return (
-   <GoalContext.Provider value={{ createGoal, setSelectedAgentId, selectedAgentId }}>
+   <GoalContext.Provider value={{ createGoal, setSelectedAgentId, selectedAgentId, agentGoal }}>
       {children}
    </GoalContext.Provider>
 );

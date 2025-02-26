@@ -20,7 +20,7 @@ export default function IndicateProvider({children}) {
    const [ monthlySummery, setMonthlySummery ] = useState([])
    const [ allSummery, setAllSummery ] = useState([])
    const [selectedAgentId, setSelectedAgentId] = useState(null)
-
+  const [agentGoal, setAgentGoal] = useState(null)
 
    const ifUserExist = () => {
       if (!user) {
@@ -69,7 +69,7 @@ export default function IndicateProvider({children}) {
          throw new Error(`Failed to create indicator: ${response.status} - ${errorMessage}`);
       }
       const responseData = await response.json();
-      console.log("Indicator created successfully:", responseData);
+      // console.log("Indicator created successfully:", responseData);
       // toast.success('סטטוס נוצר בהצלחה!')
       return responseData;
 
@@ -129,7 +129,7 @@ const fetchAgentData = async (agentId) => {
          allResponse.json()
       ]);
 
-      console.log("All data fetched successfully:", { dailyData, weeklyData, monthlyData, allData });
+      // console.log("All data fetched successfully:", { dailyData, weeklyData, monthlyData, allData });
 
       setDailyStatus(dailyData.data.indicators.length === 0 ? null : dailyData.data.indicators);
       setWeeklySummery(weeklyData.data === 0 ? null : weeklyData.data ? [weeklyData.data] : []);
@@ -148,8 +148,8 @@ useEffect(() => {
 }, [selectedAgentId, login]); 
 
 return (
-   <IndicateContext.Provider value={{ createIndicator, dailyStatus, 
-      weeklySummery, monthlySummery, allSummery, setSelectedAgentId, selectedAgentId }}>
+   <IndicateContext.Provider value={{ createIndicator, dailyStatus, weeklySummery,
+    monthlySummery, allSummery, setSelectedAgentId, selectedAgentId, agentGoal }}>
       {children}
    </IndicateContext.Provider>
 );

@@ -6,12 +6,20 @@ import { useAuth } from '../../../context/AuthProvider';
 import { useIndicate } from '../../../context/IndicateProvider';
 import { FaEdit } from "react-icons/fa";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
+import { useGoal } from '../../../context/GoalProvider';
 
 export default function PersonalIndicator() {
-  const { dailyStatus, weeklySummery, monthlySummery, allSummery, updateIndicator } = useIndicate();
+  const { dailyStatus, weeklySummery, monthlySummery,allSummery } = useIndicate();
   const { user } = useAuth()
+  const { agentGoal } = useGoal()
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState([]);
+  const [editedGoals, setEditedGoals] = useState([]);
+
+  const handleEditGoals = () => {
+    setIsEditing(true);
+    setEditedGoals(agentGoal);
+  };
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -45,7 +53,27 @@ export default function PersonalIndicator() {
       toast.error('שגיאה בשמירת השינויים');
     }
   };
-  
+
+  const handleSaveGoals = async () => {
+    try {
+       const promises = editedGoals.map(async (goal) => {
+          await fetch(`http://127.0.0.1:3000/api/v1/goals/${goal._id}`, {
+             method: 'PATCH',
+             credentials: "include",
+             headers: {
+                'Content-Type': 'application/json'
+             },
+             body: JSON.stringify(goal)
+          });
+       });
+       await Promise.all(promises);
+       toast.success('יעדים נשמרו בהצלחה!');
+       setIsEditing(false);
+    } catch (error) {
+       console.error("Error updating goals:", error);
+       toast.error('שגיאה בשמירת היעדים');
+    }
+ };
   
   const mapDaily = dailyStatus && dailyStatus.length > 0 ? dailyStatus.map(status => (
     <tr key={status._id}>
@@ -72,9 +100,34 @@ export default function PersonalIndicator() {
     </tr>
   )) : <tr><td colSpan="8">אין נתונים להצגה</td></tr>;
 
+  const mapGoal = agentGoal && agentGoal.length > 0 ? agentGoal.map(goal => (
+    <tr key={goal._id}>
+      {isEditing ? (
+        <>
+          <td><input type="number" name="meetings" value={editedData.find(item => item._id === goal._id)?.meetings || ''} onChange={(e) => handleChange(goal._id, 'meetings', e.target.value)} /></td>
+          <td><input type="number" name="deals" value={editedData.find(item => item._id === goal._id)?.deals || ''} onChange={(e) => handleChange(goal._id, 'deals', e.target.value)} /></td>
+          <td><input type="number" name="priceUpdates" value={editedData.find(item => item._id === goal._id)?.priceUpdates || ''} onChange={(e) => handleChange(goal._id, 'priceUpdates', e.target.value)} /></td>
+          <td><input type="number" name="buyerTours" value={editedData.find(item => item._id === goal._id)?.buyerTours || ''} onChange={(e) => handleChange(goal._id, 'buyerTours', e.target.value)} /></td>
+          <td><input type="number" name="priceOffers" value={editedData.find(item => item._id === goal._id)?.priceOffers || ''} onChange={(e) => handleChange(goal._id, 'priceOffers', e.target.value)} /></td>
+          <td><input type="number" name="exclusives" value={editedData.find(item => item._id === goal._id)?.exclusives || ''} onChange={(e) => handleChange(goal._id, 'exclusives', e.target.value)} /></td>
+        </>
+      ) : (
+        <>
+          <td>{goal.meetings}</td>
+          <td>{goal.deals}</td>
+          <td>{goal.priceUpdates}</td>
+          <td>{goal.buyerTours}</td>
+          <td>{goal.priceOffers}</td>
+          <td>{goal.exclusives}</td>
+        </>
+      )}
+      <td>{new Date(goal.createdAt).toLocaleString()}</td>
+    </tr>
+  )) : <tr><td colSpan="8">אין נתונים להצגה</td></tr>;
+
   const mapWeekly = weeklySummery && Array.isArray(weeklySummery) && weeklySummery.length > 0 
     ? weeklySummery.map(week => (
-      <tr key={week._id.agentId}>
+      <tr key={week._id}>
         <td>{week.totalMeetings}</td>
         <td>{week.totalDeals}</td>
         <td>{week.totalPriceUpdates}</td>
@@ -145,6 +198,34 @@ return (
         ) : (
           <button className='editBtn' onClick={handleSave}>
             <MdOutlinePublishedWithChanges className='icon'/> שמור את כל השינויים
+          </button>
+        )}
+      </div>
+      <div className='agentGoal'>
+        <h2>יעד חודשי</h2>
+        <table border="1" cellPadding="5" cellSpacing="0">
+          <thead>
+            <tr>
+              <th> יעד מפגשים</th>
+              <th>יעד עסקאות</th>
+              <th>יעד עדכוני מחיר</th>
+              <th> יעד סיורים לקונים</th>
+              <th> יעד הצעות מחיר</th>
+              <th> יעד חוזים בלעדיים</th>
+              <th> יעד תאריך יצירה</th>
+            </tr>
+          </thead>
+          <tbody>{mapGoal}</tbody>
+        </table>
+        {!isEditing ? (
+          user.role === 'admin' ? ( 
+            <button className='editBtn' onClick={handleEditGoals}>
+              <FaEdit className='icon'/> ערוך הכל
+            </button>
+          ): null
+        ) : (
+          <button className='editBtn' onClick={handleSaveGoals}>
+            <MdOutlinePublishedWithChanges className='icon'/> שמור יעדים
           </button>
         )}
       </div>

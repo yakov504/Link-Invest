@@ -29,7 +29,7 @@ export default function AgentProvider({children}){
          }
   
          const responseData = await response.json();
-         console.log(responseData);
+         // console.log(responseData);
          setAgents(responseData.data.data);
          return { success: true};
       }catch(err){

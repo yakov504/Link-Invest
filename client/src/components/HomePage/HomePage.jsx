@@ -25,7 +25,7 @@ export default function HomePage() {
   const options = [
     // { verb: 'קונה', img:buy },
     // { verb: 'משכיר',img:rent },
-    { verb: 'להשארת פרטים', img:sell}
+    { verb: 'רוצים שניצור אתכם קשר, לחצו כאן ', img:sell}
 
   ];
 
@@ -37,11 +37,23 @@ export default function HomePage() {
     </div>
   ));
 
+
+  // const reasons = [
+  //   {reason: " ות וטכנולוגיה מתקדמת – אנו מנצלים את הכלים הטכנולוגיים המתקדמים ביותר לניתוח שוק מדויק, שמביא לכם את העסקאות הטובות ביותר", icon:<FaHandshake/>},
+  //   {reason: 'תמיכה וליווי עד הסיום – מהייעוץ הראשוני ועד לחתימת העסקה – אנחנו שם בשבילכם בכל שלב ובכל שאלה', icon:<GrUpdate/>},
+  //   {reason: 'ניסיון עשיר ואמינות מוכחת – שנים של הצלחות בתחום הנד"ן מבטיחות לכם ליווי מקצועי שמבוסס על ניסיון עמוק ושקיפות מלאה', icon:<FaPersonRays/>},
+  // ];
+
   const reasons = [
     {reason: "מחויבות לשקיפות וליושר", icon:<FaHandshake/>},
     {reason: 'עדכונים שוטפים לאורך כל הדרך', icon:<GrUpdate/>},
     {reason: "הבנה עמוקה של הצרכים וההעדפות שלכם", icon:<FaPersonRays/>},
   ];
+//   ות וטכנולוגיה מתקדמת – אנו מנצלים את הכלים הטכנולוגיים המתקדמים ביותר לניתוח שוק מדויק, שמביא לכם את העסקאות הטובות ביותר
+// תמיכה וליווי עד הסיום – מהייעוץ הראשוני ועד לחתימת העסקה – אנחנו שם בשבילכם בכל שלב ובכל שאלה
+// אורן גלילי
+// 14:40
+// ניסיון עשיר ואמינות מוכחת – שנים של הצלחות בתחום הנדל"ן מבטיחות לכם ליווי מקצועי שמבוסס על ניסיון עמוק ושקיפות מלאה
 
   const reasonsMap = reasons.map(reason => (
     <div key={reason.reason} className='reasons'>
@@ -51,11 +63,11 @@ export default function HomePage() {
   ))
 
   const services = [
-    {service: "מכירת נכסים", paragragh:"ייעוץ וליווי אישי בתהליך מכירת הנכס ומציאת הנכס הבא שלך",icon:<FaHandshake/>},
-    {service: "ליווי משקיעים", paragragh:"השקעה לטווח ארוך ? השקעה לטווח קצר ? תנו ליועצים שלנו לעשות עבורך את העבודה.", icon:<GrUpdate/>},
-    {service: 'נדל"ן מסחרי' , paragragh:"מקסמו את הרווחים שלכם ומזערו את הסיכונים עם הנחיות מדויקות בעולם המסחרי.", icon:<FaPersonRays/>},
-    {service: 'שיווק פרויקטים' , paragragh:'הקמת משרדי מכירות. גיוס והכשרת אנשי נדל"ן מותאמים לפי צרכי היזם.', icon:<FaPersonRays/>},
-    {service: 'התחדשות עירונית (פינוי בינוי)', paragragh:"העתיד כבר כאן. החתמת דיירים ליזמים. שיתופי פעולה עם קבלנים וותיקים ומובילים.", icon:<FaPersonRays/>},
+    {service: "מכירת נכסים", paragragh:"ייעוץ וליווי אישי בתהליך מכירת הנכס ומציאת הנכס הבא שלך"},
+    {service: "ליווי משקיעים", paragragh:"השקעה לטווח ארוך ? השקעה לטווח קצר ? תנו ליועצים שלנו לעשות עבורך את העבודה."},
+    {service: 'יעוץ משכנתאות ', paragragh:"תנו לנו להוביל אתכם לעבר הבית הבא עם ייעוץ משכנתא שמשלב חדשנות, יחס אישי ושירות ייחודיי."},
+    {service: 'שיווק פרויקטים' , paragragh:'הקמת משרדי מכירות. גיוס והכשרת אנשי נדל"ן מותאמים לפי צרכי היזם.'},
+    {service: ' הכשרת סוכני נדל"ן ', paragragh:'הצטרף לקורס ההכשרה הייחודי שלנו לסוכני נדל"ן, וגלה סודות מעשיים וטכניקות מוכחות שיהפכו כל עסקה להזדמנות מנצחת', },
 
   ];
 
@@ -74,12 +86,9 @@ export default function HomePage() {
           Your browser does not support the video tag.
         </video>
         <div className='welcomeH'>
-          <h1>WELCOME TO THE</h1>
+          <h1>WELCOME TO YOUR</h1>
           {/* <h3></h3> */}
-          <h2>NEW FUTURE</h2>
-        </div>
-        <div className='options_buy_sell'>
-          {buy_sell_rent}
+          <h2>NEW HOME</h2>
         </div>
         <div className='whoWeAre'>
           <div className='whoText'>
@@ -112,7 +121,7 @@ export default function HomePage() {
             Your browser does not support the video tag.
           </video>
         </div>
-        <h3 className='whyWeH'>למה לבחור בנו?</h3>
+        <h3 className='whyWeH'>למה לינק</h3>
         <div className='whyW'>
           {reasonsMap}
         </div>
@@ -124,6 +133,9 @@ export default function HomePage() {
           <div className='services'>
            {servicesMap}
           </div>
+        </div>
+        <div className='options_buy_sell'>
+          {buy_sell_rent}
         </div>
       </div>
       <Footer/>

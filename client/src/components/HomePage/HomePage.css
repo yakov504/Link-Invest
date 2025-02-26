@@ -23,13 +23,13 @@
   margin-top: -45px;
   /* border: solid 1px transparent; */
   /* border-top: solid 2px white; */
-  border-bottom: solid 2px #6cd3ef;
+  /* border-bottom: solid 2px #6cd3ef; */
   border-image-source: linear-gradient(to right, transparent, white, white, transparent);
   border-image-slice: 1;
 }
 
  .welcomeH h1{
-  font-size: 70px;
+  font-size: 65px;
   font-family: "Sora", serif;
   /* width: 300px; */
   font-weight: 200;
@@ -46,60 +46,7 @@
   /* color: rgba(141, 138, 147, 0.76); */
   color: rgba(105, 232, 251, 0.338);
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.448);
- }
-
- .options_buy_sell{
-  display: flex;
-  margin-top: 120px;
-  margin-bottom: 20px;
-  flex-direction: row;
-  border-width: 100%;
- }
-
- .options{
-  height: 300px;
-  width: 380px;
-  margin-left: 20px;
-  margin-right: 20px;
- }
-
- .options img{
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  border-radius: 2px 2px 2px 2px;
-
-  transition: color 0.3s ease, background-color 0.3s ease;
-
- }
-
- .options img:hover{
-  /* transform: opacity(1.03);  */
-  opacity: 0.8;
-
- }
-
- .options h2{
-  text-align: center;
-  /* font-family: "Fredoka", serif; */
-  font-family: "Secular One", serif;
-  color: white;
-  /* color: rgb(141, 208, 246); */
-  font-size: 25px;
-  font-weight: 500;
-  padding-top:3px ;
-  padding-bottom:3px ;
-  /* background-color: rgba(2, 2, 35, 0.811); */
-  border: solid 1px white;
-  border-radius: 2px 30px 2px 30px;
-  transition: color 0.3s ease, background-color 0.3s ease;
-
- }
- .options h2:hover{
-  border: solid 1px #6cd3ef;
-  /* transform: scale(1.1);  */
-  cursor: pointer;
- }
+}
 
 .whoWeAre {
   display: flex; 
@@ -259,7 +206,7 @@
 
 .whyW{
   display: flex;
-  margin-top: 30px; 
+  margin-top: 5px; 
   margin-bottom: 60px; 
   width: 100%;
   text-align: center;
@@ -267,7 +214,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
-
+  
 }
 
 .reasons {
@@ -278,6 +225,7 @@
   text-align: center;
   /* background-color: rgb(255, 255, 255); */
   font-size: 22px;
+  /* height: 350px; */
   width: 340px;
   padding: 0px 0px 15px 0px;
   transition: all 0.3s ease;
@@ -290,12 +238,12 @@
   align-items: center;
   margin-bottom: 0px;
   transition: color 0.3s ease, background-color 0.3s ease;
-
+  
 }
 
 .reasons h4:hover{
    transform: scale(1.2); 
-}
+  }
 
 .offers {
   margin-top: 20px; 
@@ -317,7 +265,7 @@
   font-size: 40px;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.46);
   font-weight: 100;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 20px;
   align-items: center;
   text-align: center;
@@ -355,6 +303,58 @@
 
 .service:hover{
   background-color: #4d6d7661;
+}
+
+.options_buy_sell{
+display: flex;
+margin-top: 30px;
+margin-bottom: 160px;
+flex-direction: row;
+border-width: 100%;
+}
+
+.options{
+height: 300px;
+width: 380px;
+margin-left: 20px;
+margin-right: 20px;
+}
+
+.options img{
+width: 100%;
+height: 100%;
+cursor: pointer;
+border-radius: 2px 2px 2px 2px;
+transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+
+.options img:hover{
+/* transform: opacity(1.03);  */
+opacity: 0.8;
+
+}
+
+.options h2{
+text-align: center;
+/* font-family: "Fredoka", serif; */
+font-family: "Secular One", serif;
+color: white;
+/* color: rgb(141, 208, 246); */
+font-size: 25px;
+font-weight: 500;
+padding-top:3px ;
+padding-bottom:3px ;
+/* background-color: rgba(2, 2, 35, 0.811); */
+border: solid 1px white;
+border-radius: 2px 30px 2px 30px;
+transition: color 0.3s ease, background-color 0.3s ease;
+
+}
+.options h2:hover{
+border: solid 1px #6cd3ef;
+/* transform: scale(1.1);  */
+cursor: pointer;
 }
 
 /* FOOTER */

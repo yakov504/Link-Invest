@@ -2,13 +2,14 @@ import { useState } from 'react';
 import NavSide from '../NavSide';
 import './PersonalIndicator.css'
 import { toast } from 'react-toastify';
+import { useAuth } from '../../../context/AuthProvider';
 import { useIndicate } from '../../../context/IndicateProvider';
 import { FaEdit } from "react-icons/fa";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
 
 export default function PersonalIndicator() {
   const { dailyStatus, weeklySummery, monthlySummery, allSummery, updateIndicator } = useIndicate();
-
+  const { user } = useAuth()
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState([]);
 
@@ -136,9 +137,11 @@ return (
           <tbody>{mapDaily}</tbody>
         </table>
         {!isEditing ? (
-          <button className='editBtn' onClick={handleEdit}>
-            <FaEdit className='icon'/> ערוך הכל
-          </button>
+          user.role === 'admin' ? ( 
+            <button className='editBtn' onClick={handleEdit}>
+              <FaEdit className='icon'/> ערוך הכל
+            </button>
+          ): null
         ) : (
           <button className='editBtn' onClick={handleSave}>
             <MdOutlinePublishedWithChanges className='icon'/> שמור את כל השינויים

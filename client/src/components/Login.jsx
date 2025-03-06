@@ -25,7 +25,6 @@ export default function Login() {
       // console.log(response.message);
     }
   };
-  
  
   return (
     <div className='loginContainer'>

@@ -293,6 +293,7 @@
   width: 220px;
   padding: 10px 20px 20px 20px;
   transition: color 0.3s ease, background-color 0.3s ease;
+  /* transition-duration: 1s ; */
 
 }
 
@@ -302,6 +303,8 @@
 }
 
 .service:hover{
+  /* transform: rotate(45deg); */
+  /* border-radius: 2px 2px 2px 2px; */
   background-color: #4d6d7661;
 }
 

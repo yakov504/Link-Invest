@@ -24,7 +24,7 @@ export default function IndicateProvider({children}) {
 
    const ifUserExist = () => {
       if (!user) {
-         const storedUser = localStorage.getItem("user"); // שלוף את המשתמש מ-localStorage
+         const storedUser = localStorage.getItem("user")
          if (storedUser) {
             // אם יש נתונים ב-localStorage, עדכן את ה-state
             setUser(JSON.parse(storedUser)); // עדכון ה-state עם הנתונים שנמצאו

@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import customFetch from '../utils/customFetch'
 import { toast } from "react-toastify";
 
 const AuthContext = createContext(undefined);

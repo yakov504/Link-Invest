@@ -308,12 +308,20 @@
   background-color: #4d6d7661;
 }
 
+.liveDitails{
+  width: 100%;
+ border-top: solid 2px white;
+ border-image-source: linear-gradient(to right, transparent, white, white, transparent);
+ border-image-slice: 1; 
+}
+
 .options_buy_sell{
-display: flex;
-margin-top: 30px;
-margin-bottom: 160px;
-flex-direction: row;
-border-width: 100%;
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 160px;
+  flex-direction: column;
+  align-items: center;
+  border-width: 100%;
 }
 
 .options{
@@ -388,7 +396,7 @@ cursor: pointer;
   }
 
   .options_buy_sell .options{
-    margin-top: 100px;
+    margin-top: 50px;
   }
     .whyW {
       flex-direction: column;

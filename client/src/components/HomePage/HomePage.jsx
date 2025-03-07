@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Footer from './Footer'
+import BuySellRent from './BuySellRent'
 import './HomePage.css'
 
 import haifaN from '../../assets/image/haifaNghit.jpg'
@@ -134,8 +135,11 @@ export default function HomePage() {
            {servicesMap}
           </div>
         </div>
-        <div className='options_buy_sell'>
-          {buy_sell_rent}
+        <div className='liveDitails'>
+          <div className='options_buy_sell'>
+            {buy_sell_rent}
+          </div>
+          {/* <BuySellRent/> */}
         </div>
       </div>
       <Footer/>

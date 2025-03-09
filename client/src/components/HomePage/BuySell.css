@@ -24,7 +24,7 @@
    margin-right: 20px;
    width: 100%;
    display: flex;
-   flex-direction: column; /* הופך את התוכן לעמודה */
+   flex-direction: column;
    justify-content: center;
  }
 

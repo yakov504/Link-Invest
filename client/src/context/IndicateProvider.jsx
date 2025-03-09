@@ -129,7 +129,7 @@ const fetchAgentData = async (agentId) => {
          allResponse.json()
       ]);
 
-      // console.log("All data fetched successfully:", { dailyData, weeklyData, monthlyData, allData });
+      console.log("All data fetched successfully:", { dailyData, weeklyData, monthlyData, allData });
 
       setDailyStatus(dailyData.data.indicators.length === 0 ? null : dailyData.data.indicators);
       setWeeklySummery(weeklyData.data === 0 ? null : weeklyData.data ? [weeklyData.data] : []);

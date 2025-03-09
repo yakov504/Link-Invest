@@ -19,7 +19,7 @@ export default function AgentProvider({children}){
       try{
          const response = await fetch("http://127.0.0.1:3000/api/v1/users",{
             method: 'GET',
-            credentials: "include", // שולח את ה-cookie עם הבקשה
+            credentials: "include",
             headers: {
                'Content-Type': 'application/json'
          }
@@ -45,7 +45,7 @@ export default function AgentProvider({children}){
           const result = await allAgents();
           if (result.success) {
             // console.log(agents);
-            // setAgents(result.responseData.data.data);
+            setAgents(result.responseData.data.data);
           } else {
             console.error(result.message);
           }

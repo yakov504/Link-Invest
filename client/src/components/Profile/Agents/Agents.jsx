@@ -4,10 +4,10 @@ import './Agents.css'
 import { useNavigate } from "react-router-dom";
 import { useAgent } from '../../../context/AgentProvider';
 import { useIndicate } from '../../../context/IndicateProvider';
-import { useGoal } from '../../../context/GoalProvider';
+// import { useGoal } from '../../../context/GoalProvider';
 
+// import { GoGraph } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
-import { GoGraph } from "react-icons/go";
 import { GoGoal } from "react-icons/go";
 
 export default function Agents() {

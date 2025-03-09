@@ -3,26 +3,28 @@ import { useState, useEffect, useContext } from 'react';
 import'./NavBar.css'
 import { useAuth } from '../context/AuthProvider';
 import logo from '../assets/image/link_logo.png'
+
+import { BiDownArrow } from "react-icons/bi";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 export default function NavBar(props) {
   const { user } = useAuth();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (!loading && !user) {
-  //     navigate('/login');
-  //   }
-  // }, [loading, user, navigate]);
+  const handleMouseEnter = () => {
+    setDropdownOpen(true);
+  };
 
+  const handleMouseLeave = () => {
+    setDropdownOpen(false);
+  };
+  
   return (
     <nav className={props.className}> 
       <ul>
         <li>
-          {/* <Link to={'/AgentProfile'}>
-            איזור אישי לסוכנים
-          </Link> */}
           { user === null ? <Link to={'/Login'}>
             איזור אישי לסוכנים</Link> : <Link to={'/AgentProfile'}>
             איזור אישי לסוכנים
@@ -30,7 +32,23 @@ export default function NavBar(props) {
         </li>
         <li> 
           <Link to='/'>עמוד הבית</Link>
-        </li> 
+        </li>
+        <li onMouseEnter={handleMouseEnter} 
+         onMouseLeave={handleMouseLeave} className='dropdown'>
+          <Link to='/'>
+            לנכסים שלנו <BiDownArrow className='navIcon' />
+          </Link>
+          {dropdownOpen && (
+            <ul className='dropdown-menu'>
+              <li>
+                <Link to='/Sale'>מכירה</Link>
+              </li>
+              <li>
+                <Link to='/Rent'>השכרה</Link>
+              </li>
+            </ul>
+          )}
+        </li>
       </ul>
       <ul className='icons'>
         <li>

@@ -17,6 +17,8 @@ import DailyIndicator from './components/Profile/Indicators/DailyIndicator';
 import Agents from './components/Profile/Agents/Agents'
 import PersonalIndicator from './components/Profile/Indicators/PersonalIndicator';
 import AdminGoals from './components/Profile/Goals/AdminGoals';
+import Sale from './components/Propertys/Sale'
+import Rent from './components/Propertys/Rent'
 
 export default function App() {
   // const { user, getUserData } = useAuth();
@@ -56,6 +58,8 @@ export default function App() {
                 <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
                 <Route path='/Agents' element={<Agents />}/>
                 <Route path='/AdminGoals' element={<AdminGoals />}/>
+                <Route path='/Sale' element={<Sale/>}/>
+                <Route path='/Rent' element={<Rent/>}/>
               </Routes>
             </GoalProvider>
           </AgentProvider>

@@ -2,101 +2,95 @@ const Indicator = require('../modules/indicatorsModuls');
 const Goal = require('../modules/goalsModuls');
 const mongoose = require('mongoose');
 
-exports.getMonthlyPerformance = async (req, res, next) => {
-  try {
-     const { id: agentId } = req.params;  // שלוף את ה-agentId מתוך ה- URL
-     const startDate = new Date(new Date().setDate(1)); // תחילת החודש הנוכחי
-     const endDate = new Date(new Date().setMonth(new Date().getMonth() + 1, 0)); // סוף החודש
-
+exports.getAgentPerformance = async (req, res, next) => {
+   try {
+     const { agentId, year, month } = req.query;
+ 
+     const startDate = new Date(`${year || new Date().getFullYear()}-${month || (new Date().getMonth() + 1)}-01`);
+     const endDate = new Date(new Date(startDate).setMonth(startDate.getMonth() + 1, 0));
+ 
+     const matchStage = {
+       createdAt: { $gte: startDate, $lte: endDate }
+     };
+ 
+     if (agentId) {
+       matchStage.agent = new mongoose.Types.ObjectId(agentId);
+     }
+ 
      const performance = await Indicator.aggregate([
-        {
-           $match: {
-              agent: new mongoose.Types.ObjectId(agentId),
-              createdAt: { $gte: startDate, $lte: endDate }
-           }
-        },
-        {
-           $group: {
-              _id: '$agent',
-              totalMeetings: { $sum: '$meetings' },
-              totalExclusives: { $sum: '$exclusives' },
-              totalPriceUpdates: { $sum: '$priceUpdates' },
-              totalBuyerTours: { $sum: '$buyerTours' },
-              totalPriceOffers: { $sum: '$priceOffers' },
-              totalDeals: { $sum: '$deals' }
-           }
-        }
+       { $match: matchStage },
+       {
+         $group: {
+           _id: '$agent',
+           totalMeetings: { $sum: '$meetings' },
+           totalExclusives: { $sum: '$exclusives' },
+           totalPriceUpdates: { $sum: '$priceUpdates' },
+           totalBuyerTours: { $sum: '$buyerTours' },
+           totalPriceOffers: { $sum: '$priceOffers' },
+           totalDeals: { $sum: '$deals' }
+         }
+       }
      ]);
+ 
+     const goals = await Goal.find({}).populate({
+       path: 'agent',
+       select: 'name role'
+     });
 
-    const goals = await Goal.findOne({ agent: agentId }).populate({
-      path: 'agent',
-      select: 'name role'  // זה יביא את השם של הסוכן
-    });
+     console.log(goals); 
+ 
+     const calculatePercentage = (actual, goal) => (goal ? ((actual || 0) / goal) * 100 : 0).toFixed(2);
+ 
+     const summary = performance.map(perf => {
+      // יש לוודא ש-agent הוא אובייקט ולא מערך, ואם כן אז לבחור את האובייקט הראשון במערך
+      const agentGoals = goals.find(goal => goal.agent && goal.agent[0]._id.toString() === perf._id.toString());
+      
+      if (!agentGoals) return null;
     
-    console.log('goals:', goals);
-
-    if (!goals) {
-        return res.status(404).json({ message: 'לא נמצאו יעדים עבור הסוכן' });
-    }
-
-    const agentName = goals.agent.name
-
-    const totalWorkDays = 20; // 5 ימים בשבוע * 4 שבועות
-    const daysPassed = new Date().getDate();
-    const remainingWorkDays = totalWorkDays - daysPassed;
-
-    const summary = {
-      // agentName: agentName,
-      meetings: {
-         actual: performance.totalMeetings || 0,
-         goal: goals.meetings,
-         percentage: ((performance.totalMeetings || 0) / goals.meetings) * 100,
-         forecast: ((performance.totalMeetings || 0) / daysPassed) * totalWorkDays
-      },
-      exclusives: {
-         actual: performance.totalExclusives || 0,
-         goal: goals.exclusives,
-         percentage: ((performance.totalExclusives || 0) / goals.exclusives) * 100,
-         forecast: ((performance.totalExclusives || 0) / daysPassed) * totalWorkDays
-      },
-      priceUpdates: {
-         actual: performance.totalPriceUpdates || 0,
-         goal: goals.priceUpdates,
-         percentage: ((performance.totalPriceUpdates || 0) / goals.priceUpdates) * 100,
-         forecast: ((performance.totalPriceUpdates || 0) / daysPassed) * totalWorkDays
-      },
-      buyerTours: {
-         actual: performance.totalBuyerTours || 0,
-         goal: goals.buyerTours,
-         percentage: ((performance.totalBuyerTours || 0) / goals.buyerTours) * 100,
-         forecast: ((performance.totalBuyerTours || 0) / daysPassed) * totalWorkDays
-      },
-      priceOffers: {
-         actual: performance.totalPriceOffers || 0,
-         goal: goals.priceOffers,
-         percentage: ((performance.totalPriceOffers || 0) / goals.priceOffers) * 100,
-         forecast: ((performance.totalPriceOffers || 0) / daysPassed) * totalWorkDays
-      },
-      deals: {
-         actual: performance.totalDeals || 0,
-         goal: goals.deals,
-         percentage: ((performance.totalDeals || 0) / goals.deals) * 100,
-         forecast: ((performance.totalDeals || 0) / daysPassed) * totalWorkDays
-      },
-   };
-
-   // החזרת התוצאה למשתמש
-   res.status(200).json({
-      status: 'success',
-      data: summary, agentName
-   });
-  } catch (error) {
-    console.log(error);
-    
-    res.status(500).json({
-      message: 'שגיאה בשרת',
-      error 
-    });
-  }
-};
-
+      return {
+        agentName: agentGoals.agent[0].name,  // התייחסות לשם של הסוכן מתוך האובייקט במערך
+        meetings: {
+          actual: perf.totalMeetings || 0,
+          goal: agentGoals.meetings,
+          percentage: calculatePercentage(perf.totalMeetings, agentGoals.meetings)
+        },
+        exclusives: {
+          actual: perf.totalExclusives || 0,
+          goal: agentGoals.exclusives,
+          percentage: calculatePercentage(perf.totalExclusives, agentGoals.exclusives)
+        },
+        priceUpdates: {
+          actual: perf.totalPriceUpdates || 0,
+          goal: agentGoals.priceUpdates,
+          percentage: calculatePercentage(perf.totalPriceUpdates, agentGoals.priceUpdates)
+        },
+        buyerTours: {
+          actual: perf.totalBuyerTours || 0,
+          goal: agentGoals.buyerTours,
+          percentage: calculatePercentage(perf.totalBuyerTours, agentGoals.buyerTours)
+        },
+        priceOffers: {
+          actual: perf.totalPriceOffers || 0,
+          goal: agentGoals.priceOffers,
+          percentage: calculatePercentage(perf.totalPriceOffers, agentGoals.priceOffers)
+        },
+        deals: {
+          actual: perf.totalDeals || 0,
+          goal: agentGoals.deals,
+          percentage: calculatePercentage(perf.totalDeals, agentGoals.deals)
+        }
+      };
+    }).filter(item => item !== null);
+ 
+     res.status(200).json({
+       status: 'success',
+       data: summary
+     });
+   } catch (error) {
+     console.error(error);
+     res.status(500).json({
+       message: 'שגיאה בשרת',
+       error
+     });
+   }
+ };

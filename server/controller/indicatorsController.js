@@ -66,8 +66,13 @@ exports.getAllSummary = catchAsync(async (req, res, next) => {
 
 
 exports.getIndicatorsByAgent = catchAsync(async (req, res, next) => {
-   const { agent } = req.body.id;  // מקבל את ה-agent מה-body של הבקשה
+   console.log('req.body:', req.body); // הדפסה לבדוק אם יש את ה-id
 
+   const { agent } = req.body.id || {}; // בטיחות בעת הדה-סטרקטורינג
+   if (!agent) {
+     return res.status(400).json({ message: 'הסוכן לא נמצא ב-body' });
+   }
+   
    const indicators = await Indicator.find({ agent }).populate({
        path: 'agent',
        select: 'name role'

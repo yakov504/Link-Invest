@@ -127,13 +127,26 @@
 @media only screen and (max-width: 45em) {
 
   .nav{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    position: sticky; 
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     font-size: 14px;
+    padding: 0 0px;
+
   }
 
   .logo{
     height:55px;
     width: auto;
-    margin-left: 28px;
+    margin-left: 0px;
     margin-right: 7px;
  } 
   .nav ul {
@@ -146,5 +159,43 @@
     padding: 12px 5px;
   }
 }
+
+@media only screen and (max-width: 35em) {
+
+  .nav{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    position: sticky; 
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 11px;
+   padding: 0 0px;
+
+  }
+
+  .logo{
+    height:50px;
+    width: auto;
+    margin-left: -15px;
+    margin-right: 0px;
+    /* padding-left: -px; */
+ } 
+  .nav ul {
+    padding: 10px;
+    padding-right: 0px;
+  }
+  
+  .nav a {
+    /* height: 100%; */
+    padding: 12px 0px;
+  }
+}
+ 
  
  

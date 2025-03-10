@@ -1,9 +1,14 @@
 const express = require('express')
 const goalsController = require('../controller/goalsController')
 const authController = require('../controller/authController')
+const performanceController = require('../controller/performanceController')
 
 const router = express.Router({mergeParams: true});
 router.use(authController.protect)
+
+router.route('/agentPerformance/:id').get(
+  performanceController.getMonthlyPerformance,
+  authController.restrictTo("admin", "agent"))
 
 router.route('/').get(
    authController.restrictTo('admin'),

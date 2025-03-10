@@ -13,7 +13,7 @@ import { CgAlignBottom } from "react-icons/cg";
 
 export default function NavSide() {
   const { user, logout } = useAuth();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className="nav-container">
@@ -22,18 +22,23 @@ export default function NavSide() {
           ☰
         </button>
         <ul>
-          <li>
-            {user.role === 'admin' ? 
-            <Link to={'/Agents'}><FaPeopleGroup className="icon"/>
-            {isOpen && "מבט על סוכנים"}</Link> : 
-            null}
-          </li>
-          {
-            user.role === 'admin' ?
-            null :
+          {user.role === 'admin' ? 
             <li>
-              <Link to={'/PersonalIndicator'}><GoGraph className="icon"/> {isOpen && "מדדים"}</Link>
-            </li> 
+              <Link to={'/Agents'}><FaPeopleGroup className="icon"/>
+                {isOpen && "מבט על סוכנים"}
+              </Link>
+            </li>
+          : null}
+          {user.role === 'admin' ?     
+            <li>
+              <Link to={'/Performance'}><GoGraph className="icon"/> {isOpen && "ביצועי משרד"}</Link>
+            </li>
+          : null}   
+          {user.role === 'admin' ?
+            null :
+              <li>
+                <Link to={'/PersonalIndicator'}><GoGraph className="icon"/> {isOpen && "מדדים"}</Link>
+              </li> 
           }
           <li onClick={() => logout()}>
             <Link to={'/'}>

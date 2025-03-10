@@ -94,3 +94,99 @@ exports.getAgentPerformance = async (req, res, next) => {
      });
    }
  };
+
+exports.getCompanyPerformance = async (req, res, next) => {
+    try {
+        const { year, month } = req.query;
+
+        const startDate = new Date(`${year || new Date().getFullYear()}-${month || (new Date().getMonth() + 1)}-01`);
+        const endDate = new Date(new Date(startDate).setMonth(startDate.getMonth() + 1, 0));
+
+        const matchStage = {
+            createdAt: { $gte: startDate, $lte: endDate }
+        };
+
+        const performance = await Indicator.aggregate([
+            { $match: matchStage },
+            {
+                $group: {
+                    _id: null, // קבוצה אחת עבור כל המסמכים
+                    totalMeetings: { $sum: '$meetings' },
+                    totalExclusives: { $sum: '$exclusives' },
+                    totalPriceUpdates: { $sum: '$priceUpdates' },
+                    totalBuyerTours: { $sum: '$buyerTours' },
+                    totalPriceOffers: { $sum: '$priceOffers' },
+                    totalDeals: { $sum: '$deals' }
+                }
+            }
+        ]);
+
+        const goals = await Goal.aggregate([
+            {
+                $group: {
+                    _id: null, // קבוצה אחת עבור כל המסמכים
+                    totalMeetings: { $sum: '$meetings' },
+                    totalExclusives: { $sum: '$exclusives' },
+                    totalPriceUpdates: { $sum: '$priceUpdates' },
+                    totalBuyerTours: { $sum: '$buyerTours' },
+                    totalPriceOffers: { $sum: '$priceOffers' },
+                    totalDeals: { $sum: '$deals' }
+                }
+            }
+        ]);
+
+        const calculatePercentage = (actual, goal) => (goal ? ((actual || 0) / goal) * 100 : 0).toFixed(2);
+
+        if (performance.length === 0 || goals.length === 0) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'לא נמצאו נתונים עבור התקופה המבוקשת.'
+            });
+        }
+
+        const companyPerformance = {
+            companyName: 'לינק',
+            meetings: {
+                actual: performance[0].totalMeetings || 0,
+                goal: goals[0].totalMeetings || 0,
+                percentage: calculatePercentage(performance[0].totalMeetings, goals[0].totalMeetings)
+            },
+            exclusives: {
+                actual: performance[0].totalExclusives || 0,
+                goal: goals[0].totalExclusives || 0,
+                percentage: calculatePercentage(performance[0].totalExclusives, goals[0].totalExclusives)
+            },
+            priceUpdates: {
+                actual: performance[0].totalPriceUpdates || 0,
+                goal: goals[0].totalPriceUpdates || 0,
+                percentage: calculatePercentage(performance[0].totalPriceUpdates, goals[0].totalPriceUpdates)
+            },
+            buyerTours: {
+                actual: performance[0].totalBuyerTours || 0,
+                goal: goals[0].totalBuyerTours || 0,
+                percentage: calculatePercentage(performance[0].totalBuyerTours, goals[0].totalBuyerTours)
+            },
+            priceOffers: {
+                actual: performance[0].totalPriceOffers || 0,
+                goal: goals[0].totalPriceOffers || 0,
+                percentage: calculatePercentage(performance[0].totalPriceOffers, goals[0].totalPriceOffers)
+            },
+            deals: {
+                actual: performance[0].totalDeals || 0,
+                goal: goals[0].totalDeals || 0,
+                percentage: calculatePercentage(performance[0].totalDeals, goals[0].totalDeals)
+            }
+        };
+
+        res.status(200).json({
+            status: 'success',
+            data: companyPerformance
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'שגיאה בשרת',
+            error
+        });
+    }
+};

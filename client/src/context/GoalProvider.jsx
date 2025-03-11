@@ -20,6 +20,7 @@ export default function GoalProvider({ children }) {
     const [allAgentsPerformance, setAllAgentsPerformance] = useState(null);
     const [singleAgentPerformance, setSingleAgentPerformance] = useState(null);
     const [companyPerformance, setCompanyPerformance] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const createGoal = async (formData) => {
         try {
@@ -73,7 +74,7 @@ export default function GoalProvider({ children }) {
 
     const fetchAllAgentsPerformance = async (year, month) => {
         try {
-            const url = `http://127.0.0.1:3000/api/v1/performance/all?year=${year || new Date().getFullYear()}&month=${month || new Date().getMonth() + 1}`;
+            const url = `http://127.0.0.1:3000/api/v1/performance/all/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
             const response = await fetch(url, {
                 credentials: "include",
             });
@@ -86,10 +87,10 @@ export default function GoalProvider({ children }) {
             console.error('Error fetching all agents performance:', error);
         }
     };
-
+    
     const fetchSingleAgentPerformance = async (agentId, year, month) => {
         try {
-            const url = `http://127.0.0.1:3000/api/v1/performance/${agentId}?year=${year || new Date().getFullYear()}&month=${month || new Date().getMonth() + 1}`;
+            const url = `http://127.0.0.1:3000/api/v1/performance/${agentId}/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
             const response = await fetch(url, {
                 credentials: "include",
             });
@@ -102,10 +103,11 @@ export default function GoalProvider({ children }) {
             console.error('Error fetching single agent performance:', error);
         }
     };
-
+    
     const fetchCompanyPerformance = async (year, month) => {
         try {
-            const response = await fetch(`http://127.0.0.1:3000/api/v1/companyPerformance?year=${year || new Date().getFullYear()}&month=${month || new Date().getMonth() + 1}`, {
+            const url = `http://127.0.0.1:3000/api/v1/companyPerformance/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
+            const response = await fetch(url, {
                 credentials: "include",
             });
             if (!response.ok) {
@@ -118,19 +120,28 @@ export default function GoalProvider({ children }) {
         }
     };
 
+    const handleLogin = async (...args) => {
+        await login(...args);
+        setIsLoggedIn(true);
+    };
+    
     useEffect(() => {
-        if (selectedAgentId || user) {
-            fetchGoal(selectedAgentId);
+        if (isLoggedIn) {
             fetchAllAgentsPerformance();
-            if (selectedAgentId) {
-                fetchSingleAgentPerformance(selectedAgentId);
+            if (selectedAgentId || user) {
+                fetchGoal(selectedAgentId);
+                if (selectedAgentId) {
+                    fetchSingleAgentPerformance(selectedAgentId);
+                }
             }
         }
-    }, [selectedAgentId, login]);
+    }, [isLoggedIn, selectedAgentId]);
 
     useEffect(() => {
-        fetchCompanyPerformance();
-    }, [login]);
+        if (isLoggedIn) {
+            fetchCompanyPerformance();
+        }
+    }, [isLoggedIn]);
 
     return (
         <GoalContext.Provider value={{
@@ -143,7 +154,8 @@ export default function GoalProvider({ children }) {
             companyPerformance,
             fetchAllAgentsPerformance,
             fetchSingleAgentPerformance,
-            fetchCompanyPerformance
+            fetchCompanyPerformance,
+            login: handleLogin
         }}>
             {children}
         </GoalContext.Provider>

@@ -8,6 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { GoGraph } from "react-icons/go";
 import { IoLogInOutline } from "react-icons/io5";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { FaHome } from "react-icons/fa";
 import { CgAlignBottom } from "react-icons/cg";
 
 
@@ -27,6 +28,11 @@ export default function NavSide() {
               <Link to={'/Agents'}><FaPeopleGroup className="icon"/>
                 {isOpen && "מבט על סוכנים"}
               </Link>
+            </li>
+          : null}
+          {user.role === 'admin' ? 
+            <li>
+              <Link to= {'/NewProperty'}><FaHome className="icon"/>{'נכס חדש'}</Link>
             </li>
           : null}
           {user.role === 'admin' ?     

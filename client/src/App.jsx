@@ -19,6 +19,7 @@ import PersonalIndicator from './components/Profile/Indicators/PersonalIndicator
 import AdminGoals from './components/Profile/Goals/AdminGoals';
 import Sale from './components/Propertys/Sale'
 import Rent from './components/Propertys/Rent'
+import NewProperty from './components/Propertys/NewProperty';
 import Performance from './components/Profile/Goals/Performance';
 
 export default function App() {
@@ -62,6 +63,7 @@ export default function App() {
                 <Route path='/Performance' element={<Performance/>}/>
                 <Route path='/Sale' element={<Sale/>}/>
                 <Route path='/Rent' element={<Rent/>}/>
+                <Route path='/NewProperty' element={<NewProperty/>}/>
               </Routes>
             </GoalProvider>
           </AgentProvider>

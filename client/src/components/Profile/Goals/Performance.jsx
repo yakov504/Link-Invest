@@ -4,26 +4,25 @@ import { useGoal } from '../../../context/GoalProvider';
 import { toast } from 'react-toastify';
 
 export default function Performance() {
-  const { allAgentsPerformance, companyPerformance, fetchAllAgentsPerformance, fetchCompanyPerformance } = useGoal();
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  // const { allAgentsPerformance, companyPerformance, fetchAllAgentsPerformance, fetchCompanyPerformance } = useGoal();
+  // const [year, setYear] = useState(new Date().getFullYear());
+  // const [month, setMonth] = useState(new Date().getMonth() + 1);
 
-  const handleDateChange = async () => {
-    try {
-      await fetchAllAgentsPerformance(year, month);
-      await fetchCompanyPerformance(year, month);
-      toast.success('הנתונים עודכנו בהצלחה!');
-    } catch (error) {
-      toast.error('שגיאה בעדכון הנתונים');
-    }
-  };
+  // const handleDateChange = async () => {
+  //   try {
+  //     await fetchAllAgentsPerformance(year, month);
+  //     await fetchCompanyPerformance(year, month);
+  //     toast.success('הנתונים עודכנו בהצלחה!');
+  //   } catch (error) {
+  //     toast.error('שגיאה בעדכון הנתונים');
+  //   }
+  // };
 
   return (
     <div>
       <NavSide />
-      <div>
+      {/* <div>
         <h2>ביצועי משרד</h2>
-        {/* Date Picker */}
         <div style={{ margin: '20px 0' }}>
           <label htmlFor="year">בחר שנה:</label>
           <select
@@ -58,7 +57,6 @@ export default function Performance() {
             עדכן נתונים
           </button>
         </div>
-        {/* All Agents Performance Table */}
         {allAgentsPerformance && (
           <div>
             <h3>ביצועי סוכני מכירות</h3>
@@ -90,7 +88,6 @@ export default function Performance() {
             </table>
           </div>
         )}
-        {/* Company Performance Table */}
         {companyPerformance && (
           <div>
             <h3>ביצועים כלליים של המשרד</h3>
@@ -112,7 +109,7 @@ export default function Performance() {
             </table>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

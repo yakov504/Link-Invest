@@ -31,7 +31,7 @@ const createSendToken = ( user, statusCode, res ) => {
    res.cookie('token', token, cookieOptions);
    user.password = undefined
    
-   console.log("token:",token);
+   // console.log("token:",token);
    res.status(statusCode).json({
       status: 'success',
       token,
@@ -51,7 +51,7 @@ exports.signUp = catchAsync(async( req, res ,next ) => {
 
 exports.login = catchAsync(async( req, res, next ) => {
    const { email, password } = req.body;
-   console.log(email, password ,"req body");
+   // console.log(email, password ,"req body");
    
    ///1.לבדוק אם המייל קיים///
    if(!email || !password){
@@ -63,7 +63,7 @@ exports.login = catchAsync(async( req, res, next ) => {
    if (!user || !(await user.correctPassword(password, user.password))) {
       return next(new AppError('incorrect email or password', 401))
    }
-   console.log('Cookies received:', req.cookies);
+   // console.log('Cookies received:', req.cookies);
    ///3. אם הכל נכון לשלוח token ללקוח 
    createSendToken(user, 200, res)
 })
@@ -223,7 +223,7 @@ exports.protect = catchAsync(async( req, res, next )=> {
    } else if (req.cookies.token) {
       token = req.cookies.token;
    }
-   console.log("Protect func get token:", token); 
+   // console.log("Protect func get token:", token); 
    /// אם אין תוקן מחזיר שגיעה
     if (!token) {
       return next(new AppError('you are not logedin',401))
@@ -247,22 +247,5 @@ exports.protect = catchAsync(async( req, res, next )=> {
     req.user = currentUser
     next()
 })
-
-// exports.protect = async(req, res, next) => {
-
-//    const user = await User.findById(req.body.id)
-
-//    try{
-//       const token = req.headers.authorization.split(' ')[1];
-//       if (!token) {
-//          return next(new AppError('you are not logedin',401))
-//       } 
-//       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-//       req.userData = {id: decodedToken.id}
-//       next()
-//    }catch (err){
-//       return next(new AppError('you are not logedin',401))
-//    }
-// }
 
 

@@ -14,6 +14,7 @@ const indicatorsRouter = require('./routes/indicatorsRouter');
 const userRouter = require('./routes/usersRouter')
 const goalsRouter = require('./routes/goalsRouter')
 const emailRouter = require('./routes/emailsRouter')
+const propertyRouter = require('./routes/propertyRouter')
 dotenv.config({path:'./config.env'})
 
 
@@ -94,12 +95,7 @@ app.use('/api/v1/users', userRouter)
 app.use('/api/v1/indicators', indicatorsRouter)
 app.use('/api/v1/goals', goalsRouter)
 app.use('/api/v1/email', emailRouter)
-
-
-///DEMY ROUTER
-app.get('/api/v1/test', (req, res) => {
-   res.json ({ message:'test route'})
-})
+app.use('/api/v1/property', propertyRouter)
 
 /// HANDAL ERR ROUTER ///
 app.all('*', (req, res, next) => {

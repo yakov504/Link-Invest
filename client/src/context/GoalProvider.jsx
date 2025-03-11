@@ -72,53 +72,53 @@ export default function GoalProvider({ children }) {
         }
     };
 
-    const fetchAllAgentsPerformance = async (year, month) => {
-        try {
-            const url = `http://127.0.0.1:3000/api/v1/performance/all/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
-            const response = await fetch(url, {
-                credentials: "include",
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch all agents performance");
-            }
-            const data = await response.json();
-            setAllAgentsPerformance(data.data);
-        } catch (error) {
-            console.error('Error fetching all agents performance:', error);
-        }
-    };
+    // const fetchAllAgentsPerformance = async (year, month) => {
+    //     try {
+    //         const url = `http://127.0.0.1:3000/api/v1/performance/all/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
+    //         const response = await fetch(url, {
+    //             credentials: "include",
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error("Failed to fetch all agents performance");
+    //         }
+    //         const data = await response.json();
+    //         setAllAgentsPerformance(data.data);
+    //     } catch (error) {
+    //         console.error('Error fetching all agents performance:', error);
+    //     }
+    // };
     
-    const fetchSingleAgentPerformance = async (agentId, year, month) => {
-        try {
-            const url = `http://127.0.0.1:3000/api/v1/performance/${agentId}/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
-            const response = await fetch(url, {
-                credentials: "include",
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch single agent performance");
-            }
-            const data = await response.json();
-            setSingleAgentPerformance(data.data);
-        } catch (error) {
-            console.error('Error fetching single agent performance:', error);
-        }
-    };
+    // const fetchSingleAgentPerformance = async (agentId, year, month) => {
+    //     try {
+    //         const url = `http://127.0.0.1:3000/api/v1/performance/${agentId}/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
+    //         const response = await fetch(url, {
+    //             credentials: "include",
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error("Failed to fetch single agent performance");
+    //         }
+    //         const data = await response.json();
+    //         setSingleAgentPerformance(data.data);
+    //     } catch (error) {
+    //         console.error('Error fetching single agent performance:', error);
+    //     }
+    // };
     
-    const fetchCompanyPerformance = async (year, month) => {
-        try {
-            const url = `http://127.0.0.1:3000/api/v1/companyPerformance/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
-            const response = await fetch(url, {
-                credentials: "include",
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch company performance");
-            }
-            const data = await response.json();
-            setCompanyPerformance(data.data);
-        } catch (error) {
-            console.error('Error fetching company performance:', error);
-        }
-    };
+    // const fetchCompanyPerformance = async (year, month) => {
+    //     try {
+    //         const url = `http://127.0.0.1:3000/api/v1/companyPerformance/${year || new Date().getFullYear()}/${month || new Date().getMonth() + 1}`;
+    //         const response = await fetch(url, {
+    //             credentials: "include",
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error("Failed to fetch company performance");
+    //         }
+    //         const data = await response.json();
+    //         setCompanyPerformance(data.data);
+    //     } catch (error) {
+    //         console.error('Error fetching company performance:', error);
+    //     }
+    // };
 
     const handleLogin = async (...args) => {
         await login(...args);
@@ -127,19 +127,19 @@ export default function GoalProvider({ children }) {
     
     useEffect(() => {
         if (isLoggedIn) {
-            fetchAllAgentsPerformance();
+            // fetchAllAgentsPerformance();
             if (selectedAgentId || user) {
                 fetchGoal(selectedAgentId);
-                if (selectedAgentId) {
-                    fetchSingleAgentPerformance(selectedAgentId);
-                }
+                // if (selectedAgentId) {
+                //     fetchSingleAgentPerformance(selectedAgentId);
+                // }
             }
         }
     }, [isLoggedIn, selectedAgentId]);
 
     useEffect(() => {
         if (isLoggedIn) {
-            fetchCompanyPerformance();
+            // fetchCompanyPerformance();
         }
     }, [isLoggedIn]);
 
@@ -149,12 +149,12 @@ export default function GoalProvider({ children }) {
             setSelectedAgentId,
             selectedAgentId,
             agentGoal,
-            allAgentsPerformance,
-            singleAgentPerformance,
-            companyPerformance,
-            fetchAllAgentsPerformance,
-            fetchSingleAgentPerformance,
-            fetchCompanyPerformance,
+            // allAgentsPerformance,
+            // singleAgentPerformance,
+            // companyPerformance,
+            // fetchAllAgentsPerformance,
+            // fetchSingleAgentPerformance,
+            // fetchCompanyPerformance,
             login: handleLogin
         }}>
             {children}

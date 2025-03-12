@@ -21,7 +21,7 @@ router.route('/:id')
    authController.restrictTo('agent','admin'),
    propertyController.updateProperty)
   .delete(authController.protect,
-    authController.restrictTo('agent','admin'),
-    propertyController.deleteProperty)
+   authController.restrictTo('agent','admin'),
+   propertyController.deleteProperty)
 
 module.exports = router

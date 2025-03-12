@@ -1,6 +1,8 @@
 import "./Profile.css";
+import NavSide from "./NavSide";
+import { useAuth } from "../../context/AuthProvider";
+
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { CiMail } from "react-icons/ci";
@@ -8,8 +10,6 @@ import { CgProfile } from "react-icons/cg";
 import { IoIosPhonePortrait } from "react-icons/io";
 import { FaPersonCircleQuestion } from "react-icons/fa6";
 
-import { useAuth } from "../../context/AuthProvider";
-import NavSide from "./NavSide";
 
 export default function AgentProfile() {
   const { user } = useAuth();

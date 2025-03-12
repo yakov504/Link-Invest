@@ -1,20 +1,13 @@
-import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Footer from './Footer'
 import BuySellRent from './BuySellRent'
 import './HomePage.css'
+import Carousel from './Carousel/Carousel.jsx'
 
 import haifaN from '../../assets/image/haifaNghit.jpg'
-// import sell from '../../assets/image/sell.jpg'
 import sell from '../../assets/image/IMG_8928.jpg'
-// import buy from '../../assets/image/buy1.jpg'
-import buy from '../../assets/image/link-3-twr.jpg'
-// import rent from '../../assets/image/rent.jpg'
-import rent from '../../assets/image/link-tawer.jpg'
 import agentVideo from '../../assets/video/agentsVideo.mp4'
-// import linkVideo from '../../assets/video/link-vid-nologo.mp4'
 import linkVideo from '../../assets/video/link-vid13sc.mp4'
-
 
 import { FaHandshake } from "react-icons/fa";
 import { GrUpdate } from "react-icons/gr";
@@ -24,8 +17,6 @@ export default function HomePage() {
  const navigate = useNavigate()
 
   const options = [
-    // { verb: 'קונה', img:buy },
-    // { verb: 'משכיר',img:rent },
     { verb: 'רוצים שניצור אתכם קשר, לחצו כאן ', img:sell}
 
   ];
@@ -37,8 +28,6 @@ export default function HomePage() {
       <h2 onClick={() => navigate('/BuySellRent')}>{option.verb}</h2>
     </div>
   ));
-
-
   // const reasons = [
   //   {reason: " ות וטכנולוגיה מתקדמת – אנו מנצלים את הכלים הטכנולוגיים המתקדמים ביותר לניתוח שוק מדויק, שמביא לכם את העסקאות הטובות ביותר", icon:<FaHandshake/>},
   //   {reason: 'תמיכה וליווי עד הסיום – מהייעוץ הראשוני ועד לחתימת העסקה – אנחנו שם בשבילכם בכל שלב ובכל שאלה', icon:<GrUpdate/>},
@@ -88,20 +77,16 @@ export default function HomePage() {
         </video>
         <div className='welcomeH'>
           <h1>WELCOME TO YOUR</h1>
-          {/* <h3></h3> */}
           <h2>NEW HOME</h2>
         </div>
         <div className='whoWeAre'>
           <div className='whoText'>
             <h2>WHO WE ARE</h2>
-            {/* <h2>מי אנחנו</h2> */}
             <div className="company-intro">
               <p>
                 <span className="highlight">אנחנו חברת לינק!</span><br />
                 מומחים בתיווך נכסים, מחויבים להפוך את חלום הבית שלכם למציאות. 
                 <br /> 
-              {/* </p>
-              <p> */}
                 צוות סוכני הנדל"ן המנוסים שלנו ימצא עבורכם את הנכס המושלם,
                 <br /> 
                 בין אם זהו הבית הראשון שלכם או בית חלומותיכם.אנו נלווה אתכם לאורך
@@ -140,6 +125,7 @@ export default function HomePage() {
             {buy_sell_rent}
           </div>
           {/* <BuySellRent/> */}
+          {/* <Carousel/> */}
         </div>
       </div>
       <Footer/>

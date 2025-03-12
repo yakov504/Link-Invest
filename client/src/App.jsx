@@ -4,6 +4,7 @@ import AuthProvider from './context/AuthProvider';
 import IndicateProvider from './context/IndicateProvider'
 import AgentProvider from './context/AgentProvider';
 import GoalProvider from './context/GoalProvider';
+import PropertyProvider from './context/PropertyProvider';
 
 import './App.css';
 import './index.css';
@@ -50,21 +51,23 @@ export default function App() {
         <IndicateProvider>
           <AgentProvider>
             <GoalProvider>
-              <NavBar className={navClass} />
-              <Routes>
-                <Route path="/Login" element={<Login />} />
-                <Route path="/AgentProfile" element={<AgentProfile/>}/> 
-                <Route path="/" element={<HomePage />} />
-                <Route path='/BuySellRent' element={<BuySellRent />}/>
-                <Route path='/DailyIndicator' element={<DailyIndicator />}/>
-                <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
-                <Route path='/Agents' element={<Agents />}/>
-                <Route path='/AdminGoals' element={<AdminGoals />}/>
-                <Route path='/Performance' element={<Performance/>}/>
-                <Route path='/Sale' element={<Sale/>}/>
-                <Route path='/Rent' element={<Rent/>}/>
-                <Route path='/NewProperty' element={<NewProperty/>}/>
-              </Routes>
+              <PropertyProvider>
+                <NavBar className={navClass} />
+                <Routes>
+                  <Route path="/Login" element={<Login />} />
+                  <Route path="/AgentProfile" element={<AgentProfile/>}/> 
+                  <Route path="/" element={<HomePage />} />
+                  <Route path='/BuySellRent' element={<BuySellRent />}/>
+                  <Route path='/DailyIndicator' element={<DailyIndicator />}/>
+                  <Route path='/PersonalIndicator' element={<PersonalIndicator />}/>
+                  <Route path='/Agents' element={<Agents />}/>
+                  <Route path='/AdminGoals' element={<AdminGoals />}/>
+                  <Route path='/Performance' element={<Performance/>}/>
+                  <Route path='/Sale' element={<Sale/>}/>
+                  <Route path='/Rent' element={<Rent/>}/>
+                  <Route path='/NewProperty' element={<NewProperty/>}/>
+                </Routes>
+              </PropertyProvider>
             </GoalProvider>
           </AgentProvider>
         </IndicateProvider>

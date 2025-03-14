@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import Footer from './Footer'
 import BuySellRent from './BuySellRent'
 import './HomePage.css'
-import Carousel from './Carousel/Carousel.jsx'
 
 import haifaN from '../../assets/image/haifaNghit.jpg'
 import sell from '../../assets/image/IMG_8928.jpg'

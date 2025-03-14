@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import NavSide from '../NavSide';
-import './PersonalIndicator.css'
 import { toast } from 'react-toastify';
+import './PersonalIndicator.css'
+import { useGoal } from '../../../context/GoalProvider';
 import { useAuth } from '../../../context/AuthProvider';
 import { useIndicate } from '../../../context/IndicateProvider';
+import AgentMonthlyGoalSummary from './AgentMonthlyGoalSummary';
 import { FaEdit } from "react-icons/fa";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
-import { useGoal } from '../../../context/GoalProvider';
 
 export default function PersonalIndicator() {
   const { dailyStatus, weeklySummery, monthlySummery,allSummery } = useIndicate();
@@ -201,7 +202,8 @@ return (
           </button>
         )}
       </div>
-      <div className='agentGoal'>
+      <AgentMonthlyGoalSummary/>
+      {/* <div className='agentGoal'>
         <h2>יעד חודשי</h2>
         <table border="1" cellPadding="5" cellSpacing="0">
           <thead>
@@ -216,7 +218,7 @@ return (
             </tr>
           </thead>
           <tbody>{mapGoal}</tbody>
-        </table>
+        </table> */}
         {!isEditing ? (
           user.role === 'admin' ? ( 
             <button className='editBtn' onClick={handleEditGoals}>
@@ -246,7 +248,7 @@ return (
         </table>
       </div>
 
-      <div className='monthlySummery'>
+      {/* <div className='monthlySummery'>
         <h2>סיכום חודשי</h2>
         <table border="1" cellPadding="7" cellSpacing="0">
           <thead>
@@ -261,7 +263,7 @@ return (
           </thead>
           <tbody>{mapMonthly}</tbody>
         </table>
-      </div>
+      </div> */}
 
       <div className='allSummery'>
         <h2>סיכום כולל</h2>
@@ -280,6 +282,6 @@ return (
         </table>
       </div>
      </div>
-    </div>
+    // </div>
   );
 }
